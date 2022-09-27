@@ -30,8 +30,21 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-    
-    <developers>
+	<developers>
+ 		<developer>
+ 			<id>antlopcub</id>
+			<name>Antonio Jose Lopez Cubiles</name>
+ 			<email>antlopcub@alum.us.es</email>
+ 			<url></url>
+ 			<roles>
+ 			<role></role>
+ 			</roles>
+ 			<properties>
+ 			<picUrl>
+ 			https://assets.reedpopcdn.com/how-hollow-knights-community-crafted-gibberish-into-a-real-language-1567781461548.jpg/BROK/thumbnail/1200x1200/quality/100/how-hollow-knights-community-crafted-gibberish-into-a-real-language-1567781461548.jpg
+			</picUrl>
+ 			</properties>
+ 		</developer>
         <developer>
         <id>pabcueper</id>
         <name>Pablo</name> 
@@ -42,9 +55,7 @@
         </role>
         </roles>
         </developer>
-    </developers>
-
-    <developers>
+        
         <developer>
             <id>adrgarpor</id>
             <name>Adrián</name>
