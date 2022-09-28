@@ -63,6 +63,16 @@
                 </role>
             </roles>
         </developer>
+        <developer>
+            <id>Antonio23337</id>
+            <name>Antonio Barea Jimenez</name> 
+            <email>antbarjim1@alum.us.es</email>
+            <roles> 
+                <role>  
+                tester
+                </role>
+            </roles>
+        </developer>
         
         <developer>
             <id>adrgarpor</id>
