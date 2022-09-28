@@ -30,7 +30,7 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-	<developers>
+ 		<developers>
  		<developer>
  			<id>antlopcub</id>
 			<name>Antonio Jose Lopez Cubiles</name>
@@ -46,14 +46,22 @@
  			</properties>
  		</developer>
         <developer>
-        <id>pabcueper</id>
-        <name>Pablo</name> 
-        <email>pabcueper@alum.us.es</email>
-        <roles> 
-        <role>
-        
-        </role>
-        </roles>
+            <id>pabcueper</id>
+            <name>Pablo</name> 
+            <email>pabcueper@alum.us.es</email>
+            <roles> 
+                <role>
+                </role>
+            </roles>
+        </developer>
+        <developer>
+            <id>edurobrus</id>
+            <name>Eduardo Robles Russo</name> 
+            <email>edurobrus@alum.us.es</email>
+            <roles> 
+                <role>
+                </role>
+            </roles>
         </developer>
         
         <developer>
@@ -70,7 +78,6 @@
             </properties>
         </developer>
     </developers>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -173,6 +180,7 @@
             <artifactId>junit</artifactId>
             <groupId>junit</groupId>
         </dependency>
+
         <!-- Development tools -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -293,6 +301,7 @@
             <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
+
 
 
 </project>
