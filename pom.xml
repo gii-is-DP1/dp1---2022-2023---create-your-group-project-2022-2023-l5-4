@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
-    <artifactId>spring-petclinic</artifactId>
+    <artifactId>G5-04</artifactId>
     <version>2.2.0.BUILD-SNAPSHOT</version>
 
     <parent>
@@ -12,8 +10,9 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
     </parent>
-    <name>petclinic</name>
+    <name>G5-04</name>
 
+    
     <properties>
 
         <!-- Generic properties -->
@@ -31,22 +30,64 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-    
-    <developers>
+ 		<developers>
+ 		<developer>
+ 			<id>antlopcub</id>
+			<name>Antonio Jose Lopez Cubiles</name>
+ 			<email>antlopcub@alum.us.es</email>
+ 			<url></url>
+ 			<roles>
+ 			<role></role>
+ 			</roles>
+ 			<properties>
+ 			<picUrl>
+ 			https://assets.reedpopcdn.com/how-hollow-knights-community-crafted-gibberish-into-a-real-language-1567781461548.jpg/BROK/thumbnail/1200x1200/quality/100/how-hollow-knights-community-crafted-gibberish-into-a-real-language-1567781461548.jpg
+			</picUrl>
+ 			</properties>
+ 		</developer>
         <developer>
-        <id> pabcueper </id> 
-        <name> Pablo </name> 
-        <email> pabcueper@alum.us.es </email>
-        <roles> 
-        <role>
-        
-        </role>
-        </roles>
+            <id>pabcueper</id>
+            <name>Pablo</name> 
+            <email>pabcueper@alum.us.es</email>
+            <roles> 
+                <role>
+                </role>
+            </roles>
+        </developer>
+        <developer>
+            <id>edurobrus</id>
+            <name>Eduardo Robles Russo</name> 
+            <email>edurobrus@alum.us.es</email>
+            <roles> 
+                <role>
+                </role>
+            </roles>
+        </developer>
+        <developer>
+            <id>Antonio23337</id>
+            <name>Antonio Barea Jimenez</name> 
+            <email>antbarjim1@alum.us.es</email>
+            <roles> 
+                <role>  
+                tester
+                </role>
+            </roles>
+        </developer>
+        <developer>
+            <id>adrgarpor</id>
+            <name>Adrián</name>
+            <email>adrianporrasazahares@gmail.com</email>
+            <roles>
+                <role>leader</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    https://pbs.twimg.com/profile_images/1476520369930616833/hVX-zxJt_400x400.jpg
+       </picUrl>
+            </properties>
         </developer>
     </developers>
-
     <dependencies>
-        <!-- Spring and Spring Boot dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
@@ -63,16 +104,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <dependency>  
-            <groupId>org.springframework.security</groupId>  
-            <artifactId>spring-security-taglibs</artifactId>  
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
         </dependency>
         <!-- Databases - Uses H2 by default -->
         <!-- dependency>
                 <groupId>org.hsqldb</groupId>
                 <artifactId>hsqldb</artifactId>
                 <scope>runtime</scope>
-        </dependency-->        
+        </dependency-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -148,11 +189,12 @@
             <artifactId>junit</artifactId>
             <groupId>junit</groupId>
         </dependency>
+
         <!-- Development tools -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>    
+            <version>1.18.20</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
