@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.springframework.samples</groupId>
-    <artifactId>spring-petclinic</artifactId>
+    <artifactId>G5-04</artifactId>
     <version>2.2.0.BUILD-SNAPSHOT</version>
 
     <parent>
@@ -10,7 +10,7 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
     </parent>
-    <name>petclinic</name>
+    <name>G5-04</name>
 
     
     <properties>
@@ -30,8 +30,49 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-
-    <developers>
+ 		<developers>
+ 		<developer>
+ 			<id>antlopcub</id>
+			<name>Antonio Jose Lopez Cubiles</name>
+ 			<email>antlopcub@alum.us.es</email>
+ 			<url></url>
+ 			<roles>
+ 			<role></role>
+ 			</roles>
+ 			<properties>
+ 			<picUrl>
+ 			https://assets.reedpopcdn.com/how-hollow-knights-community-crafted-gibberish-into-a-real-language-1567781461548.jpg/BROK/thumbnail/1200x1200/quality/100/how-hollow-knights-community-crafted-gibberish-into-a-real-language-1567781461548.jpg
+			</picUrl>
+ 			</properties>
+ 		</developer>
+        <developer>
+            <id>pabcueper</id>
+            <name>Pablo</name> 
+            <email>pabcueper@alum.us.es</email>
+            <roles> 
+                <role>
+                </role>
+            </roles>
+        </developer>
+        <developer>
+            <id>edurobrus</id>
+            <name>Eduardo Robles Russo</name> 
+            <email>edurobrus@alum.us.es</email>
+            <roles> 
+                <role>
+                </role>
+            </roles>
+        </developer>
+        <developer>
+            <id>Antonio23337</id>
+            <name>Antonio Barea Jimenez</name> 
+            <email>antbarjim1@alum.us.es</email>
+            <roles> 
+                <role>  
+                tester
+                </role>
+            </roles>
+        </developer>
         <developer>
             <id>adrgarpor</id>
             <name>Adrián</name>
@@ -46,7 +87,6 @@
             </properties>
         </developer>
     </developers>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -149,6 +189,7 @@
             <artifactId>junit</artifactId>
             <groupId>junit</groupId>
         </dependency>
+
         <!-- Development tools -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -269,6 +310,7 @@
             <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
+
 
 
 </project>

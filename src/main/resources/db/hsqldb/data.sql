@@ -4,6 +4,13 @@ INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
 -- One owner user, named owner1 with passwor 0wn3r
 INSERT INTO users(username,password,enabled) VALUES ('owner1','0wn3r',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
+INSERT INTO users(username,password,enabled) VALUES ('antbarjim1','123abc',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (4,'antbarjim1','owner');
+INSERT INTO users(username,password,enabled) VALUES ('adrgarpor','0wn3r',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (5,'adrgarpor','owner');
+INSERT INTO users(username,password,enabled) VALUES ('edurobrus','0wn3r',TRUE);
+INSERT INTO authorities(id,username,authority) VALUES (6,'edurobrus','owner');
+
 -- One vet user, named vet1 with passwor v3t
 INSERT INTO users(username,password,enabled) VALUES ('vet1','v3t',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
@@ -43,6 +50,7 @@ INSERT INTO owners VALUES (7, 'Jeff', 'Black', '1450 Oak Blvd.', 'Monona', '6085
 INSERT INTO owners VALUES (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison', '6085557683', 'owner1');
 INSERT INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison', '6085559435', 'owner1');
 INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487', 'owner1');
+INSERT INTO owners VALUES (11, 'Antonio', 'Barea', 'Tarfia St.', 'Sevilla', '662934416', 'antbarjim1');
 
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07', 1, 1);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06', 6, 2);
@@ -57,9 +65,70 @@ INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (10, 'Mulligan', '2
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (11, 'Freddy', '2010-03-09', 5, 9);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (12, 'Lucky', '2010-06-24', 2, 10);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (13, 'Sly', '2012-06-08', 1, 10);
+INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (14, 'Firulais', '2011-07-10', 2, 11);
 
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (1, 7, '2013-01-01', 'rabies shot');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02', 'rabies shot');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+INSERT INTO cards(id) VALUES (1);
+-- One vet user, named vet1 with symol
+
+INSERT INTO symbol(id, name) VALUES (1, 'Anchor');
+INSERT INTO symbol(id, name) VALUES (2, 'Apple');
+INSERT INTO symbol(id, name) VALUES (3, 'Bottle');
+INSERT INTO symbol(id, name) VALUES (4, 'pump');
+INSERT INTO symbol(id, name) VALUES (5, 'cacti');
+INSERT INTO symbol(id, name) VALUES (6, 'Candle');
+INSERT INTO symbol(id, name) VALUES (7, 'Taxis');
+INSERT INTO symbol(id, name) VALUES (8, 'Carrot');
+INSERT INTO symbol(id, name) VALUES (9, 'Chess Knight');
+INSERT INTO symbol(id, name) VALUES (10, 'Clock');
+INSERT INTO symbol(id, name) VALUES (11, 'Clown');
+INSERT INTO symbol(id, name) VALUES (12, 'daisy flower');
+INSERT INTO symbol(id, name) VALUES (13, 'Dinosaurs');
+INSERT INTO symbol(id, name) VALUES (14, 'Dolphin');
+INSERT INTO symbol(id, name) VALUES (15, 'Dragon');
+INSERT INTO symbol(id, name) VALUES (16, 'exclamation point');
+INSERT INTO symbol(id, name) VALUES (17,'Eye');
+INSERT INTO symbol(id, name) VALUES (18, 'Fire');
+INSERT INTO symbol(id, name) VALUES (19, 'Four Leaf Clover');
+INSERT INTO symbol(id, name) VALUES (20, 'Fantasy');
+INSERT INTO symbol(id, name) VALUES (21, 'Green symbols');
+INSERT INTO symbol(id, name) VALUES (22, 'Hammer');
+INSERT INTO symbol(id, name) VALUES (23, 'Heart');
+INSERT INTO symbol(id, name) VALUES (24, 'ice cube');
+INSERT INTO symbol(id, name) VALUES (25, 'Igloo');
+INSERT INTO symbol(id, name) VALUES (26, 'Key');
+INSERT INTO symbol(id, name) VALUES (27, 'Ladybug');
+INSERT INTO symbol(id, name) VALUES (28, 'Lightbulb');
+INSERT INTO symbol(id, name) VALUES (29, 'Bolt Lightning');
+INSERT INTO symbol(id, name) VALUES (30, 'lock');
+INSERT INTO symbol(id, name) VALUES (31, 'Arch Blade');
+INSERT INTO symbol(id, name) VALUES (32, 'Moon');
+INSERT INTO symbol(id, name) VALUES (33, 'Entry prohibited sign');
+INSERT INTO symbol(id, name) VALUES (34, 'Orange Scarecrow Man');
+INSERT INTO symbol(id, name) VALUES (35, 'Pencil');
+INSERT INTO symbol(id, name) VALUES (36, 'purple bird');
+INSERT INTO symbol(id, name) VALUES (37, 'cat purple ');
+INSERT INTO symbol(id, name) VALUES (38, 'Purple double hand');
+INSERT INTO symbol(id, name) VALUES (39, 'Red Lips');
+INSERT INTO symbol(id, name) VALUES (40, 'Scissors');
+INSERT INTO symbol(id, name) VALUES (41, 'Skull and Crossbones');
+INSERT INTO symbol(id, name) VALUES (42, 'Snowflake');
+INSERT INTO symbol(id, name) VALUES (43, 'Snowman');
+INSERT INTO symbol(id, name) VALUES (44, 'Spider');
+INSERT INTO symbol(id, name) VALUES (45, 'Cobweb');
+INSERT INTO symbol(id, name) VALUES (46, '​​Sun');
+INSERT INTO symbol(id, name) VALUES (47, 'Sunglasses');
+INSERT INTO symbol(id, name) VALUES (48, 'Target/crosshair');
+INSERT INTO symbol(id, name) VALUES (49, 'Turtle');
+INSERT INTO symbol(id, name) VALUES (50, 'Treble Clef');
+INSERT INTO symbol(id, name) VALUES (51, 'Tree');
+INSERT INTO symbol(id, name) VALUES (52, 'Dripping water');
+INSERT INTO symbol(id, name) VALUES (53, 'Dog');
+INSERT INTO symbol(id, name) VALUES (54, 'Yin and Yang');
+INSERT INTO symbol(id, name) VALUES (55, 'Zebras');
+INSERT INTO symbol(id, name) VALUES (56, 'Question mark');
+INSERT INTO symbol(id, name) VALUES (57, 'cheese');
