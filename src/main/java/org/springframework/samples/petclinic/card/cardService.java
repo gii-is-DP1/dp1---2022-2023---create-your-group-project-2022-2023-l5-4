@@ -10,32 +10,32 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class cardService {
-    private cardRepository salaRepo;
+    private cardRepository cardRepo;
 
 	@Autowired
-	public cardService(cardRepository salaRepo){
-		this.salaRepo=salaRepo;
+	public cardService(cardRepository cardRepo){
+		this.cardRepo=cardRepo;
 
 	}
 	@Transactional(readOnly = true)
 	public List<card> getCards(){
-		return salaRepo.findAll();
+		return cardRepo.findAll();
 				
 	}
 	@Transactional
 	public void deleteCard(long id) {
-		salaRepo.deleteById(id);
+		cardRepo.deleteById(id);
 
 	}
 	@Transactional(readOnly = true)
 	public Optional<card> getCardById(long id) {
-		Optional<card> result=salaRepo.findById(id);
+		Optional<card> result=cardRepo.findById(id);
 		return result;
 
 	}
 	@Transactional
 	public void save(card card) {
-		salaRepo.save(card);
+		cardRepo.save(card);
 	}
     
 }
