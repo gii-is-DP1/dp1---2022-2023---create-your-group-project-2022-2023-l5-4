@@ -9,16 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class cardService {
+public class CardService {
     private cardRepository cardRepo;
 
 	@Autowired
-	public cardService(cardRepository cardRepo){
+	public CardService(CardRepository cardRepo){
 		this.cardRepo=cardRepo;
 
 	}
 	@Transactional(readOnly = true)
-	public List<card> getCards(){
+	public List<Card> getCards(){
 		return cardRepo.findAll();
 				
 	}
@@ -28,13 +28,13 @@ public class cardService {
 
 	}
 	@Transactional(readOnly = true)
-	public Optional<card> getCardById(long id) {
-		Optional<card> result=cardRepo.findById(id);
+	public Optional<Card> getCardById(long id) {
+		Optional<Card> result=cardRepo.findById(id);
 		return result;
 
 	}
 	@Transactional
-	public void save(card card) {
+	public void save(Card card) {
 		cardRepo.save(card);
 	}
     
