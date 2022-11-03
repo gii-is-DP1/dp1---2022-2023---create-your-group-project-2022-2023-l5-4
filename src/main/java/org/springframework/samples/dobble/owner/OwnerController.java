@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.dobble.owner;
 
 import java.util.Collection;
 import java.util.Map;
@@ -21,8 +21,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.user.AuthoritiesService;
-import org.springframework.samples.petclinic.user.UserService;
+import org.springframework.samples.dobble.user.AuthoritiesService;
+import org.springframework.samples.dobble.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

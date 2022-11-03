@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.pet;
+package org.springframework.samples.dobble.pet;
 
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;

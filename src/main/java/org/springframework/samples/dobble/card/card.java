@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.card;
+package org.springframework.samples.dobble.card;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

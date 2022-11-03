@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.dobble.owner;
 
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
@@ -18,9 +18,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.user.AuthoritiesService;
-import org.springframework.samples.petclinic.user.UserService;
+import org.springframework.samples.dobble.configuration.SecurityConfiguration;
+import org.springframework.samples.dobble.owner.Owner;
+import org.springframework.samples.dobble.owner.OwnerController;
+import org.springframework.samples.dobble.owner.OwnerService;
+import org.springframework.samples.dobble.user.AuthoritiesService;
+import org.springframework.samples.dobble.user.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;

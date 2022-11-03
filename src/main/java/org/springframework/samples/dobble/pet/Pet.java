@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.pet;
+package org.springframework.samples.dobble.pet;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ import javax.persistence.Table;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.samples.petclinic.model.NamedEntity;
-import org.springframework.samples.petclinic.owner.Owner;
+import org.springframework.samples.dobble.model.NamedEntity;
+import org.springframework.samples.dobble.owner.Owner;
 
 /**
  * Simple business object representing a pet.

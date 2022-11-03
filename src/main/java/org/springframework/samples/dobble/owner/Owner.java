@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.dobble.owner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,9 +34,9 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
-import org.springframework.samples.petclinic.model.Person;
-import org.springframework.samples.petclinic.pet.Pet;
-import org.springframework.samples.petclinic.user.User;
+import org.springframework.samples.dobble.model.Person;
+import org.springframework.samples.dobble.pet.Pet;
+import org.springframework.samples.dobble.user.User;
 
 /**
  * Simple JavaBean domain object representing an owner.

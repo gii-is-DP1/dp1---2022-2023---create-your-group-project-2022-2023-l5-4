@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.owner;
+package org.springframework.samples.dobble.owner;
 
 import java.util.Collection;
 
@@ -21,8 +21,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.BaseEntity;
-import org.springframework.samples.petclinic.owner.OwnerRepository;
+import org.springframework.samples.dobble.model.BaseEntity;
+import org.springframework.samples.dobble.owner.OwnerRepository;
 
 /**
  * Spring Data JPA OwnerRepository interface

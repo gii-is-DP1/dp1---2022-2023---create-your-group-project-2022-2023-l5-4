@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.configuration;
+package org.springframework.samples.dobble.configuration;
 
 import javax.sql.DataSource;
 

@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.pet;
+package org.springframework.samples.dobble.pet;
 
 /*
  * Copyright 2012-2019 the original author or authors.
@@ -32,9 +32,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerService;
+import org.springframework.samples.dobble.configuration.SecurityConfiguration;
+import org.springframework.samples.dobble.owner.Owner;
+import org.springframework.samples.dobble.owner.OwnerService;
+import org.springframework.samples.dobble.pet.Pet;
+import org.springframework.samples.dobble.pet.PetController;
+import org.springframework.samples.dobble.pet.PetService;
+import org.springframework.samples.dobble.pet.PetType;
+import org.springframework.samples.dobble.pet.PetTypeFormatter;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;

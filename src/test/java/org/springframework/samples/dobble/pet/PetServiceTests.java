@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.pet;
+package org.springframework.samples.dobble.pet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,10 +27,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerService;
-import org.springframework.samples.petclinic.pet.exceptions.DuplicatedPetNameException;
-import org.springframework.samples.petclinic.util.EntityUtils;
+import org.springframework.samples.dobble.owner.Owner;
+import org.springframework.samples.dobble.owner.OwnerService;
+import org.springframework.samples.dobble.pet.Pet;
+import org.springframework.samples.dobble.pet.PetService;
+import org.springframework.samples.dobble.pet.PetType;
+import org.springframework.samples.dobble.pet.Visit;
+import org.springframework.samples.dobble.pet.exceptions.DuplicatedPetNameException;
+import org.springframework.samples.dobble.util.EntityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

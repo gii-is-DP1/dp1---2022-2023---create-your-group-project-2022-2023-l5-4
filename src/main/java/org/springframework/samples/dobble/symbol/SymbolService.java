@@ -1,5 +1,5 @@
 
-package org.springframework.samples.petclinic.symbol;
+package org.springframework.samples.dobble.symbol;
 
 
 import java.util.Optional;

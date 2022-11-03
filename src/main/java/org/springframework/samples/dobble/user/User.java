@@ -1,4 +1,4 @@
-package org.springframework.samples.petclinic.user;
+package org.springframework.samples.dobble.user;
 
 import java.util.Set;
 
