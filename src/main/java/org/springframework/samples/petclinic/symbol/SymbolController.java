@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,9 +18,9 @@ public class SymbolController {
 	
 	@GetMapping
 	public ModelAndView showSymbols(){
-		Iterable<Symbol> parlamentarios=symbolService.findAll();
+		Iterable<Symbol> symbols=symbolService.findAll();
 		ModelAndView result=new ModelAndView("SymbolsListing");
-		result.addObject("symbols", parlamentarios);
+		result.addObject("symbols", symbols);
 		return result;
 		
 	}
@@ -35,21 +34,4 @@ public class SymbolController {
 		return result;
 	}
 	
-	@PostMapping(path="/edit/{id}")
-	public ModelAndView grabarParlamentario(@ModelAttribute("symbol")  Symbol symbol, @PathVariable("id") long id) {
-		symbolService.save(symbol);
-		ModelAndView result=showSymbols();	
-		result.addObject("mesasge", "Symbol sucessfully updated");
-		result.addObject("messageType", "sucess");
-		return result;
-	}
-	
-	@GetMapping(path="/delete/{id}")
-	public ModelAndView borrarParlamentario(@PathVariable("id") long id){
-		symbolService.deleteById(id);
-		ModelAndView result=showSymbols();	
-		result.addObject("message", "Parlamentario borrado con éxito");
-		result.addObject("messageType", "sucess");
-		return result;
-	}
 }
