@@ -13,10 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/cards")
-public class cardController {
+public class CardController {
     public static final String CARD_LISTING="cardListing";
     @Autowired
-    cardService service;
+    CardService service;
 
     @GetMapping()
     public ModelAndView showAllCards(){
@@ -33,7 +33,7 @@ public class cardController {
     @GetMapping("/edit/{id}")
     public ModelAndView editCard(@PathVariable("id") long id){
         ModelAndView result = new ModelAndView("EditCard");
-        Optional<card> card=service.getCardById(id);
+        Optional<Card> card=service.getCardById(id);
         if(card.isPresent()){
             result.addObject("card", card.get());
         }else{
@@ -43,7 +43,7 @@ public class cardController {
         return result;
     }
     @PostMapping("/edit/{id}")
-    public ModelAndView saveEditedCard(card card, BindingResult br,@PathVariable("id") long id){
+    public ModelAndView saveEditedCard(Card card, BindingResult br,@PathVariable("id") long id){
         ModelAndView result=new ModelAndView();
         if(!br.hasErrors()){
             service.save(card);
