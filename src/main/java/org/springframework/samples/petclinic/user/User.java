@@ -47,4 +47,7 @@ public class User{
 	@OneToMany(mappedBy = "winner")
 	private List<Game> wonGames;
 
+	public String toString(){
+		return this.username;
+	}
 }

@@ -132,3 +132,8 @@ INSERT INTO symbol(id, name) VALUES (54, 'Yin and Yang');
 INSERT INTO symbol(id, name) VALUES (55, 'Zebras');
 INSERT INTO symbol(id, name) VALUES (56, 'Question mark');
 INSERT INTO symbol(id, name) VALUES (57, 'cheese');
+
+
+INSERT INTO games(id, gamemode, owner_Id, winner_Id) VALUES (1, 'THE_TOWER', 'adrgarpor', null);
+INSERT INTO games(id, gamemode, owner_Id, winner_Id) VALUES (2, 'THE_WELL', 'adrgarpor', null);
+INSERT INTO games(id, gamemode, owner_Id, winner_Id) VALUES (3, 'THE_POISONED_GIFT', 'adrgarpor', null);

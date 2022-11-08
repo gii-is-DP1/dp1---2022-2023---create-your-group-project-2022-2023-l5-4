@@ -34,7 +34,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(controllers = OwnerController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 class OwnerControllerTests {
 
-	private static final int TEST_OWNER_ID = 1;
+	private static final Long TEST_OWNER_ID = 1L;
 
 	@Autowired
 	private OwnerController ownerController;
