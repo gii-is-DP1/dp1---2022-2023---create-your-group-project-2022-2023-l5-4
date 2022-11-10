@@ -26,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "tournaments")
-public class Tournament extends Person{
+public class Tournament {
 
     @Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
