@@ -16,18 +16,20 @@
 package org.springframework.samples.petclinic.user;
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.owner.Owner;
-import org.springframework.samples.petclinic.owner.OwnerService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author Juergen Hoeller
@@ -40,12 +42,12 @@ public class UserController {
 
 	private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
 
-	private final OwnerService ownerService;
+
+
 
 	@Autowired
-	public UserController(OwnerService clinicService) {
-		this.ownerService = clinicService;
-	}
+	UserService service;
+
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
@@ -54,21 +56,53 @@ public class UserController {
 
 	@GetMapping(value = "/users/new")
 	public String initCreationForm(Map<String, Object> model) {
-		Owner owner = new Owner();
-		model.put("owner", owner);
+		User user = new User();
+		model.put("user", user);
 		return VIEWS_OWNER_CREATE_FORM;
 	}
 
 	@PostMapping(value = "/users/new")
-	public String processCreationForm(@Valid Owner owner, BindingResult result) {
+	public String processCreationForm(@Valid User user, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_FORM;
 		}
 		else {
 			//creating owner, user, and authority
-			this.ownerService.saveOwner(owner);
+			this.service.saveUser(user);
 			return "redirect:/";
 		}
 	}
+
+	@PreAuthorize("hasRole('admin')")
+	@GetMapping()
+	public ModelAndView showAllUsers(){
+        ModelAndView result = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
+        result.addObject("users", service.getUsers());
+        return result;
+    }
+
+	@PreAuthorize("hasRole('admin')")
+	@GetMapping()
+	public ModelAndView showUser(){
+        ModelAndView result = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
+        result.addObject("users", service.getUser().getUsername());
+		result.addObject("users", service.getUser().getPassword());
+		result.addObject("users", service.getUser().getAuthorities());
+        return result;
+    }
+
+	@GetMapping("/user/edit")
+    public ModelAndView editUser(@PathVariable("username") String nombre){
+        ModelAndView result = new ModelAndView("EditUser");
+        Optional<User> user= service.findUser(nombre);
+        if((user).isPresent()){
+            result.addObject("user", user.get());
+        }else{
+            result=showAllUsers();
+            result.addObject("message", "User with id " + nombre + " not found!");
+        }
+        return result;
+    }
+	
 
 }
