@@ -1,4 +1,4 @@
-package org.springframework.samples.dobble.symbol;
+package org.springframework.samples.petclinic.symbol;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

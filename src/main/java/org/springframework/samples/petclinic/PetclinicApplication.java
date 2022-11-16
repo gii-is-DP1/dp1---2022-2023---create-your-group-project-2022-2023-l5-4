@@ -1,13 +1,13 @@
-package org.springframework.samples.dobble;
+package org.springframework.samples.petclinic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication()
-public class DobbleApplication {
+public class PetclinicApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DobbleApplication.class, args);
+		SpringApplication.run(PetclinicApplication.class, args);
 	}
 
 }

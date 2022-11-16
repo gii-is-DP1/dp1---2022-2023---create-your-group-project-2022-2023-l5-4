@@ -1,4 +1,4 @@
-package org.springframework.samples.dobble.card;
+package org.springframework.samples.petclinic.card;
 
 import java.util.List;
 

@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.dobble.owner;
+package org.springframework.samples.petclinic.owner;
 
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.dobble.user.AuthoritiesService;
-import org.springframework.samples.dobble.user.UserService;
+import org.springframework.samples.petclinic.user.AuthoritiesService;
+import org.springframework.samples.petclinic.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

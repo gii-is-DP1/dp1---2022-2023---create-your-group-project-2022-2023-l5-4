@@ -1,5 +1,5 @@
 
-package org.springframework.samples.dobble.symbol;
+package org.springframework.samples.petclinic.symbol;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

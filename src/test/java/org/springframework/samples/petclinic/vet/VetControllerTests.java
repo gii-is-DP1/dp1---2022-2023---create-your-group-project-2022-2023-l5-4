@@ -1,4 +1,4 @@
-package org.springframework.samples.dobble.vet;
+package org.springframework.samples.petclinic.vet;
 
 import static org.hamcrest.xml.HasXPath.hasXPath;
 import static org.mockito.BDDMockito.given;
@@ -17,11 +17,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
-import org.springframework.samples.dobble.configuration.SecurityConfiguration;
-import org.springframework.samples.dobble.vet.Specialty;
-import org.springframework.samples.dobble.vet.Vet;
-import org.springframework.samples.dobble.vet.VetController;
-import org.springframework.samples.dobble.vet.VetService;
+import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.vet.Specialty;
+import org.springframework.samples.petclinic.vet.Vet;
+import org.springframework.samples.petclinic.vet.VetController;
+import org.springframework.samples.petclinic.vet.VetService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;

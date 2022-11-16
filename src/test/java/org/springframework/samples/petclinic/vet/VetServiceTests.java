@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.dobble.vet;
+package org.springframework.samples.petclinic.vet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,9 +23,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.dobble.util.EntityUtils;
-import org.springframework.samples.dobble.vet.Vet;
-import org.springframework.samples.dobble.vet.VetService;
+import org.springframework.samples.petclinic.util.EntityUtils;
+import org.springframework.samples.petclinic.vet.Vet;
+import org.springframework.samples.petclinic.vet.VetService;
 import org.springframework.stereotype.Service;
 
 /**

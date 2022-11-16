@@ -1,6 +1,6 @@
 
 
-package org.springframework.samples.dobble.symbol;
+package org.springframework.samples.petclinic.symbol;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
