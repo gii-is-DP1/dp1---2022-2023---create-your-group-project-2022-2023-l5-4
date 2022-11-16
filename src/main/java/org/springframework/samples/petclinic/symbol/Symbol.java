@@ -2,12 +2,17 @@
 
 package org.springframework.samples.petclinic.symbol;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
+import org.springframework.samples.petclinic.card.Card;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,5 +31,6 @@ public class Symbol {
 	@Column(nullable=false, unique=true)
 	private String name;
 	
-		
+	@ManyToMany(targetEntity=Card.class,fetch=FetchType.EAGER,mappedBy = "symbols")
+	private List<Card> Cards;	
 }

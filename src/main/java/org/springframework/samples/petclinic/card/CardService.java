@@ -1,0 +1,53 @@
+package org.springframework.samples.petclinic.card;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.samples.petclinic.symbol.Symbol;
+
+@Service
+public class CardService {
+	@Autowired
+	private CardRepository mazoRepo;
+	
+
+	@Transactional(readOnly = true)
+	public Iterable<Card> findAll() {
+		return mazoRepo.findAll();
+	}
+	
+	@Transactional
+	public void deleteById(long id) {
+		mazoRepo.deleteById(id);
+	}
+
+	@Transactional
+	public void save(Card mazo) {
+		mazoRepo.save(mazo);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<Card> findById(long id) {
+		return mazoRepo.findById(id);
+	}
+
+	@Transactional
+	public void resetSymbols() {
+		Iterable<Card> mazos=mazoRepo.findAll();
+		List<Symbol> symbolsToBeRemoved=new ArrayList<>();
+		for(Card mazo:mazos) {
+			symbolsToBeRemoved.clear();
+			for(Symbol symbol:mazo.getSymbols())
+				symbolsToBeRemoved.add(symbol);
+			mazo.getSymbols().removeAll(symbolsToBeRemoved);
+			mazoRepo.save(mazo);
+		}
+		
+	}
+}

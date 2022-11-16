@@ -7,7 +7,7 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('antbarjim1','123abc',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'antbarjim1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('adrgarpor','0wn3r',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (5,'adrgarpor','owner');
+INSERT INTO authorities(id,username,authority) VALUES (5,'adrgarpor','admin');
 INSERT INTO users(username,password,enabled) VALUES ('edurobrus','0wn3r',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (6,'edurobrus','owner');
 
@@ -71,9 +71,6 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (1, 7, '2013-01-01',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02', 'rabies shot');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
-
-INSERT INTO cards(id) VALUES (1);
--- One vet user, named vet1 with symol
 
 INSERT INTO symbol(id, name) VALUES (1, 'Anchor');
 INSERT INTO symbol(id, name) VALUES (2, 'Apple');
