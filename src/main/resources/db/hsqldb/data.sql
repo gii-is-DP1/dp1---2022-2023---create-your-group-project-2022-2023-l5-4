@@ -72,3 +72,7 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+
+INSERT INTO tournaments(id,description,password) VALUES (1, 'La cosa cambia', 'password');
+INSERT INTO tournaments(id,description,password) VALUES (2, 'No vas a poder ganar', 'contraseña');
+INSERT INTO tournaments(id,description,password) VALUES (3, 'La cosa cambia v2', 'pass123');

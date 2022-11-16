@@ -3,21 +3,16 @@ package org.springframework.samples.petclinic.tournament;
 
 
 
-import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
-import org.springframework.samples.petclinic.model.Person;
-import org.springframework.samples.petclinic.user.User;
+import org.springframework.samples.petclinic.model.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,22 +21,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "tournaments")
-public class Tournament extends Person{
+public class Tournament extends BaseEntity{
 
-    @Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false, precision=10)
-	private long tournamentId;
     
-    
-    @NotBlank
-    @Column(name = "password")
+    @Column(nullable=false, length=100, name = "description")
+	private String description;
+
+    @Column(nullable=false, name = "password")
     private String password;
-
-    @ManyToMany
-    @Size(min = 2, max = 6)
-    @JoinTable(name = "usernames")
-	private List<User> user;
 
     
 }
