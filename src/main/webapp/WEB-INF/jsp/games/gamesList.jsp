@@ -8,9 +8,15 @@
 <petclinic:layout pageName="games">
     <script>
         function goto(url){
-         
             window.location=url
     }
+        async function join(gameUrl){
+            console.log(gameUrl)
+            await fetch(gameUrl,{
+                method: "POST",
+            })
+   
+        }
     </script>
     <style>
       
@@ -37,7 +43,7 @@
             </spring:url>
             
                
-                <tr onclick="goto('${fn:escapeXml(gameUrl)}')">
+                <tr>
                     
                     <td>
                          <c:out value="${game.id}"/>
@@ -52,8 +58,10 @@
                     <td>
                         <c:out value="${game.numUsers}"/>
                     </td>
-                    <td>
-                        <a href="/">Play</a>
+                    <td onclick="">
+                        <a href="${gameUrl}/join">Join</a>
+                           
+                          
                     </td>
             
                </tr>

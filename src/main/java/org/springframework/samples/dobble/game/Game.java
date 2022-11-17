@@ -52,9 +52,13 @@ public class Game extends BaseEntity{
     @ManyToMany
     @JoinTable(name = "gamecards")
     private List<Card> centralDeck;
-    
+
     public Integer getNumUsers(){
         return this.users.size();
+    }
+
+    public void addUser(User user) {
+        this.users.add(user);
     }
 
 }
