@@ -1,74 +1,108 @@
 /*
- * Copyright 2002-2013 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright 2002-2013 the original author or authors.
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 package org.springframework.samples.dobble.user;
 
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.dobble.owner.Owner;
-import org.springframework.samples.dobble.owner.OwnerService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
- * @author Juergen Hoeller
- * @author Ken Krebs
- * @author Arjen Poutsma
- * @author Michael Isvy
- */
+* @author Juergen Hoeller
+* @author Ken Krebs
+* @author Arjen Poutsma
+* @author Michael Isvy
+*/
 @Controller
 public class UserController {
 
-	private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
+   private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
 
-	private final OwnerService ownerService;
 
-	@Autowired
-	public UserController(OwnerService clinicService) {
-		this.ownerService = clinicService;
-	}
 
-	@InitBinder
-	public void setAllowedFields(WebDataBinder dataBinder) {
-		dataBinder.setDisallowedFields("id");
-	}
 
-	@GetMapping(value = "/users/new")
-	public String initCreationForm(Map<String, Object> model) {
-		Owner owner = new Owner();
-		model.put("owner", owner);
-		return VIEWS_OWNER_CREATE_FORM;
-	}
+   @Autowired
+   UserService service;
 
-	@PostMapping(value = "/users/new")
-	public String processCreationForm(@Valid Owner owner, BindingResult result) {
-		if (result.hasErrors()) {
-			return VIEWS_OWNER_CREATE_FORM;
-		}
-		else {
-			//creating owner, user, and authority
-			this.ownerService.saveOwner(owner);
-			return "redirect:/";
-		}
-	}
+
+   @InitBinder
+   public void setAllowedFields(WebDataBinder dataBinder) {
+	   dataBinder.setDisallowedFields("id");
+   }
+
+   @GetMapping(value = "/users/new")
+   public String initCreationForm(Map<String, Object> model) {
+	   User user = new User();
+	   model.put("user", user);
+	   return VIEWS_OWNER_CREATE_FORM;
+   }
+
+   @PostMapping(value = "/users/new")
+   public String processCreationForm(@Valid User user, BindingResult result) {
+	   if (result.hasErrors()) {
+		   return VIEWS_OWNER_CREATE_FORM;
+	   }
+	   else {
+		   //creating owner, user, and authority
+		   this.service.saveUser(user);
+		   return "redirect:/";
+	   }
+   }
+
+   @PreAuthorize("hasRole('admin')")
+   @GetMapping()
+   public ModelAndView showAllUsers(){
+	   ModelAndView result = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
+	   result.addObject("users", service.getUsers());
+	   return result;
+   }
+
+   @PreAuthorize("hasRole('admin')")
+   @GetMapping()
+   public ModelAndView showUser(){
+	   ModelAndView result = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
+	   result.addObject("users", service.getUser().getUsername());
+	   result.addObject("users", service.getUser().getPassword());
+	   result.addObject("users", service.getUser().getAuthorities());
+	   return result;
+   }
+
+   @GetMapping("/user/edit")
+   public ModelAndView editUser(@PathVariable("username") String nombre){
+	   ModelAndView result = new ModelAndView("EditUser");
+	   Optional<User> user= service.findUser(nombre);
+	   if((user).isPresent()){
+		   result.addObject("user", user.get());
+	   }else{
+		   result=showAllUsers();
+		   result.addObject("message", "User with id " + nombre + " not found!");
+	   }
+	   return result;
+   }
+   
 
 }
