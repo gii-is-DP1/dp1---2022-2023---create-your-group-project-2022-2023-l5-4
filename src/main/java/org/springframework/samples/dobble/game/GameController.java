@@ -1,7 +1,9 @@
 package org.springframework.samples.dobble.game;
 
+
 import java.util.List;
 import java.util.Map;
+
 
 import javax.validation.Valid;
 
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/games")
 public class GameController {
+
 
     private static final String VIEW_PLAY_GAME = "games/playGame";
     private String VIEW_SHOW_GAME = "games/gameDetails";
