@@ -43,7 +43,7 @@
             </spring:url>
             
                
-                <tr>
+                <tr onclick="goto('${gameUrl}')">
                     
                     <td>
                          <c:out value="${game.id}"/>

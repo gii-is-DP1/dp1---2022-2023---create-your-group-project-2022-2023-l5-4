@@ -46,8 +46,9 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
-	public Optional<User> findUser(String username) {
-		return userRepository.findById(username);
+	@Transactional(readOnly = true)
+	public User findUser(String username) {
+		return userRepository.findById(username).orElse(null);
 	}
 
 	@Transactional
@@ -55,10 +56,6 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-	@Transactional
-	public User getUser(){
-		return userRepository.findUser();
-	}
 	
 	
 

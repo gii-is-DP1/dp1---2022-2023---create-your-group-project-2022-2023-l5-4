@@ -5,20 +5,23 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-
+import org.springframework.samples.dobble.user.User;
+import org.springframework.samples.dobble.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GameService {
-r
+
 	
 	
     private GameRepository gameRepository;
+	private UserRepository userRepository;
 	
 	@Autowired
-	public GameService(GameRepository gameRepository){
+	public GameService(GameRepository gameRepository, UserRepository userRepository){
 		this.gameRepository=gameRepository;
+		this.userRepository=userRepository;
 	}
 	
 	@Transactional(readOnly = true)
@@ -49,6 +52,19 @@ r
 	@Transactional
 	public void deleteGameById(Long gameId){
 		gameRepository.deleteById(gameId);
+	}
+
+	@Transactional
+	public void addUserGame(Long gameId, String username){
+		Game game = gameRepository.findById(gameId).orElse(null);
+		User user = userRepository.findById(username).orElse(null);
+
+		if (game!=null && user!=null){
+			game.addUser(user);
+			gameRepository.save(game);
+			System.out.println("FROM SEVICE");
+			System.out.println(game.getUsers());
+		}		
 	}
 
 }

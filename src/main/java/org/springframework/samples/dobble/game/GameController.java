@@ -9,6 +9,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.user.User;
+import org.springframework.samples.dobble.user.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +32,12 @@ public class GameController {
     private String VIEW_INDEX_GAMES = "games/gamesList";
 
     private GameService gameService;
+    private UserService userService;
 
     @Autowired
-    public GameController(GameService gameService) {
+    public GameController(GameService gameService, UserService userService) {
         this.gameService = gameService;
+        this.userService = userService;
     }
 
     @ModelAttribute("gamemodes")
@@ -85,18 +90,16 @@ public class GameController {
     }
 
     @GetMapping("/{gameId}/join")
-    public ModelAndView joinGame(@PathVariable("gameId") Long gameId, User user) {
+    public String joinGame(@PathVariable("gameId") Long gameId) {
         try {
-            Game game = this.gameService.findGame(gameId);
-            if (!(game.getNumUsers()<6)){
-                return indexGames();
-            }
-
-            game.addUser(user);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userId =authentication.getName();
+            System.out.println("HEEEEEEEERE");
+            gameService.addUserGame(gameId, userId);
         } catch (Error err) {
-            return indexGames();
+            return"redirect:/games";
         }
-        return playGame(gameId);
+        return "redirect:/games/{gameId}/play";
 
     }
 }
