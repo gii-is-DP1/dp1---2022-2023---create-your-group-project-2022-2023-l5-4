@@ -22,6 +22,9 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 public class User{
+
+	public User(){}
+	
 	@Id
 	String username;
 	
@@ -47,4 +50,7 @@ public class User{
 	@OneToMany(mappedBy = "winner")
 	private List<Game> wonGames;
 
+	public String toString(){
+		return this.username;
+	}
 }
