@@ -46,18 +46,13 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
-	public Optional<User> findUser(String username) {
+	public Optional<User> findUsername(String username) {
 		return userRepository.findById(username);
 	}
 
 	@Transactional
 	public List<User> getUsers(){
 		return userRepository.findAll();
-	}
-
-	@Transactional
-	public User getUser(){
-		return userRepository.findUser();
 	}
 	
 	

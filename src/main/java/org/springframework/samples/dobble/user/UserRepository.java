@@ -8,8 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends  CrudRepository<User, String>{
     List<User> findAll();
-    @Query("SELECT s FROM User s WHERE s.user.username=:username")
-    User findUser();
 
 	
 }

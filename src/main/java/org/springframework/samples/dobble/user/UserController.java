@@ -81,28 +81,12 @@ public class UserController {
 	   return result;
    }
 
-   @PreAuthorize("hasRole('admin')")
-   @GetMapping()
-   public ModelAndView showUser(){
-	   ModelAndView result = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
-	   result.addObject("users", service.getUser().getUsername());
-	   result.addObject("users", service.getUser().getPassword());
-	   result.addObject("users", service.getUser().getAuthorities());
-	   return result;
-   }
 
-   @GetMapping("/user/edit")
-   public ModelAndView editUser(@PathVariable("username") String nombre){
-	   ModelAndView result = new ModelAndView("EditUser");
-	   Optional<User> user= service.findUser(nombre);
-	   if((user).isPresent()){
-		   result.addObject("user", user.get());
-	   }else{
-		   result=showAllUsers();
-		   result.addObject("message", "User with id " + nombre + " not found!");
-	   }
-	   return result;
-   }
-   
+   @GetMapping(path="/users/edit/{username}")
+	public ModelAndView editarMazo(@PathVariable("username") String username){		
+		ModelAndView result=new ModelAndView("users/EditUser");
+		result.addObject("user", service.findUsername(username));
+		return result;
+	}
 
 }
