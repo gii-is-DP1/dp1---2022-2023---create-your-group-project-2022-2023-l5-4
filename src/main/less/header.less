@@ -1,6 +1,6 @@
 .navbar {
-  border-top: 4px solid #6db33f;
-  background-color: #34302d;
+  border-top: 4px solid yellow;
+  background-color: #a87be5;
   margin-bottom: 0px;
   border-bottom: 0;
   border-left: 0;
@@ -8,21 +8,23 @@
 }
 
 .navbar a.navbar-brand {
-  background: url("../images/spring-logo-dataflow.png") -1px -1px no-repeat;
-  margin: 12px 0 6px;
-  width: 229px;
-  height: 46px;
+  background: url(../images/dobble-logo.png) -1px -1px no-repeat;
+  width: 125px;
+  height: 125px;
   display: inline-block;
   text-decoration: none;
   padding: 0;
+  background-size: contain;
 }
 
 .navbar a.navbar-brand span {
-  display: block;
-  width: 229px;
-  height: 46px;
-  background: url("../images/spring-logo-dataflow.png") -1px -48px no-repeat;
-  opacity: 0;
+  background: url(../images/dobble-logo.png) -1px -1px no-repeat;
+  width: 125px;
+  height: 125px;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0;
+  background-size: contain;
   -moz-transition: opacity 0.12s ease-in-out;
   -webkit-transition: opacity 0.12s ease-in-out;
   -o-transition: opacity 0.12s ease-in-out;
@@ -32,13 +34,13 @@
   opacity: 1;
 }
 
-.navbar li > a, .navbar-text {
+.navbar li>a,
+.navbar-text {
   font-family: "montserratregular", sans-serif;
   text-shadow: none;
   font-size: 14px;
 
-/* line-height: 14px; */
-  padding: 28px 20px;
+  /* line-height: 14px; */
   transition: all 0.15s;
   -webkit-transition: all 0.15s;
   -moz-transition: all 0.15s;
@@ -46,25 +48,31 @@
   -ms-transition: all 0.15s;
 }
 
-.navbar li > a {
+.navbar li>a {
   text-transform: uppercase;
+  border-radius: 100%;
+  margin: 25px;
+  height: 50px;
+  text-shadow: 3px 2px 2px #461170b3;
 }
 
 .navbar .navbar-text {
   margin-top: 0;
   margin-bottom: 0;
 }
-.navbar li:hover > a {
+
+.navbar li:hover>a {
   color: #eeeeee;
-  background-color: #6db33f;
+  background-color: #9711e6;
 }
 
 .navbar-toggle {
   border-width: 0;
 
-  .icon-bar + .icon-bar {
+  .icon-bar+.icon-bar {
     margin-top: 3px;
   }
+
   .icon-bar {
     width: 19px;
     height: 3px;
