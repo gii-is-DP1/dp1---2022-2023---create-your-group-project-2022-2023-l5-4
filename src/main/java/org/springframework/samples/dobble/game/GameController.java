@@ -76,6 +76,7 @@ public class GameController {
     public String createGame(@Valid Game game, BindingResult result) {
         if (result.hasErrors())
             return VIEWS_GAMES_CREATE_OR_UPDATE_FORM;
+        game.setIsFinished(false);
         this.gameService.saveGame(game);
         return "redirect:/games/" + game.getId();
     }
@@ -94,7 +95,6 @@ public class GameController {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId =authentication.getName();
-            System.out.println("HEEEEEEEERE");
             gameService.addUserGame(gameId, userId);
         } catch (Error err) {
             return"redirect:/games";
