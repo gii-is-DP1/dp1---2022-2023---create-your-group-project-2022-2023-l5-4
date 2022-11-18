@@ -3,9 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="games">
+<dobble:layout pageName="games">
     <script>
         function goto(url){
             window.location=url
@@ -21,10 +21,10 @@
     <style>
       
         tbody > tr:hover > td {
-            background-color: rgba(45, 168, 0, 0.508);
+            background-color: #a77be591;
         }
     </style>
-    <h2>Owners</h2>
+    <h2>Games</h2>
 
     <table id="gamesTable" class="table table-striped">
         <thead>
@@ -73,4 +73,4 @@
         </tbody>
     </table>
     
-</petclinic:layout>
+</dobble:layout>
