@@ -36,12 +36,7 @@ public class User{
 	private Set<Authorities> authorities;
 
 	
-    @ManyToMany
-	@JoinTable(
-        name = "usergames",
-        joinColumns = @JoinColumn(name = "userId", nullable = false, table = "users"),
-        inverseJoinColumns = @JoinColumn(name = "gameId", nullable = false, table = "games")
-    )
+    @ManyToMany(mappedBy = "users")
 	private List<Game> games;
 	
 	@OneToMany(mappedBy = "owner")

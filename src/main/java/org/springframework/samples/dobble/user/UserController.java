@@ -45,9 +45,12 @@ public class UserController {
 
 
 
+   UserService userService;
+   
    @Autowired
-   UserService service;
-
+   public UserController(UserService userService){
+	 this.userService = userService;
+   }
 
    @InitBinder
    public void setAllowedFields(WebDataBinder dataBinder) {
@@ -68,7 +71,7 @@ public class UserController {
 	   }
 	   else {
 		   //creating owner, user, and authority
-		   this.service.saveUser(user);
+		   this.userService.saveUser(user);
 		   return "redirect:/";
 	   }
    }
@@ -77,16 +80,33 @@ public class UserController {
    @GetMapping()
    public ModelAndView showAllUsers(){
 	   ModelAndView result = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
-	   result.addObject("users", service.getUsers());
+	   result.addObject("users", userService.getUsers());
 	   return result;
    }
 
 
-   @GetMapping(path="/users/edit/{username}")
-	public ModelAndView editarMazo(@PathVariable("username") String username){		
-		ModelAndView result=new ModelAndView("users/EditUser");
-		result.addObject("user", service.findUsername(username));
-		return result;
-	}
+   @PreAuthorize("hasRole('admin')")
+   @GetMapping("/users/{username}")
+   public ModelAndView showUser(@PathVariable("username") String username){
+	   ModelAndView mav = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
+		User user = userService.findUser(username);
+		mav.addObject(user);
+	   return mav;
+   }
+
+   @GetMapping("/user/{username}/edit")
+   public ModelAndView editUser(@PathVariable("username") String nombre){
+	   ModelAndView result = new ModelAndView("EditUser");
+	   User user= userService.findUser(nombre);
+	   if(user != null){
+		   result.addObject("user", user);
+	   }else{
+		   result=showAllUsers();
+		   result.addObject("message", "User with id " + nombre + " not found!");
+	   }
+	   return result;
+   }
+   
+
 
 }
