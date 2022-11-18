@@ -137,3 +137,11 @@ INSERT INTO gamemodes(id, name) VALUES (3, 'The Poisoned Gift');
 INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (1, 1, 'adrgarpor', null);
 INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (2, 2, 'adrgarpor', null);
 INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (3, 3, 'adrgarpor', null);
+
+
+INSERT INTO players(id, name) VALUES (1, 'edurobrus');
+INSERT INTO players(id, name) VALUES (2, 'miguel');
+INSERT INTO players(id, name) VALUES (3, 'florencio');
+INSERT INTO players(id, name) VALUES (4, 'esurobrus');
+INSERT INTO players(id, name) VALUES (5, 'atci');
+INSERT INTO players(id, name) VALUES (6, 'edus');

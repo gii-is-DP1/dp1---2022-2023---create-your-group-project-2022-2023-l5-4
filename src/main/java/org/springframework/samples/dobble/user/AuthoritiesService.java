@@ -49,9 +49,11 @@ public class AuthoritiesService {
 	@Transactional
 	public void saveAuthorities(String username, String role) throws DataAccessException {
 		Authorities authority = new Authorities();
+
 		User user = userService.findUser(username);
 		if(user != null) {
 			authority.setUser(user);
+
 			authority.setAuthority(role);
 			//user.get().getAuthorities().add(authority);
 			authoritiesRepository.save(authority);

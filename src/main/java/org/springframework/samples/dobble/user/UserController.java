@@ -84,6 +84,7 @@ public class UserController {
 	   return result;
    }
 
+
    @PreAuthorize("hasRole('admin')")
    @GetMapping("/users/{username}")
    public ModelAndView showUser(@PathVariable("username") String username){
@@ -106,5 +107,6 @@ public class UserController {
 	   return result;
    }
    
+
 
 }

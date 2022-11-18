@@ -10,10 +10,10 @@
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 
-<title>Cards</title>
+<title>Tournaments</title>
 </head>
 <body>
-	<h2>Cards:</h2>
+	<h2>Tournaments:</h2>
 	<div class="container">
 		<br />
 		<c:if test="${message != null}">
@@ -33,7 +33,7 @@
 		 <c:forEach items="${cards}" var="p">
 			<tr>
 				<td><c:out value="${p.id}"/></td>				
-				<td>Card of:
+				<td>Tournament of:
 					<ul>
 					<c:forEach items="${p.symbols}" var="o">
 						<li><c:out value="${o.name}"/></li>

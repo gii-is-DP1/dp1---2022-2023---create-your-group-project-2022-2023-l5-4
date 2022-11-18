@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.springframework.samples.dobble.symbol.Symbol;
 
@@ -29,6 +30,7 @@ public class Card {
 	@Column(unique=true, nullable=false, precision=10)
     private long id;
 
+    @Size(max=8)
     @ManyToMany(fetch=FetchType.EAGER)
 	private List<Symbol> symbols;
     

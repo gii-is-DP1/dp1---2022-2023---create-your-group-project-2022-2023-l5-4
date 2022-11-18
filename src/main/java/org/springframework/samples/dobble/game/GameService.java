@@ -13,8 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GameService {
 
-	
-	
+
     private GameRepository gameRepository;
 	private UserRepository userRepository;
 	
