@@ -23,9 +23,22 @@
         tbody > tr:hover > td {
             background-color: #a77be591;
         }
-    </style>
-    <h2>Games</h2>
 
+        .game-list-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+    <div class="game-list-header">
+        <h2>Games</h2>
+        <a href="/games/new">
+            <span class="glyphicon glyphicon-plus sucess" aria-hidden="true">
+                </span>
+            New Game
+        </a>
+    </div>
     <table id="gamesTable" class="table table-striped">
         <thead>
         <tr>

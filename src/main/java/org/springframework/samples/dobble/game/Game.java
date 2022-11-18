@@ -1,15 +1,18 @@
 package org.springframework.samples.dobble.game;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.model.BaseEntity;
 import org.springframework.samples.dobble.user.User;
@@ -56,6 +59,9 @@ public class Game extends BaseEntity{
     @JoinTable(name = "gamecards")
     private List<Card> centralDeck;
 
+    @ColumnDefault("false")
+    private Boolean isFinished;
+
     public Integer getNumUsers(){
         return this.users.size();
     }
@@ -66,7 +72,10 @@ public class Game extends BaseEntity{
     }
     public void addUser(User user) {
         this.getUsersInternal().add(user);
-        this.setUsers(this.getUsers());
+    }
+
+    public void removeUser(User user){
+        this.getUsersInternal().remove(user);
     }
 
 }
