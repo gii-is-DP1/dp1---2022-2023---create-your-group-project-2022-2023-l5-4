@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.dobble.game.Game;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +58,17 @@ public class UserService {
 	public List<User> getUsers(){
 		return userRepository.findAll();
 	}
+
+	@Transactional
+    public void setCurrentGame(User user, Game game) {
+		Game currentGame = user.getCurrentGame();
+		if (currentGame!=null && !currentGame.isFinished()){
+			currentGame.removeUser(user);
+		}
+		user.setCurrentGame(game);
+		userRepository.save(user);
+
+    }
 
 	
 	

@@ -1,9 +1,7 @@
 package org.springframework.samples.dobble.game;
 
-
 import java.util.List;
 import java.util.Map;
-
 
 import javax.validation.Valid;
 
@@ -25,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/games")
 public class GameController {
 
-
     private static final String VIEW_PLAY_GAME = "games/playGame";
     private String VIEW_SHOW_GAME = "games/gameDetails";
     private String VIEWS_GAMES_CREATE_OR_UPDATE_FORM = "games/createOrUpdateGameForm";
@@ -46,9 +43,9 @@ public class GameController {
     }
 
     @GetMapping
-    public ModelAndView indexGames() {
+    public ModelAndView indexUnstartedGames() {
         ModelAndView mav = new ModelAndView(VIEW_INDEX_GAMES);
-        List<Game> games = this.gameService.findAllGames();
+        List<Game> games = this.gameService.findAllUnstartedGames();
         mav.addObject("games", games);
         return mav;
 
@@ -65,17 +62,23 @@ public class GameController {
 
     @GetMapping("/new")
     public String initCreationForm(Map<String, Object> model) {
-        Game game = new Game();
-        User user = new User();
-        model.put("game", game);
-        model.put("user", user);
+        try {
+            Game game = new Game();
+            model.put("game", game);
+        } catch (Error err) {
+        }
         return VIEWS_GAMES_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping("/new")
-    public String createGame(@Valid Game game, BindingResult result) {
+    public String createGame(Game game, BindingResult result) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        User owner = userService.findUser(userId);
+        game.setOwner(owner);
         if (result.hasErrors())
             return VIEWS_GAMES_CREATE_OR_UPDATE_FORM;
+        game.setState(GameState.LOBBY);
         this.gameService.saveGame(game);
         return "redirect:/games/" + game.getId();
     }
@@ -93,11 +96,10 @@ public class GameController {
     public String joinGame(@PathVariable("gameId") Long gameId) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String userId =authentication.getName();
-            System.out.println("HEEEEEEEERE");
+            String userId = authentication.getName();
             gameService.addUserGame(gameId, userId);
         } catch (Error err) {
-            return"redirect:/games";
+            return "redirect:/games";
         }
         return "redirect:/games/{gameId}/play";
 

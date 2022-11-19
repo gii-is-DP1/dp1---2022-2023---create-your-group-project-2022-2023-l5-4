@@ -53,6 +53,17 @@
 @pagination-active-border:                @spring-green;
 @table-border-color:                      @spring-brown;
 
+body{
+  overflow: hidden;
+}
+
+.switch > input:checked + .slider {
+  background-color: @dobble-light-violet;
+}
+
+.table {
+  border-collapse: unset;
+}
 .table > thead > tr > th {
   background-color: lighten(@spring-brown, 3%);
   color: @spring-light-grey;

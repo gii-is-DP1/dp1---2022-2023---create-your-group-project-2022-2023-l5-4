@@ -6,8 +6,8 @@
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
 <dobble:layout pageName="home">
-    <h2><fmt:message key="welcome"/></h2>
     <div class="row">
+        <h2><fmt:message key="welcome"/></h2>
     <h2>Project ${title}</h2>
     <p><h2>Group ${group}</h2></p>
     <p><ul>
@@ -24,5 +24,5 @@
             <spring:url value="/resources/images/logoPNG_3.png" htmlEscape="true" var="UniImage"/>
             <img class="img-responsive" src="${UniImage}"/>
         </div>
-    </div>
+</div>
 </dobble:layout>
