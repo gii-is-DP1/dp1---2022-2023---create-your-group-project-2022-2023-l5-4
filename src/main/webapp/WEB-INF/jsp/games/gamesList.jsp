@@ -10,6 +10,10 @@
         function goto(url){
             window.location=url
     }
+    
+    function showAccessModal(bool){
+            document.getElementById("access-modal").style.visibility=bool
+    }
         async function join(gameUrl){
             console.log(gameUrl)
             await fetch(gameUrl,{
@@ -19,15 +23,6 @@
         }
     </script>
     <style>
-        
-
-        tbody > tr:hover > td {
-            background-color: #a77be591;
-        }
-        table .games-table {
-            border-collapse: unset;
-        }
-
         .game-list-header {
             display: flex;
             flex-direction: row;
@@ -43,7 +38,7 @@
             New Game
         </a>
     </div>
-    <table id="games-table" class="table">
+    <table id="games-table" class=" table hoverable" >
         <thead>
         <tr>
             <th>ID</th>
@@ -75,8 +70,15 @@
                     <td>
                         <c:out value="${game.numUsers}"/>
                     </td>
-                    <td onclick="">
-                        <a href="${gameUrl}/join">Join</a>
+                    <td>
+                        <c:choose>
+                            <c:when test="${game.isPrivate()}">  
+                                <a href="${gameUrl}/join" onclick="showAccessModal(true)">Join</a>
+                            </c:when>
+                            <c:when test="${!game.isPrivate()}">  
+                                <a href="${gameUrl}/join">Join</a>
+                            </c:when>
+                        </c:choose>
                            
                           
                     </td>

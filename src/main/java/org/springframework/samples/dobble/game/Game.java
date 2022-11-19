@@ -82,7 +82,8 @@ public class Game extends BaseEntity{
         return null;
     }
 
-    public Boolean hasAccessCode(){
+    public Boolean isPrivate(){
+        System.out.println(this.accessCode!=null);
         return this.accessCode!=null;
     }
     private Integer hashCode(String password){
