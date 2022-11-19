@@ -31,6 +31,11 @@ public class GameService {
 	}
 
 	@Transactional(readOnly = true)
+	public List<Game> findAllUnstartedGames()  throws DataAccessException {
+		return gameRepository.findAllUnstarted();
+	}
+
+	@Transactional(readOnly = true)
 	public Game findGame(Long gameId) throws NoSuchElementException {
 		return gameRepository.findById(gameId).get();
 	}
@@ -61,7 +66,7 @@ public class GameService {
 		User user = userRepository.findById(username).orElse(null);
 
 		if (game != null && user != null) {
-			if (!game.getIsFinished()) {
+			if (!game.hasStarted()) {
 				game.addUser(user);
 				userService.setCurrentGame(user, game);
 				gameRepository.save(game);

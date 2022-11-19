@@ -46,9 +46,9 @@ public class GameController {
     }
 
     @GetMapping
-    public ModelAndView indexGames() {
+    public ModelAndView indexUnstartedGames() {
         ModelAndView mav = new ModelAndView(VIEW_INDEX_GAMES);
-        List<Game> games = this.gameService.findAllGames();
+        List<Game> games = this.gameService.findAllUnstartedGames();
         mav.addObject("games", games);
         return mav;
 
@@ -76,7 +76,7 @@ public class GameController {
     public String createGame(@Valid Game game, BindingResult result) {
         if (result.hasErrors())
             return VIEWS_GAMES_CREATE_OR_UPDATE_FORM;
-        game.setIsFinished(false);
+        game.setState(GameState.LOBBY);
         this.gameService.saveGame(game);
         return "redirect:/games/" + game.getId();
     }

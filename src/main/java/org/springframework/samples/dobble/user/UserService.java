@@ -62,7 +62,7 @@ public class UserService {
 	@Transactional
     public void setCurrentGame(User user, Game game) {
 		Game currentGame = user.getCurrentGame();
-		if (currentGame!=null && !currentGame.getIsFinished()){
+		if (currentGame!=null && !currentGame.isFinished()){
 			currentGame.removeUser(user);
 		}
 		user.setCurrentGame(game);

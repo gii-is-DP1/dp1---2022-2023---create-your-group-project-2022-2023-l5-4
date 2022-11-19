@@ -2,6 +2,8 @@ package org.springframework.samples.dobble.game;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -59,8 +61,9 @@ public class Game extends BaseEntity{
     @JoinTable(name = "gamecards")
     private List<Card> centralDeck;
 
-    @ColumnDefault("false")
-    private Boolean isFinished;
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'LOBBY'")
+    private GameState state;
 
     public Integer getNumUsers(){
         return this.users.size();
@@ -76,6 +79,14 @@ public class Game extends BaseEntity{
 
     public void removeUser(User user){
         this.getUsersInternal().remove(user);
+    }
+
+    public boolean isFinished() {
+        return this.state==GameState.FINISHED;
+    }
+
+    public boolean hasStarted() {
+        return this.state!=GameState.LOBBY;
     }
 
 }
