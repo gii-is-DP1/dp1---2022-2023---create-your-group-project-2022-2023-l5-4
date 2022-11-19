@@ -19,9 +19,13 @@
         }
     </script>
     <style>
-      
+        
+
         tbody > tr:hover > td {
             background-color: #a77be591;
+        }
+        table .games-table {
+            border-collapse: unset;
         }
 
         .game-list-header {
@@ -39,7 +43,7 @@
             New Game
         </a>
     </div>
-    <table id="gamesTable" class="table table-striped">
+    <table id="games-table" class="table">
         <thead>
         <tr>
             <th>ID</th>
