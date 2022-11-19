@@ -23,6 +23,11 @@
 @dobble-gold: #ffe600;
 @dobble-white: white;
 
+
+@primary-color:                     @dobble-light-violet;
+@primary-color-alt:                 @dobble-dark-violet;
+@secondary-color:                   @dobble-gold;
+
 @body-bg:                           @dobble-white;
 @text-color:                        @spring-brown;
 @link-color:                        @dobble-dark-violet;
@@ -55,6 +60,10 @@
 
 body{
   overflow: hidden;
+}
+
+table.hoverable tbody > tr:hover > td {
+  background-color: ~"@{primary-color}91";
 }
 
 .switch > input:checked + .slider {

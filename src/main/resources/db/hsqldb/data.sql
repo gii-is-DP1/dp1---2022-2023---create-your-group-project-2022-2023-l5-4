@@ -134,8 +134,8 @@ INSERT INTO gamemodes(id, name) VALUES (1, 'The Well');
 INSERT INTO gamemodes(id, name) VALUES (2, 'The Tower');
 INSERT INTO gamemodes(id, name) VALUES (3, 'The Poisoned Gift');
 
-INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (1, 1, 'adrgarpor', null);
-INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (2, 2, 'adrgarpor', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (1, 1234, 4, 'LOBBY', 1, 'adrgarpor', null);
+INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (2, 2, 'edurobrus', null);
 INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (3, 3, 'adrgarpor', null);
 
 
