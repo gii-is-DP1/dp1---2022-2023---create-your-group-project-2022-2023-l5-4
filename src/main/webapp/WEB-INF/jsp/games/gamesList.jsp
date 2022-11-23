@@ -7,7 +7,6 @@
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
 <dobble:layout pageName="games">
-    
     <style>
        
         .access-modal > .modal-content {
@@ -33,7 +32,8 @@
         .access-modal-input{
             bottom:50%;
             border-radius: 5px;
-            font-family: 'cartoon-toy';
+            font-family: cartoon-toy;
+            font-size: 18px;
         }
         
         .access-modal input {
@@ -49,7 +49,21 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        .alert > * {
+            margin: 5px;
+        }
     </style>
+    <c:if test="${param.error!=null}">
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-alert"></span>
+            <label>
+                ERROR:  
+            </label>
+            <c:out value="${param.error}"></c:out>
+        </div>
+    </c:if>
+    
     <div class="game-list-header">
         <h2>Games</h2>
         <a href="/games/new">
@@ -105,7 +119,7 @@
                </tr>
                <dobble:modal id="${game.id}-access-modal" className="access-modal">
                    <h2 style="text-align: center;">Access Code</h2>
-                <form:form  id="${game.id}-form" action="${gameUrl}/join" method="POST">
+                <form:form  id="${game.id}-form" action="${gameUrl}/join" method="POST" modelAttribute="accessCode">
                     <div class="form">
                         <input id="${game.id}-access-modal-input" name="accessCode"  class="access-modal-input" placeholder="Enter access code...">
                         <input id="${game.id}-access-modal-submit" class="access-modal-submit" type="submit" value="Join">
@@ -149,5 +163,4 @@
 
     
     </script>
-    
 </dobble:layout>

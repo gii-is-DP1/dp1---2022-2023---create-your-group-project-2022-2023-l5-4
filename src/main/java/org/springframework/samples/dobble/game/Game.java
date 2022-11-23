@@ -95,7 +95,7 @@ public class Game extends BaseEntity{
     }
 
     public Boolean validAccessCode(String accessCode){
-        return this.accessCode == hashCode(accessCode);
+        return this.accessCode.equals(hashCode(accessCode));
     }
 
     public Integer getNumUsers(){
