@@ -86,17 +86,16 @@ public class Game extends BaseEntity{
         System.out.println(this.accessCode!=null);
         return this.accessCode!=null;
     }
-    private Integer hashCode(String password){
-        return password.hashCode();
+    private Integer hashCode(String accessCode){
+        return accessCode.toString().hashCode();
     }
-    public void setAccessCode(String password){
-        System.out.println("PASS");
-        System.out.println(password);
-        if(!(password==null || password=="")) this.accessCode = hashCode(password);
+    public void setAccessCode(String accessCode){
+        
+        if(!(accessCode==null || accessCode=="")) this.accessCode = hashCode(accessCode);
     }
 
-    public Boolean validAccessCode(String password){
-        return this.accessCode == hashCode(password);
+    public Boolean validAccessCode(String accessCode){
+        return this.accessCode == hashCode(accessCode);
     }
 
     public Integer getNumUsers(){

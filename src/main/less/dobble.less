@@ -58,8 +58,32 @@
 @pagination-active-border:                @spring-green;
 @table-border-color:                      @spring-brown;
 
+@font-face{
+  font-family: 'cartoon-toy';
+  src: url(../resources/static/resources/fonts/cartoon-toy.ttf) format('truetype');
+  src: url(../resources/static/resources/fonts/cartoon-toy-webfont.woff2) format('woff2'),
+       url(../resources/static/resources/fonts/cartoon-toy-webfont.woff) format('woff');
+  
+}
 body{
   overflow: hidden;
+}
+
+.access-modal-submit{
+  background-color: @dobble-light-violet;
+  color: @dobble-white;
+}
+
+.access-modal-submit:hover {
+  background-color: @dobble-dark-violet;
+  color: @dobble-gold;
+}
+
+.access-modal-input{
+  border-color: @dobble-dark-violet;
+  }
+.private-game-lock{
+  color:gray;
 }
 
 table.hoverable tbody > tr:hover > td {

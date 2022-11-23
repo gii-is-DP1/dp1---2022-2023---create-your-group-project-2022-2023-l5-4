@@ -3,6 +3,7 @@ package org.springframework.samples.dobble.game;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.inject.Model;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +93,7 @@ public class GameController {
 
     }
 
-    @GetMapping("/{gameId}/join")
+    @PostMapping("/{gameId}/join")
     public String joinGame(@PathVariable("gameId") Long gameId) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -102,6 +103,17 @@ public class GameController {
             return "redirect:/games";
         }
         return "redirect:/games/{gameId}/play";
+
+    }
+
+    @GetMapping("/{gameId}/join")
+    public ModelAndView joinGameRequest(@PathVariable("gameId") Long gameId) {
+        try {
+            ModelAndView mav = new ModelAndView();
+        } catch (Error err) {
+            return new ModelAndView("redirect:/games");
+        }
+        return new ModelAndView("redirect:/games");
 
     }
 }
