@@ -7,53 +7,7 @@
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
 <dobble:layout pageName="games">
-    <style>
-       
-        .access-modal > .modal-content {
-            border-radius: 25px;
-            width: 25%;
-            aspect-ratio: 1.5;            
-            margin: 10% auto;
-           
-        }
-        
-        .access-modal-submit{
-            bottom:25px;
-            height:50px;
-            width: 100px;
-            font-size: large;
-            font-weight: bold;
-            border-radius: 10px;
-            border-width: 0;
-          
-        }
-       
-
-        .access-modal-input{
-            bottom:50%;
-            border-radius: 5px;
-            font-family: cartoon-toy;
-            font-size: 18px;
-        }
-        
-        .access-modal input {
-            transform: translate(-50%, 0);
-            left:50%;
-            position: absolute;
-            height: 50px;
-            width: 150px;
-        }
-        .game-list-header {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .alert > * {
-            margin: 5px;
-        }
-    </style>
+   
     <c:if test="${param.error!=null}">
         <div class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-alert"></span>
@@ -72,15 +26,16 @@
             New Game
         </a>
     </div>
-    <table id="games-table" class=" table hoverable" >
+    <table id="games-table" class=" table" >
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Gamemode</th>
+            <th>ID<span class="glyphicon glyphicon-sort"></span></th>
+            <th>Gamemode<span class="glyphicon glyphicon-sort"></span></th>
             <th>Owner</th>
-            <th>Num. Players</th>
+            <th><span class="glyphicon glyphicon-lock"></span>
+                <span class="glyphicon glyphicon-sort"></span></th>
             <th></th>
-            <th></th>
+            <th style="width:150px">Num. Players<span class="glyphicon glyphicon-sort"></span></th>
         </tr>
 
         </thead>
@@ -104,33 +59,33 @@
                         <c:out value="${game.owner}"/>
                     </td>
                     <td>
-                        <c:out value="${game.numUsers}/${game.maxPlayers}"/>
-                    </td>
-                    <td>
                         <c:if test="${game.isPrivate()}">  
                             <span class="glyphicon glyphicon-lock private-game-lock"></span>
                         </c:if>
                     </td>
-
-                        <td>
-                            <a href="${gameUrl}">Details</a>
+                    
+                    <td>
+                        <a href="${gameUrl}">Details</a>
                     </td>
-            
-               </tr>
+                    
+                    <td class="num-players" style="text-align:center;">
+                        <c:out value="${game.numUsers}/${game.maxPlayers}"/>
+                    </td>
+                </tr>
                <dobble:modal id="${game.id}-access-modal" className="access-modal">
                    <h2 style="text-align: center;">Access Code</h2>
-                <form:form  id="${game.id}-form" action="${gameUrl}/join" method="POST" modelAttribute="accessCode">
-                    <div class="form">
-                        <input id="${game.id}-access-modal-input" name="accessCode"  class="access-modal-input" placeholder="Enter access code...">
-                        <input id="${game.id}-access-modal-submit" class="access-modal-submit" type="submit" value="Join">
-                    </div>
-            </form:form>
-               </dobble:modal> 
-              
-           
-        </c:forEach>
-        
-        
+                   <form:form  id="${game.id}-form" action="${gameUrl}/join" method="POST" modelAttribute="accessCode">
+                       <div class="form">
+                           <input id="${game.id}-access-modal-input" name="accessCode"  class="access-modal-input" placeholder="Enter access code...">
+                           <input id="${game.id}-access-modal-submit" class="access-modal-submit" type="submit" value="Join">
+                        </div>
+                    </form:form>
+                </dobble:modal> 
+                
+                
+            </c:forEach>
+            
+            
         </tbody>
     </table>
     <script>
@@ -160,6 +115,17 @@
     }
     } 
 })
+
+    const numPlayersIter = document.getElementsByClassName("num-players")
+    console.log(numPlayersIter)
+    for (numPlayers of numPlayersIter){
+        const playersText = numPlayers.innerText.split("/")
+        const currentPlayers = playersText[0], maxPlayers = playersText[1]
+        if (currentPlayers >= maxPlayers) numPlayers.style.color="#ff3c38"
+        else if (currentPlayers == maxPlayers-1) numPlayers.style.color="#ffc921"
+        else numPlayers.style.color="#29cb3d"
+        numPlayers.style.fontWeight="bold"
+    }
 
     
     </script>

@@ -56,52 +56,17 @@
 
 @pagination-active-bg:                    @spring-brown;
 @pagination-active-border:                @spring-green;
-@table-border-color:                      @spring-brown;
+@table-border-color:                      @dobble-light-violet;
 
-@font-face{
-  font-family: 'cartoon-toy';
-  src: url(../fonts/cartoon-toy.ttf) format('truetype');
-  src: url(../fonts/cartoon-toy-webfont.woff2) format('woff2'),
-       url(../fonts/cartoon-toy-webfont.woff) format('woff');
-  font-style: normal;
-  font-weight: normal;
-}
+
 body{
   overflow: hidden;
-}
-
-.access-modal-submit{
-  background-color: @dobble-light-violet;
-  color: @dobble-white;
-}
-
-.access-modal-submit:hover {
-  background-color: @dobble-dark-violet;
-  color: @dobble-gold;
-}
-
-.access-modal-input{
-  border-color: @dobble-dark-violet;
-  }
-.private-game-lock{
-  color:gray;
-}
-
-table.hoverable tbody > tr:hover > td {
-  background-color: ~"@{primary-color}91";
-}
-
-.switch > input:checked + .slider {
-  background-color: @dobble-light-violet;
 }
 
 .table {
   border-collapse: unset;
 }
-.table > thead > tr > th {
-  background-color: lighten(@spring-brown, 3%);
-  color: @spring-light-grey;
-}
+
 
 .table-filter {
   background-color: @spring-brown;
@@ -286,3 +251,5 @@ hr {
 @import "typography.less";
 @import "header.less";
 @import "responsive.less";
+@import "gameList.less";
+@import "newGame.less";
