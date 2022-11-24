@@ -1,0 +1,130 @@
+#games-table *::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+#games-table{
+    border-radius: 20px;
+    border: 4px solid @primary-color;
+    font-family: cartoon-toy;
+    font-size: 20px;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+    background-color: @primary-color;
+}
+
+#games-table table {
+    margin:0;
+}
+#games-table tbody {
+    background-color: @dobble-white;
+  }
+  
+#games-table-body tbody > tr:hover > td {
+    background-color: ~"@{primary-color}91";
+    text-shadow: -2px -1px 0 white;
+  }
+
+#games-table thead {
+    background-color: @primary-color;
+    color:@secondary-color;
+    border: 0px solid;
+    text-shadow: -2px -1px 0px #00000094;
+    vertical-align:bottom;
+  }
+
+#games-table thead span{
+    top:5px;
+}
+
+#games-table .glyphicon-lock{
+    font-size: 15px;
+}
+#games-table .glyphicon-sort{
+    text-shadow: none;
+    color:#8a58d0;
+    margin:10px;
+    font-size: 15px;
+}
+#games-table .glyphicon-sort:hover{
+    color:white;
+   
+}
+
+#games-table-head{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: @primary-color;
+}
+#games-table-body-div{
+    overflow: auto;
+    max-height: 400px;
+    
+}
+
+  .access-modal-submit{
+    background-color: @primary-color;
+    color: @dobble-white;
+  }
+  
+  .access-modal-submit:hover {
+    background-color: @primary-color-alt;
+    color: @secondary-color;
+  }
+  
+  .access-modal-input{
+    border-color: @primary-color-alt;
+    }
+  .private-game-lock{
+    color:gray;
+  }
+  
+  
+
+  
+.access-modal > .modal-content {
+    border-radius: 25px;
+    width: 25%;
+    aspect-ratio: 1.5;            
+    margin: 10% auto;
+   
+}
+
+.access-modal-submit{
+    bottom:25px;
+    height:50px;
+    width: 100px;
+    font-size: large;
+    font-weight: bold;
+    border-radius: 10px;
+    border-width: 0;
+  
+}
+
+
+.access-modal-input{
+    bottom:50%;
+    border-radius: 5px;
+    font-family: cartoon-toy;
+    font-size: 18px;
+}
+
+.access-modal input {
+    transform: translate(-50%, 0);
+    left:50%;
+    position: absolute;
+    height: 50px;
+    width: 150px;
+}
+.game-list-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert > * {
+    margin: 5px;
+}

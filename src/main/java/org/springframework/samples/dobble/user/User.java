@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +23,9 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 public class User{
+
+	public User(){}
+	
 	@Id
 	String username;
 	
@@ -33,13 +37,11 @@ public class User{
 	private Set<Authorities> authorities;
 
 	
-    @ManyToMany
-	@JoinTable(
-        name = "usergames",
-        joinColumns = @JoinColumn(name = "userId", nullable = false, table = "users"),
-        inverseJoinColumns = @JoinColumn(name = "gameId", nullable = false, table = "games")
-    )
+    @ManyToMany(mappedBy = "users")
 	private List<Game> games;
+
+	@ManyToOne
+	private Game currentGame;
 	
 	@OneToMany(mappedBy = "owner")
 	private List<Game> ownedGames;
@@ -47,4 +49,7 @@ public class User{
 	@OneToMany(mappedBy = "winner")
 	private List<Game> wonGames;
 
+	public String toString(){
+		return this.username;
+	}
 }

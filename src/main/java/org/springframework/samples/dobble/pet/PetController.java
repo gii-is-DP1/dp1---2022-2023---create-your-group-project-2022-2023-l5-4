@@ -61,7 +61,7 @@ public class PetController {
 	}
 
 	@ModelAttribute("owner")
-	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
+	public Owner findOwner(@PathVariable("ownerId") Long ownerId) {
 		return this.ownerService.findOwnerById(ownerId);
 	}
         
