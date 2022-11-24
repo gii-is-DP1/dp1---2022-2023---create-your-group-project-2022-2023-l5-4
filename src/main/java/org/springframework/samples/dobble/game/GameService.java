@@ -3,6 +3,7 @@ package org.springframework.samples.dobble.game;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.resource.spi.IllegalStateException;
 import javax.security.auth.message.AuthException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,14 +64,15 @@ public class GameService {
 	}
 
 	@Transactional
-	public void addUserGame(Long gameId, String username, String accessCode) throws AuthException, NullPointerException{
+	public void addUserGame(Long gameId, String username, String accessCode) throws AuthException, NullPointerException, IllegalStateException{
 		Game game = gameRepository.findById(gameId).orElse(null);
 		User user = userRepository.findById(username).orElse(null);
 
 		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
 
-		if(game!=null && !game.validAccessCode(accessCode)) throw new AuthException("Wrong Access Code");
-	
+		if (!game.validAccessCode(accessCode)) throw new AuthException("Wrong Access Code");
+		
+		if (game.isFull()) throw new IllegalStateException("The game is already full");
 		if (!game.hasStarted()) {
 			game.addUser(user);
 			userService.setCurrentGame(user, game);

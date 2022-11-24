@@ -1,18 +1,26 @@
+#games-table *::-webkit-scrollbar {
+    width: 5px;
+  }
+  
 #games-table{
     border-radius: 20px;
-    border: 4px solid #a87be5;
+    border: 4px solid @primary-color;
     font-family: cartoon-toy;
     font-size: 20px;
     overflow: hidden;
     padding: 0;
+    width: 100%;
     background-color: @primary-color;
-  }
- 
+}
+
+#games-table table {
+    margin:0;
+}
 #games-table tbody {
     background-color: @dobble-white;
   }
   
-#games-table tbody > tr:hover > td {
+#games-table-body tbody > tr:hover > td {
     background-color: ~"@{primary-color}91";
     text-shadow: -2px -1px 0 white;
   }
@@ -41,6 +49,19 @@
 #games-table .glyphicon-sort:hover{
     color:white;
    
+}
+
+#games-table-head{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: @primary-color;
+}
+#games-table-body-div{
+    overflow: auto;
+    max-height: 400px;
+    
 }
 
   .access-modal-submit{
