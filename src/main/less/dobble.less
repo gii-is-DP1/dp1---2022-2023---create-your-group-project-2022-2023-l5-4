@@ -56,27 +56,29 @@
 
 @pagination-active-bg:                    @spring-brown;
 @pagination-active-border:                @spring-green;
-@table-border-color:                      @spring-brown;
+@table-border-color:                      @dobble-light-violet;
+
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 
 body{
   overflow: hidden;
 }
 
-table.hoverable tbody > tr:hover > td {
-  background-color: ~"@{primary-color}91";
-}
-
-.switch > input:checked + .slider {
-  background-color: @dobble-light-violet;
-}
-
 .table {
   border-collapse: unset;
 }
-.table > thead > tr > th {
-  background-color: lighten(@spring-brown, 3%);
-  color: @spring-light-grey;
-}
+
 
 .table-filter {
   background-color: @spring-brown;
@@ -261,3 +263,5 @@ hr {
 @import "typography.less";
 @import "header.less";
 @import "responsive.less";
+@import "gameList.less";
+@import "newGame.less";

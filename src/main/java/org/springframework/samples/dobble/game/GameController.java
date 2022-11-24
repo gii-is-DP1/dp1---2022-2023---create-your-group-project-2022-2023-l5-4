@@ -3,6 +3,8 @@ package org.springframework.samples.dobble.game;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.inject.Model;
+import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/games")
@@ -92,16 +95,17 @@ public class GameController {
 
     }
 
-    @GetMapping("/{gameId}/join")
-    public String joinGame(@PathVariable("gameId") Long gameId) {
+    @PostMapping("/{gameId}/join")
+    public String joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode, RedirectAttributes redirAttrs) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
-            gameService.addUserGame(gameId, userId);
-        } catch (Error err) {
-            return "redirect:/games";
-        }
+            gameService.addUserGame(gameId, userId, accessCode);
+        } catch(Exception e) {
+            return "redirect:/games?error="+ e.getMessage();
+        } 
         return "redirect:/games/{gameId}/play";
 
     }
+
 }

@@ -134,9 +134,6 @@ INSERT INTO gamemodes(id, name) VALUES (1, 'The Well');
 INSERT INTO gamemodes(id, name) VALUES (2, 'The Tower');
 INSERT INTO gamemodes(id, name) VALUES (3, 'The Poisoned Gift');
 
-INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (1, 1234, 4, 'LOBBY', 1, 'adrgarpor', null);
-INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (2, 2, 'edurobrus', null);
-INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (3, 3, 'adrgarpor', null);
 
 
 INSERT INTO players(id, name) VALUES (1, 'edurobrus');
@@ -145,3 +142,57 @@ INSERT INTO players(id, name) VALUES (3, 'florencio');
 INSERT INTO players(id, name) VALUES (4, 'esurobrus');
 INSERT INTO players(id, name) VALUES (5, 'atci');
 INSERT INTO players(id, name) VALUES (6, 'edus');
+
+
+
+INSERT INTO USERS(username, password, enabled) VALUES ('User0','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User1','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User2','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User3','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User4','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User5','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User6','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User7','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User8','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User9','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User10','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User11','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User12','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User13','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User14','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User15','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User16','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, enabled) VALUES ('User17','p4ssw0rd',TRUE);
+
+
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (1, null, 4, 'LOBBY', 1, 'User17', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (2, null, 6, 'LOBBY', 1, 'User16', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (3, 1234, 2, 'LOBBY', 2, 'User15', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (4, null, 6, 'LOBBY', 3, 'User14', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (5, null, 6, 'LOBBY', 3, 'User13', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (6, null, 3, 'LOBBY', 1, 'User12', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (7, 1234, 4, 'LOBBY', 1, 'User9', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (8, null, 6, 'LOBBY', 2, 'User11', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (9, 1234, 6, 'LOBBY', 2, 'User10', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (10, 1234, 2, 'LOBBY', 1, 'User8', null);
+
+
+
+INSERT INTO usergames(user_id,game_id) VALUES ('User17',1);
+INSERT INTO usergames(user_id,game_id) VALUES ('User16',2);
+INSERT INTO usergames(user_id,game_id) VALUES ('User15',3);
+INSERT INTO usergames(user_id,game_id) VALUES ('User14',4);
+INSERT INTO usergames(user_id,game_id) VALUES ('User13',5);
+INSERT INTO usergames(user_id,game_id) VALUES ('User12',6);
+INSERT INTO usergames(user_id,game_id) VALUES ('User11',7);
+INSERT INTO usergames(user_id,game_id) VALUES ('User10',8);
+INSERT INTO usergames(user_id,game_id) VALUES ('User9',9);
+INSERT INTO usergames(user_id,game_id) VALUES ('User8',10);
+INSERT INTO usergames(user_id,game_id) VALUES ('User7',1);
+INSERT INTO usergames(user_id,game_id) VALUES ('User6',1);
+INSERT INTO usergames(user_id,game_id) VALUES ('User5',1);
+INSERT INTO usergames(user_id,game_id) VALUES ('User4',2);
+INSERT INTO usergames(user_id,game_id) VALUES ('User3',2);
+INSERT INTO usergames(user_id,game_id) VALUES ('User2',8);
+INSERT INTO usergames(user_id,game_id) VALUES ('User1',9);
+INSERT INTO usergames(user_id,game_id) VALUES ('User0',10);
