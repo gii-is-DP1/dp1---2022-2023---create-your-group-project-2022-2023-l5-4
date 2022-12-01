@@ -2,7 +2,7 @@ package org.springframework.samples.dobble.tournament;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.dobble.player.PlayerService;
+import org.springframework.samples.dobble.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +20,7 @@ public class TournamentController<ParalamentarioSevice> {
 	TournamentService tournamentService;
 	
 	@Autowired
-	PlayerService playerService;
+	UserService userService;
 	
 	private static final String PATHCARD = "tournaments/";
 	@GetMapping
@@ -36,7 +36,7 @@ public class TournamentController<ParalamentarioSevice> {
 	public ModelAndView crearteTournament(){		
 		ModelAndView result=new ModelAndView(PATHCARD+"EditTournament");	
 		result.addObject("tournament", new Tournament());
-		result.addObject("allPlayers", playerService.findAll());
+		result.addObject("allUsers", userService.findAll());
 		return result;
 	}
 
@@ -54,7 +54,7 @@ public class TournamentController<ParalamentarioSevice> {
 	public ModelAndView editarMazo(@PathVariable("id") long id){		
 		ModelAndView result=new ModelAndView(PATHCARD+"EditTournament");	
 		result.addObject("tournament", tournamentService.findById(id));
-		result.addObject("allPlayers", playerService.findAll());
+		result.addObject("allUsers", userService.findAll());
 		return result;
 	}
 	

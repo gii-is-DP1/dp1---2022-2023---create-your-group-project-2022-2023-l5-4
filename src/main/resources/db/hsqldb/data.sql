@@ -79,15 +79,6 @@ INSERT INTO gamemodes(id, name) VALUES (2, 'The Tower');
 INSERT INTO gamemodes(id, name) VALUES (3, 'The Poisoned Gift');
 
 
-INSERT INTO players(id, name) VALUES (1, 'edurobrus');
-INSERT INTO players(id, name) VALUES (2, 'miguel');
-INSERT INTO players(id, name) VALUES (3, 'florencio');
-INSERT INTO players(id, name) VALUES (4, 'esurobrus');
-INSERT INTO players(id, name) VALUES (5, 'atci');
-INSERT INTO players(id, name) VALUES (6, 'edus');
-
-
-
 INSERT INTO USERS(username, password, enabled) VALUES ('User0','p4ssw0rd',TRUE);
 INSERT INTO USERS(username, password, enabled) VALUES ('User1','p4ssw0rd',TRUE);
 INSERT INTO USERS(username, password, enabled) VALUES ('User2','p4ssw0rd',TRUE);

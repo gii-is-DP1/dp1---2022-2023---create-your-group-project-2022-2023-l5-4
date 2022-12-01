@@ -74,6 +74,12 @@ public class UserService {
 		return userRepository.findById(username);
 	}
 
+	@Transactional(readOnly = true)
+	public Iterable<User> findAll() {
+		return userRepository.findAll();
+	}
+
+
 	
 	
 
