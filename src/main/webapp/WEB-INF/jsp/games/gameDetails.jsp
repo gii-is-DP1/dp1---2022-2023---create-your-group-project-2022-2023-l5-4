@@ -6,7 +6,7 @@
 
 <dobble:layout pageName="games">
 
-    <h2>games Information</h2>
+    <h2>Game Information</h2>
 
 
     <table class="table table-striped">
@@ -31,7 +31,6 @@
     <br/>
     <br/>
     <br/>
-    <h2>Pets and Visits</h2>
 
     
 

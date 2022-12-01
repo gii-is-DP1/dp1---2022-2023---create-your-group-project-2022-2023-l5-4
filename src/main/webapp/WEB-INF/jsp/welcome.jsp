@@ -16,13 +16,11 @@
         </c:forEach>
         
     </ul></p>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <spring:url value="/resources/images/pets.png" htmlEscape="true" var="petsImage"/>
-            <img class="img-responsive" src="${petsImage}"/>
-            <spring:url value="/resources/images/logoPNG_3.png" htmlEscape="true" var="UniImage"/>
-            <img class="img-responsive" src="${UniImage}"/>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <spring:url value="/resources/images/logoPNG_3.png" htmlEscape="true" var="UniImage"/>
+        <img class="img-responsive" src="${UniImage}"/>
         </div>
 </div>
 </dobble:layout>
