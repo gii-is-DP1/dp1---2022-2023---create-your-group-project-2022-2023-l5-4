@@ -70,6 +70,10 @@ public class UserService {
 
     }
 
+	public Optional<User> findUsername(String username) {
+		return userRepository.findById(username);
+	}
+
 	
 	
 

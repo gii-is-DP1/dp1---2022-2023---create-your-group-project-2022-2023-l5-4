@@ -94,18 +94,12 @@ public class UserController {
 	   return mav;
    }
 
-   @GetMapping("/user/{username}/edit")
-   public ModelAndView editUser(@PathVariable("username") String nombre){
-	   ModelAndView result = new ModelAndView("EditUser");
-	   User user= userService.findUser(nombre);
-	   if(user != null){
-		   result.addObject("user", user);
-	   }else{
-		   result=showAllUsers();
-		   result.addObject("message", "User with id " + nombre + " not found!");
-	   }
-	   return result;
-   }
+   @GetMapping(path="/users/edit/{username}")
+	public ModelAndView editarMazo(@PathVariable("username") String username){		
+		ModelAndView result=new ModelAndView("users/EditUser");
+		result.addObject("user", userService.findUsername(username));
+		return result;
+	}
    
 
 
