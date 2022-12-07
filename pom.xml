@@ -73,7 +73,6 @@
                 </role>
             </roles>
         </developer>
-        
         <developer>
             <id>adrgarpor</id>
             <name>Adrián</name>
@@ -86,6 +85,15 @@
                     https://pbs.twimg.com/profile_images/1476520369930616833/hVX-zxJt_400x400.jpg
        </picUrl>
             </properties>
+        </developer>
+        <developer>
+            <id>marzoiras</id>
+            <name>Maria Zoido Rastrojo</name> 
+            <email>marzoiras@alum.us.es</email>
+            <roles> 
+                <role>
+                </role>
+            </roles>
         </developer>
     </developers>
     <dependencies>
@@ -202,6 +210,12 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+    
+      <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-api</artifactId>
+        <version>8.0.1</version>
+      </dependency>
     </dependencies>
 
     <build>

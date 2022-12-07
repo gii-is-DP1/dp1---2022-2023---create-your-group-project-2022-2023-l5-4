@@ -7,7 +7,7 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'owner1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('antbarjim1','123abc',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'antbarjim1','owner');
 INSERT INTO users(username,password,enabled) VALUES ('adrgarpor','0wn3r',TRUE);
-INSERT INTO authorities(id,username,authority) VALUES (5,'adrgarpor','owner');
+INSERT INTO authorities(id,username,authority) VALUES (5,'adrgarpor','admin');
 INSERT INTO users(username,password,enabled) VALUES ('edurobrus','0wn3r',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (6,'edurobrus','owner');
 
@@ -72,7 +72,78 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (2, 8, '2013-01-02',
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (3, 8, '2013-01-03', 'neutered');
 INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04', 'spayed');
 
+INSERT INTO symbols(id, name) VALUES (1, 'Anchor');
+INSERT INTO symbols(id, name) VALUES (2, 'Apple');
+INSERT INTO symbols(id, name) VALUES (3, 'Bottle');
+INSERT INTO symbols(id, name) VALUES (4, 'pump');
+INSERT INTO symbols(id, name) VALUES (5, 'cacti');
+INSERT INTO symbols(id, name) VALUES (6, 'Candle');
+INSERT INTO symbols(id, name) VALUES (7, 'Taxis');
+INSERT INTO symbols(id, name) VALUES (8, 'Carrot');
+INSERT INTO symbols(id, name) VALUES (9, 'Chess Knight');
+INSERT INTO symbols(id, name) VALUES (10, 'Clock');
+INSERT INTO symbols(id, name) VALUES (11, 'Clown');
+INSERT INTO symbols(id, name) VALUES (12, 'daisy flower');
+INSERT INTO symbols(id, name) VALUES (13, 'Dinosaurs');
+INSERT INTO symbols(id, name) VALUES (14, 'Dolphin');
+INSERT INTO symbols(id, name) VALUES (15, 'Dragon');
+INSERT INTO symbols(id, name) VALUES (16, 'exclamation point');
+INSERT INTO symbols(id, name) VALUES (17,'Eye');
+INSERT INTO symbols(id, name) VALUES (18, 'Fire');
+INSERT INTO symbols(id, name) VALUES (19, 'Four Leaf Clover');
+INSERT INTO symbols(id, name) VALUES (20, 'Fantasy');
+INSERT INTO symbols(id, name) VALUES (21, 'Green symbolss');
+INSERT INTO symbols(id, name) VALUES (22, 'Hammer');
+INSERT INTO symbols(id, name) VALUES (23, 'Heart');
+INSERT INTO symbols(id, name) VALUES (24, 'ice cube');
+INSERT INTO symbols(id, name) VALUES (25, 'Igloo');
+INSERT INTO symbols(id, name) VALUES (26, 'Key');
+INSERT INTO symbols(id, name) VALUES (27, 'Ladybug');
+INSERT INTO symbols(id, name) VALUES (28, 'Lightbulb');
+INSERT INTO symbols(id, name) VALUES (29, 'Bolt Lightning');
+INSERT INTO symbols(id, name) VALUES (30, 'lock');
+INSERT INTO symbols(id, name) VALUES (31, 'Arch Blade');
+INSERT INTO symbols(id, name) VALUES (32, 'Moon');
+INSERT INTO symbols(id, name) VALUES (33, 'Entry prohibited sign');
+INSERT INTO symbols(id, name) VALUES (34, 'Orange Scarecrow Man');
+INSERT INTO symbols(id, name) VALUES (35, 'Pencil');
+INSERT INTO symbols(id, name) VALUES (36, 'purple bird');
+INSERT INTO symbols(id, name) VALUES (37, 'cat purple ');
+INSERT INTO symbols(id, name) VALUES (38, 'Purple double hand');
+INSERT INTO symbols(id, name) VALUES (39, 'Red Lips');
+INSERT INTO symbols(id, name) VALUES (40, 'Scissors');
+INSERT INTO symbols(id, name) VALUES (41, 'Skull and Crossbones');
+INSERT INTO symbols(id, name) VALUES (42, 'Snowflake');
+INSERT INTO symbols(id, name) VALUES (43, 'Snowman');
+INSERT INTO symbols(id, name) VALUES (44, 'Spider');
+INSERT INTO symbols(id, name) VALUES (45, 'Cobweb');
+INSERT INTO symbols(id, name) VALUES (46, '​​Sun');
+INSERT INTO symbols(id, name) VALUES (47, 'Sunglasses');
+INSERT INTO symbols(id, name) VALUES (48, 'Target/crosshair');
+INSERT INTO symbols(id, name) VALUES (49, 'Turtle');
+INSERT INTO symbols(id, name) VALUES (50, 'Treble Clef');
+INSERT INTO symbols(id, name) VALUES (51, 'Tree');
+INSERT INTO symbols(id, name) VALUES (52, 'Dripping water');
+INSERT INTO symbols(id, name) VALUES (53, 'Dog');
+INSERT INTO symbols(id, name) VALUES (54, 'Yin and Yang');
+INSERT INTO symbols(id, name) VALUES (55, 'Zebras');
+INSERT INTO symbols(id, name) VALUES (56, 'Question mark');
+INSERT INTO symbols(id, name) VALUES (57, 'cheese');
 
-INSERT INTO tournaments(id,description,password) VALUES (1, 'La cosa cambia', 'password');
-INSERT INTO tournaments(id,description,password) VALUES (2, 'No vas a poder ganar', 'contraseña');
-INSERT INTO tournaments(id,description,password) VALUES (3, 'La cosa cambia v2', 'pass123');
+INSERT INTO gamemodes(id, name) VALUES (1, 'The Well');
+INSERT INTO gamemodes(id, name) VALUES (2, 'The Tower');
+INSERT INTO gamemodes(id, name) VALUES (3, 'The Poisoned Gift');
+
+INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES (1, 1234, 4, 'LOBBY', 1, 'adrgarpor', null);
+INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (2, 2, 'edurobrus', null);
+INSERT INTO games(id, gamemode_Id, owner_Id, winner_Id) VALUES (3, 3, 'adrgarpor', null);
+
+
+INSERT INTO players(id, name) VALUES (1, 'edurobrus');
+INSERT INTO players(id, name) VALUES (2, 'miguel');
+INSERT INTO players(id, name) VALUES (3, 'florencio');
+INSERT INTO players(id, name) VALUES (4, 'esurobrus');
+INSERT INTO players(id, name) VALUES (5, 'atci');
+INSERT INTO players(id, name) VALUES (6, 'edus');
+
+

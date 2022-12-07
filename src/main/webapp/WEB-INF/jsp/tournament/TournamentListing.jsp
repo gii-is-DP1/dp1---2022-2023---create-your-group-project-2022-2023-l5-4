@@ -12,7 +12,9 @@
         <thead>
         <tr>
             <th>Id</th>
-            <th>Description</th>
+            <th>Owner</th>
+            <th>Num. Players</th>
+            <th>Num. Games</th>
         </tr>
         </thead>
         <tbody>
@@ -20,7 +22,9 @@
             <tr>
                 <td>
                     <c:out value="${tour.id}"/>
-					<c:out value="${tour.Description}"/>
+					<c:out value="${tour.owner}"/>
+                    <c:out value="${tour.users}"/>
+                    <c:out value="${tour.nGames"/>
                 </td>
             </tr>
         </c:forEach>

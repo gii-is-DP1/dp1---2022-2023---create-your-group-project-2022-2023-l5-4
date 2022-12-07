@@ -1,5 +1,5 @@
 <%@ tag trimDirectiveWhitespaces="true" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ attribute name="pageName" required="true" %>
@@ -7,10 +7,10 @@
 
 <!doctype html>
 <html>
-<petclinic:htmlHeader/>
+<dobble:htmlHeader/>
 
 <body>
-<petclinic:bodyHeader menuName="${pageName}"/>
+<dobble:bodyHeader menuName="${pageName}"/>
 
 <div class="container-fluid">
     <div class="container xd-container">
@@ -22,13 +22,11 @@
   		</button> 
 	</div>
 	</c:if>
+        	<jsp:doBody/>
 
-        <jsp:doBody/>
-
-        <petclinic:pivotal/>
     </div>
 </div>
-<petclinic:footer/>
+<dobble:footer/>
 <jsp:invoke fragment="customScript" />
 
 </body>
