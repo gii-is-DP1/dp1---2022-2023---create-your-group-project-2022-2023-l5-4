@@ -42,8 +42,7 @@ public class Tournament extends BaseEntity{
 
     @Min(2)
     @Max(10)
-    @ColumnDefault("10")
-    private Integer nGames;
+    private Integer numGames;
 
     @ManyToOne
     @JoinColumn(name = "ownerId")

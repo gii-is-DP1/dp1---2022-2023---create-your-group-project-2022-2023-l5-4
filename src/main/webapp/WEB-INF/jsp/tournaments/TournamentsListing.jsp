@@ -34,9 +34,9 @@
 						<c:out value="${p.numUsers}/${p.maxPlayers}"/>
 					</ul>
 				</td>
-				<td><c:out value="${p.nGames}"></c:out></td>
+				<td><c:out value="${p.numGames}"></c:out></td>
 				<td>
-					<a href="/tournaments/edit/${p.id}"><span class="glyphicon glyphicon-pencil warning" aria-hidden="true"></span></a>&nbsp;<a href="/tournaments/delete/${p.id}"><span class="glyphicon glyphicon-trash alert" aria-hidden="true"></a> </td>
+					<a href="/tournaments/delete/${p.id}"><span class="glyphicon glyphicon-trash alert" aria-hidden="true"></a> </td>
 			</tr>
 		</c:forEach>		
 	</table>

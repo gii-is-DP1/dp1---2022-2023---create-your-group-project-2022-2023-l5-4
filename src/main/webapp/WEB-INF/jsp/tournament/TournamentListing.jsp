@@ -18,13 +18,13 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${tournaments.TournamentListing}" var="tour">
+        <c:forEach items="${tournaments}" var="tour">
             <tr>
                 <td>
                     <c:out value="${tour.id}"/>
 					<c:out value="${tour.owner}"/>
                     <c:out value="${tour.users}"/>
-                    <c:out value="${tour.nGames"/>
+                    <c:out value="${tour.nGames}"/>
                 </td>
             </tr>
         </c:forEach>

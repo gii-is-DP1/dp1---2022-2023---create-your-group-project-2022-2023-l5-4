@@ -21,9 +21,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/tournaments")
 public class TournamentController {
 	
-	@Autowired
+
 	private TournamentService tournamentService;
 	private UserService userService;
+
+	@Autowired
+    public TournamentController(TournamentService tournamentService, UserService userService) {
+        this.tournamentService = tournamentService;
+        this.userService = userService;
+    }
 
 	private static final String PATHCARD = "tournaments/";
 
@@ -79,8 +85,8 @@ public class TournamentController {
 	public ModelAndView borrarMazo(@PathVariable("id") long id){
 		tournamentService.deleteById(id);
 		ModelAndView result=showTournaments();	
-		result.addObject("message", "Mazo borrado con Ã©xito");
-		result.addObject("messageType", "sucess");
+		result.addObject("message", "Delete success");
+		result.addObject("messageType", "Success");
 		return result;
 	}
 
