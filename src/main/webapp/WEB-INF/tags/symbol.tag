@@ -1,3 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <%@ attribute name="className" required="false" rtexprvalue="true"
               description="class" %>
 
@@ -17,14 +19,18 @@
     .symbol:hover {
         border-color:red;
     }
-    .symbol img {
-        
+    .symbol input {
+        width:100%;
+        height:100%;
         object-fit:contain;
     }
 </style>
 
 <div class="symbol ${className}" onclick="console.log('${name}')">
-<img draggable=false src="/resources/images/symbols/${cardsetName!=null ? cardsetName : 'original'}/${name}.png">
+<form:form action="/games/2/match" method="POST" modelAttribute="symbol">
+    <input type="hidden" name="symbol" value="${name}" />
+    <input type="image" draggable=false src="/resources/images/symbols/${cardsetName!=null ? cardsetName : 'original'}/${name}.png"/>
+</form:form>
 </div>
 
 <script>

@@ -135,33 +135,51 @@
     <div class="gameboard">
         <div id="player-wrapper-top" class="player-wrapper top">
             <div class="player player-top">
-                <dobble:card className="card"/>
+                <c:if test="${players[4]!=null}">
+                    <dobble:card className="card"/>
+                    <c:out value="${players[4].username}"/>
+                </c:if>
             </div>
         </div>
         <div id="player-wrapper-left" class="player-wrapper">
             <div class="player player-left">
-                <dobble:card className="card"/>
+                <c:if test="${players[0]!=null}">
+                    <dobble:card className="card"/>
+                    <c:out value="${players[0].username}"/>
+                </c:if>
             </div>
             <div class="player player-left">
-                <dobble:card className="card"/>
+                <c:if test="${players[2]!=null}">
+                    <dobble:card className="card"/>
+                    <c:out value="${players[2].username}"/>
+                </c:if>
             </div>
         </div>
         <div id="player-wrapper-right" class="player-wrapper">
             <div class="player player-right">
-                <dobble:card className="card"/>
+                <c:if test="${players[1]!=null}">
+                    <dobble:card className="card"/>
+                    <c:out value="${players[1].username}"/>
+                </c:if>
             </div>
             <div class="player player-right">
-                <dobble:card className="card"/>
+                <c:if test="${players[3]!=null}">
+                    <dobble:card className="card"/>
+                    <c:out value="${players[3].username}"/>
+                </c:if>
             </div>
         </div>
         <div class="player-wrapper" id="central-deck-wrapper">
             <div class="player central-deck">
-                <dobble:card className="card"/>
+                    <dobble:card className="card"/>
             </div>
         </div>
         <div id="player-wrapper-bottom" class="player-wrapper">
             <div id="main-player" class="player">
-                <dobble:card className="card"/>
+                <c:if test="${mainPlayer!=null}">
+                    <dobble:card className="card"/>
+                    <c:out value="${mainPlayer.username}"/>
+                </c:if>
             </div>
 
         </div>

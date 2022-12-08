@@ -22,6 +22,7 @@ import org.springframework.samples.dobble.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,7 +53,7 @@ public class Game extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "usergames", joinColumns = @JoinColumn(name = "gameId", nullable = false, table = "games"), inverseJoinColumns = @JoinColumn(name = "userId", nullable = false, table = "users"))
     @Size(max = 6)
-    private Set<User> users;
+    private List<User> users;
 
     @ManyToMany
     @JoinTable(name = "gamecards")
@@ -100,14 +101,15 @@ public class Game extends BaseEntity {
         return this.users.size();
     }
 
-    private Set<User> getUsersInternal() {
+    private List<User> getUsersInternal() {
         if (this.getUsers() == null)
-            setUsers(new HashSet<>());
+            setUsers(new ArrayList<>());
         return this.getUsers();
     }
 
     public void addUser(User user) {
-        this.getUsersInternal().add(user);
+        List<User> userList = this.getUsersInternal();
+        if (!userList.contains(user)) userList.add(user);
     }
 
     public void removeUser(User user) {

@@ -2,6 +2,7 @@ package org.springframework.samples.dobble.game;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.enterprise.inject.Model;
 import javax.security.auth.message.AuthException;
@@ -26,11 +27,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/games")
 public class GameController {
 
+    // Views declaration
+
     private static final String VIEW_PLAY_GAME = "games/playGame";
     private String VIEW_SHOW_GAME = "games/gameDetails";
     private String VIEWS_GAMES_CREATE_OR_UPDATE_FORM = "games/createOrUpdateGameForm";
     private String VIEW_INDEX_GAMES = "games/gamesList";
 
+    // Constructor
     private GameService gameService;
     private UserService userService;
 
@@ -40,6 +44,7 @@ public class GameController {
         this.userService = userService;
     }
 
+    // Game entity related actions
     @ModelAttribute("gamemodes")
     public List<GameMode> populateGameModes() {
         return this.gameService.findGameModes();
@@ -90,13 +95,22 @@ public class GameController {
     public ModelAndView playGame(@PathVariable("gameId") Long gameId) {
         ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
         Game game = this.gameService.findGame(gameId);
-        mav.addObject(game);
-        return mav;
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User mainPlayer = userService.findUser(username);
+        List<User> players = game.getUsers();
+        players.remove(mainPlayer);
+        System.out.println(players);
+        mav.addObject("mainPlayer", mainPlayer);
+        mav.addObject("players", players);
+        mav.addObject(game); 
+        return mav; 
 
     }
 
     @PostMapping("/{gameId}/join")
-    public String joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode, RedirectAttributes redirAttrs) {
+    public String joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
@@ -106,6 +120,15 @@ public class GameController {
         } 
         return "redirect:/games/{gameId}/play";
 
+    }
+
+
+    // In-game related actions
+
+    @PostMapping("/{gameId}/match")
+    public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") String symbol ){
+        System.out.println("MATCH");
+        return "redirect:play?"+ symbol;    
     }
 
 }
