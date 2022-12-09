@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -30,8 +32,11 @@ public class Card {
 	@Column(unique=true, nullable=false, precision=10)
     private long id;
 
-    @Size(max=8)
+    @Size(min=8,max=8)
     @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="cardsymbols",
+    joinColumns = @JoinColumn(name="card_id"),
+    inverseJoinColumns = @JoinColumn(name="symbol_id"))
 	private List<Symbol> symbols;
     
 }
