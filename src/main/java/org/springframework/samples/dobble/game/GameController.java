@@ -9,6 +9,7 @@ import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
 import org.springframework.security.core.Authentication;
@@ -99,11 +100,11 @@ public class GameController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User mainPlayer = userService.findUser(username);
-        List<User> players = game.getUsers();
-        players.remove(mainPlayer);
-        System.out.println(players);
+        List<GameUser> players = game.getUsers();
+        players.removeIf(player->player.getUser().equals(mainPlayer));
         mav.addObject("mainPlayer", mainPlayer);
         mav.addObject("players", players);
+        mav.addObject("game", game);
         mav.addObject(game); 
         return mav; 
 
@@ -114,7 +115,7 @@ public class GameController {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
-            gameService.addUserGame(gameId, userId, accessCode);
+            gameService.addGameUser(gameId, userId, accessCode);
         } catch(Exception e) {
             return "redirect:/games?error="+ e.getMessage();
         } 

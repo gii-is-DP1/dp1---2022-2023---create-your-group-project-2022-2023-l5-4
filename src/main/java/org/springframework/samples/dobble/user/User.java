@@ -36,10 +36,6 @@ public class User{
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;
 
-	
-    @ManyToMany(mappedBy = "users")
-	private List<Game> games;
-
 	@ManyToOne
 	private Game currentGame;
 	
@@ -52,4 +48,5 @@ public class User{
 	public String toString(){
 		return this.username;
 	}
+
 }

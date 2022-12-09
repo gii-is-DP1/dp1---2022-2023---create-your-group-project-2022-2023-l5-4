@@ -203,7 +203,7 @@ INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, wi
 
 
 -- Initial users into games --
-INSERT INTO usergames(user_id,game_id) VALUES 
+INSERT INTO gameusers(user_id,game_id) VALUES 
 ('User17',1),
 ('User16',2),
 ('User15',3),

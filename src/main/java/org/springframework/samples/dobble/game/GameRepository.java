@@ -17,6 +17,5 @@ public interface GameRepository extends CrudRepository<Game,Long> {
 
     @Query("SELECT game FROM Game game WHERE game.state='LOBBY'")
     List<Game> findAllUnstarted();
-    
 
 }

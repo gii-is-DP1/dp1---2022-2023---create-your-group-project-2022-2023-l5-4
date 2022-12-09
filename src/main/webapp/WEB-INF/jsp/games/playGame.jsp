@@ -150,7 +150,7 @@
                 <c:if test="${players[4]!=null}">
                     <dobble:card className="card"/>
                     <p class="player-name">
-                        <c:out value="${players[4].username}"/>
+                        <c:out value="${players[4].user.usernam.usere}"/>
                     </p>
                 </c:if>
             </div>
@@ -160,7 +160,7 @@
                 <c:if test="${players[0]!=null}">
                     <dobble:card className="card"/>
                     <p class="player-name">
-                        <c:out value="${players[0].username}"/>
+                        <c:out value="${players[0].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -168,7 +168,7 @@
                 <c:if test="${players[2]!=null}">
                     <dobble:card className="card"/>
                     <p class="player-name">
-                        <c:out value="${players[2].username}"/>
+                        <c:out value="${players[2].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -178,7 +178,7 @@
                 <c:if test="${players[1]!=null}">
                     <dobble:card className="card"/>
                     <p class="player-name">
-                        <c:out value="${players[1].username}"/>
+                        <c:out value="${players[1].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -186,7 +186,7 @@
                 <c:if test="${players[3]!=null}">
                     <dobble:card className="card"/>
                     <p class="player-name">
-                        <c:out value="${players[3].username}"/>
+                        <c:out value="${players[3].user.username}"/>
                     </p>
                 </c:if>
             </div>

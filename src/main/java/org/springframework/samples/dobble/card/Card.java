@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.springframework.samples.dobble.model.BaseEntity;
 import org.springframework.samples.dobble.symbol.Symbol;
 
 
@@ -25,12 +26,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name="cards")
-public class Card {
-
-    @Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false, precision=10)
-    private long id;
+public class Card extends BaseEntity{
 
     @Size(min=8,max=8)
     @ManyToMany(fetch=FetchType.EAGER)
