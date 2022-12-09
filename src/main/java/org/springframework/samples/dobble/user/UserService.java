@@ -22,7 +22,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.dobble.game.Game;
+import org.springframework.samples.dobble.game.GameRepository;
 import org.springframework.samples.dobble.game.GameUser;
+import org.springframework.samples.dobble.game.GameUserPk;
 import org.springframework.samples.dobble.game.GameUserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,10 +69,8 @@ public class UserService {
     public void setCurrentGame(User user, Game game) {
 		Game currentGame = user.getCurrentGame();
 		if (currentGame!=null && !currentGame.isFinished()){
-			List<GameUser> gameUser = gameUserRepository.findByGameAndUser(currentGame, user);
-			System.out.println("DEEEEEEEBUG");
-			System.out.println(gameUser);
-			//gameUserRepository.delete(gameUser);
+			GameUser gameUser = gameUserRepository.findById(GameUserPk.of(user,currentGame)).orElse(null);
+			gameUserRepository.delete(gameUser);
 		}
 		user.setCurrentGame(game);
 		userRepository.save(user);

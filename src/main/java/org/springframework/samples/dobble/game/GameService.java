@@ -79,7 +79,9 @@ public class GameService {
 		if (!game.validAccessCode(accessCode)) throw new AuthException("Wrong Access Code");
 		
 		if (game.isFull()) throw new IllegalStateException("The game is already full");
+		
 		if (!game.hasStarted() && !game.getUsers().contains(gameUser)) {
+			System.out.println("ENTRA");
 			gameUserRepository.save(gameUser);
 			userService.setCurrentGame(user, game);
 			gameRepository.save(game);

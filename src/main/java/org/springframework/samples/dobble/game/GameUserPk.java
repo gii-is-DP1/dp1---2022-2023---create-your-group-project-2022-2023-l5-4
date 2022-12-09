@@ -13,13 +13,17 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class GameUserPk implements Serializable{
-    private User user;
-    private Game game;
+    private String user;
+    private Long game;
 
     public GameUserPk(){}
 
     public GameUserPk(User user, Game game) {
-        this.user = user;
-        this.game = game;
+        this.user = user.getUsername();
+        this.game = game.getId();
+    }
+
+    public static GameUserPk of (User user, Game game){
+        return new GameUserPk(user,game);
     }
 }
