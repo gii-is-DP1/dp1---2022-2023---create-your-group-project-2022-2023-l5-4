@@ -25,7 +25,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name="gameusers")
-public class GameUser extends BaseEntity {
+@IdClass(GameUserPk.class)
+public class GameUser {
     
     public GameUser(){}
 
@@ -35,12 +36,13 @@ public class GameUser extends BaseEntity {
         this.user=user;
     }
 
-
+    @Id
     @ManyToOne
     @JoinColumn(name="game_id")
     @NotNull
     private Game game;
 
+    @Id
     @ManyToOne
     @JoinColumn(name="user_id")
     @NotNull
