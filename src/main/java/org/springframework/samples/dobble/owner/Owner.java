@@ -139,7 +139,7 @@ public class Owner extends Person {
 		return getPet(name, false);
 	}
 	
-	public Pet getPetwithIdDifferent(String name,Integer id) {
+	public Pet getPetwithIdDifferent(String name,Long id) {
 		name = name.toLowerCase();
 		for (Pet pet : getPetsInternal()) {
 			String compName = pet.getName();

@@ -1,6 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="dobble" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
@@ -22,29 +22,24 @@
 		<div class="navbar-collapse collapse" id="main-navbar">
 			<ul class="nav navbar-nav">
 
-				<petclinic:menuItem active="${name eq 'home'}" url="/"
+				<dobble:menuItem active="${name eq 'home'}" url="/"
 					title="home page">
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>Home</span>
-				</petclinic:menuItem>
+				</dobble:menuItem>
 
-				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
-					title="find owners">
+				<dobble:menuItem active="${name eq 'games'}" url="/games"
+					title="find games">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find owners</span>
-				</petclinic:menuItem>
+					<span>Find games</span>
+				</dobble:menuItem>
 
-				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
-					title="veterinarians">
+
+				<dobble:menuItem active="${name eq 'tournaments'}" url="/tournaments"
+					title="tournaments">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Veterinarians</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="trigger a RuntimeException to see how it is handled">
-					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					<span>Error</span>
-				</petclinic:menuItem>
+					<span>Tournaments</span>
+				</dobble:menuItem>
 
 			</ul>
 
@@ -58,7 +53,9 @@
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span> 
+
+						data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
+
 							<strong><sec:authentication property="name" /></strong> <span
 							class="glyphicon glyphicon-chevron-down"></span>
 					</a>
@@ -73,11 +70,15 @@
 										</div>
 										<div class="col-lg-8">
 											<p class="text-left">
-												<strong><sec:authentication property="name" /></strong>
+												<strong><sec:authentication property="name"/></strong>
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"
 													class="btn btn-primary btn-block btn-sm">Logout</a>
+											</p>
+											<p class="text-left">
+												<a href="<c:url value="/users/edit/"/><sec:authentication property="name"/>"
+													class="btn btn-primary btn-block btn-sm">Account Details</a>
 											</p>
 										</div>
 									</div>
