@@ -22,10 +22,10 @@
 				<td><mvc:input path="id" readOnly="true"/></td>
 			</tr>
 			<tr>
-				<td><mvc:label path="players">Tournament of:</mvc:label></td>
+				<td><mvc:label path="users">Tournament of:</mvc:label></td>
 				<td>
-					<mvc:select path="players" multiple="multiple"> 
-     					<mvc:options items="${allPlayers}" itemValue="id" itemLabel="name"></mvc:options>
+					<mvc:select path="users" multiple="multiple"> 
+     					<mvc:options items="${allUsers}" itemValue="username" itemLabel="username"></mvc:options>
      				</mvc:select>
      			</td>
 			</tr>

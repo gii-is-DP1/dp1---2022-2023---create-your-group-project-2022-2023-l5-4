@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.springframework.samples.dobble.player.Player;
-
+import org.springframework.samples.dobble.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +29,7 @@ public class Tournament {
     private long id;
 
     @ManyToMany(fetch=FetchType.EAGER)
-	private List<Player> players;
+	private List<User> users;
     
 }
 

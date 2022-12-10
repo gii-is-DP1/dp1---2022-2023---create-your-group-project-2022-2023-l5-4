@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.dobble.player.Player;
+import org.springframework.samples.dobble.user.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,14 +37,14 @@ public class TournamentService {
 	}
 
 	@Transactional
-	public void resetPlayers() {
+	public void resetUsers() {
 		Iterable<Tournament> mazos=mazoRepo.findAll();
-		List<Player> playersToBeRemoved=new ArrayList<>();
+		List<User> usersToBeRemoved=new ArrayList<>();
 		for(Tournament mazo:mazos) {
-			playersToBeRemoved.clear();
-			for(Player player:mazo.getPlayers())
-				playersToBeRemoved.add(player);
-			mazo.getPlayers().removeAll(playersToBeRemoved);
+			usersToBeRemoved.clear();
+			for(User user:mazo.getUsers())
+				usersToBeRemoved.add(user);
+			mazo.getUsers().removeAll(usersToBeRemoved);
 			mazoRepo.save(mazo);
 		}
 		

@@ -20,21 +20,21 @@
 	<table class="table table-striped">
 		<tr>
 			<th>Name</th>
-			<th>Players</th>			
+			<th>Users</th>			
 			<th>Actions</th>
 		</tr>
-		 <c:forEach items="${tournaments}" var="p">
+		 <c:forEach items="${tournaments}" var="t">
 			<tr>
-				<td><c:out value="${p.id}"/></td>				
+				<td><c:out value="${t.id}"/></td>				
 				<td>Tournament of:
 					<ul>
-					<c:forEach items="${p.players}" var="o">
-						<li><c:out value="${o.name}"/></li>
+					<c:forEach items="${t.users}" var="u">
+						<li><c:out value="${u.username}"/></li>
 					</c:forEach>
 					</ul>
 				</td>
 				<td>
-					<a href="/tournaments/edit/${p.id}"><span class="glyphicon glyphicon-pencil warning" aria-hidden="true"></span></a>&nbsp;<a href="/tournaments/delete/${p.id}"><span class="glyphicon glyphicon-trash alert" aria-hidden="true"></a> </td>
+					<a href="/tournaments/edit/${t.id}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/tournaments/delete/${t.id}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
 			</tr>
 		</c:forEach>		
 	</table>
