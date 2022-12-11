@@ -1,5 +1,6 @@
 package org.springframework.samples.dobble.tournament;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +51,12 @@ public class TournamentController {
     public ModelAndView indexUnstartedTournaments() {
         ModelAndView mav = new ModelAndView(VIEW_INDEX_TOURNAMENTS);
         List<Tournament> tournaments = this.tournamentService.findAllUnstartedTournaments();
+        List<Integer> numPartidas = new ArrayList<Integer>();
+        for(Tournament t: tournaments){
+            numPartidas.add(t.getTournamentmodes().size());
+        }
         mav.addObject("tournaments", tournaments);
+        mav.addObject("numpartidas", numPartidas);
         return mav;
 
     }
