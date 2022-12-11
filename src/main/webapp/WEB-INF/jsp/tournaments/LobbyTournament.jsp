@@ -6,7 +6,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="tournaments">
-	<h2>Tournaments:</h2>
+	<h2>Tournament:</h2>
 	<div class="container">
 		<br />
 		<c:if test="${message != null}">
@@ -16,27 +16,19 @@
 		</div>
 		</c:if>
 	</div>
-	<a href="/tournaments/create"><span class="glyphicon glyphicon-plus sucess" aria-hidden="true"></span>Create tournament</a>
 	<table class="table table-striped">
 		<tr>
-			<th>Name</th>
-			<th>Users</th>			
-			<th>Actions</th>
+			<th>Users</th>
+			<th>Actions</th>			
 		</tr>
-		 <c:forEach items="${tournaments}" var="t">
+		 <c:forEach items="${users}" var="u">
 			<tr>
-				<td><c:out value="${t.id}"/></td>				
-				<td>Tournament of:
-					<ul>
-					<c:forEach items="${t.users}" var="u">
-						<li><c:out value="${u.username}"/></li>
-					</c:forEach>
-					</ul>
-				</td>
+				<td><c:out value="${u.username}"/></td>				
 				<td>
-					<a href="/tournaments/edit/${t.id}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/tournaments/delete/${t.id}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
+					<a href="/users/edit/${u.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/tournaments/${tournament.id}/play/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
 			</tr>
 		</c:forEach>		
 	</table>
+	
     
 </petclinic:layout>

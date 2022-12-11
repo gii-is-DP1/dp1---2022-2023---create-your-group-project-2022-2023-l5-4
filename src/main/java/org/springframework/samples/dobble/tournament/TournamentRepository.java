@@ -1,10 +1,22 @@
 package org.springframework.samples.dobble.tournament;
 
+import java.util.List;
 
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface TournamentRepository extends CrudRepository<Tournament, Long> { 
+public interface TournamentRepository extends CrudRepository<Tournament,Long> {
+
+    @Query("SELECT tournamentmode FROM TournamentMode tournamentmode ORDER BY tournamentmode.name")
+    Iterable<TournamentMode> findTournamentModes() throws DataAccessException;
+
+    @Query("SELECT tournament FROM Tournament tournament")
+    List<Tournament> findAll() throws DataAccessException;
+
+    @Query("SELECT tournament FROM Tournament tournament WHERE tournament.state='LOBBY'")
+    List<Tournament> findAllUnstarted();
     
+
 }

@@ -42,9 +42,6 @@ public class UserController {
 
    private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
 
-
-
-
    UserService userService;
    
    @Autowired
