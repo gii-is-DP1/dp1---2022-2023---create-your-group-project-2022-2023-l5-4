@@ -82,6 +82,22 @@ public class GameService {
 		
 	}
 
+	@Transactional
+	public void deleteUserGame(Long gameId, String username) throws AuthException, NullPointerException, IllegalStateException{
+		Game game = gameRepository.findById(gameId).orElse(null);
+		User user = userRepository.findById(username).orElse(null);
+
+		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
+		
+		if (!game.hasStarted()) {
+			game.removeUser(user);
+			userService.setCurrentGame(user, game);
+			gameRepository.save(game);
+		}
+
+		
+	}
+
 	
 
 }

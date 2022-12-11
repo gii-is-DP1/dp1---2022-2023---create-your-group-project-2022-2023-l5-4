@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.inject.Model;
+import javax.resource.spi.IllegalStateException;
 import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
 
@@ -88,10 +89,12 @@ public class GameController {
 
     @GetMapping("/{gameId}/play")
     public ModelAndView playGame(@PathVariable("gameId") Long gameId) {
-        ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
         Game game = this.gameService.findGame(gameId);
-        mav.addObject(game);
-        return mav;
+        Iterable<User> mazos=game.getUsers();
+		ModelAndView result=new ModelAndView("games/LobbyGame");
+		result.addObject("users", mazos);
+        result.addObject("game", game);
+		return result;	
 
     }
 
@@ -101,6 +104,17 @@ public class GameController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
             gameService.addUserGame(gameId, userId, accessCode);
+        } catch(Exception e) {
+            return "redirect:/games?error="+ e.getMessage();
+        } 
+        return "redirect:/games/{gameId}/play";
+
+    }
+
+    @GetMapping(path="/{gameId}/play/delete/{id}")
+	public String DeleteUsersGame(@PathVariable("gameId") Long gameId, @PathVariable("id") String id, RedirectAttributes redirAttrs) {
+        try {
+            gameService.deleteUserGame(gameId, id);
         } catch(Exception e) {
             return "redirect:/games?error="+ e.getMessage();
         } 

@@ -25,7 +25,7 @@
 				<td><mvc:label path="users">Tournament of:</mvc:label></td>
 				<td>
 					<mvc:select path="users" multiple="multiple"> 
-     					<mvc:options items="${allUsers}" itemValue="username" itemLabel="username"></mvc:options>
+     					<mvc:options items="${allUsers}" itemValue="id" itemLabel="username"></mvc:options>
      				</mvc:select>
      			</td>
 			</tr>

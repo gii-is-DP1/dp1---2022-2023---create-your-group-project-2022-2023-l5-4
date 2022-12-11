@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.model.BaseEntity;
+import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.samples.dobble.user.User;
 
 import lombok.Getter;
@@ -54,6 +55,9 @@ public class Game extends BaseEntity {
     @Size(max = 6)
     private Set<User> users;
 
+    @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.EAGER,mappedBy = "games")
+	private List<Tournament> Tournaments;	
+    
     @ManyToMany
     @JoinTable(name = "gamecards")
     private List<Card> centralDeck;
@@ -63,7 +67,6 @@ public class Game extends BaseEntity {
     private GameState state;
 
     @Min(2)
-
     @Max(6)
     @ColumnDefault("6")
     private Integer maxPlayers;
