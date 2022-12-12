@@ -155,16 +155,6 @@ INSERT INTO gamemodes(id, name) VALUES
 (2, 'The Tower'),
 (3, 'The Poisoned Gift');
 
--- Initial players, not needed but useful for testing --
-
-INSERT INTO players(id, name) VALUES 
-(1, 'edurobrus'),
-(2, 'miguel'),
-(3, 'florencio'),
-(4, 'esurobrus'),
-(5, 'atci'),
-(6, 'edus');
-
 
 -- Initial users, not needed but useful for testing --
 

@@ -161,7 +161,7 @@ public class GameController {
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") String symbol ){
         System.out.println("MATCH");
         return "redirect:play?"+ symbol;    
-
+    }
     //@GetMapping(path="/{gameId}/play/delete/{id}")
 	//public String DeleteUsersGame(@PathVariable("gameId") Long gameId, @PathVariable("id") String id, RedirectAttributes redirAttrs) {
     //    try {
