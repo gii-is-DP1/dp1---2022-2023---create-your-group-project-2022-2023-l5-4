@@ -10,6 +10,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.card.Card;
+import org.springframework.samples.dobble.card.CardService;
+import org.springframework.samples.dobble.card.Deck;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
 import org.springframework.security.core.Authentication;
@@ -38,11 +40,15 @@ public class GameController {
     // Constructor
     private GameService gameService;
     private UserService userService;
+    private CardService cardService;
+    private GameUserService gameUserService;
 
     @Autowired
-    public GameController(GameService gameService, UserService userService) {
+    public GameController(GameService gameService, UserService userService, CardService cardService, GameUserService gameUserService) {
         this.gameService = gameService;
         this.userService = userService;
+        this.cardService = cardService;
+        this.gameUserService = gameUserService;
     }
 
     // Game entity related actions
@@ -92,6 +98,42 @@ public class GameController {
         return "redirect:/games/" + game.getId();
     }
 
+    //Before starting
+
+    @PostMapping("/{gameId}/join")
+    public String joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userId = authentication.getName();
+            gameService.addGameUser(gameId, userId, accessCode);
+        } catch(Exception e) {
+            return "redirect:/games?error="+ e.getMessage();
+        } 
+        return "redirect:/games/{gameId}/play";
+
+    }
+
+    @PostMapping("/{gameId}/start")
+    public String startGame(@PathVariable("gameId") Long gameId){
+        Game game = gameService.findGame(gameId);
+        List<GameUser> users = game.getUsers();
+        Deck cards = Deck.of(cardService.findAll());
+        Map<GameUser, Deck> deal = cards.deal(users, game.getGamemode());
+        Deck centralDeck = cards.getLeftForCenter();
+        game.setCentralDeck(centralDeck);
+        gameService.saveGame(game);
+        users.forEach(user->{
+            user.setCards(deal.get(user));
+            gameUserService.saveGameUser(user);
+        });
+        return "redirect:play";
+    }
+
+
+   
+
+    // In-game related actions
+
     @GetMapping("/{gameId}/play")
     public ModelAndView playGame(@PathVariable("gameId") Long gameId) {
         ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
@@ -110,22 +152,7 @@ public class GameController {
 
     }
 
-    @PostMapping("/{gameId}/join")
-    public String joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode) {
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String userId = authentication.getName();
-            gameService.addGameUser(gameId, userId, accessCode);
-        } catch(Exception e) {
-            return "redirect:/games?error="+ e.getMessage();
-        } 
-        return "redirect:/games/{gameId}/play";
-
-    }
-
-
-    // In-game related actions
-
+    
     @PostMapping("/{gameId}/match")
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") String symbol ){
         System.out.println("MATCH");
