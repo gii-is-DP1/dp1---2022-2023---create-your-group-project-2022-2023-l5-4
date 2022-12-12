@@ -6,6 +6,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="tournaments">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<h2>Tournament:</h2>
 	<div class="container">
 		<br />
@@ -29,6 +30,8 @@
 			</tr>
 		</c:forEach>		
 	</table>
+
+	<p><button class="w3-button w3-purple" onclick="playTournament('${tournament.id}')">Start Tournament</button></p>
 	
     
 </petclinic:layout>

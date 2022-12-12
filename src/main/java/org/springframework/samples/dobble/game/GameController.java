@@ -94,7 +94,8 @@ public class GameController {
 		ModelAndView result=new ModelAndView("games/LobbyGame");
 		result.addObject("users", mazos);
         result.addObject("game", game);
-		return result;	
+		return result;
+
 
     }
 
