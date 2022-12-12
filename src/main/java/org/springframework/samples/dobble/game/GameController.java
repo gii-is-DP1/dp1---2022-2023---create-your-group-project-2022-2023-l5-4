@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.enterprise.inject.Model;
+import javax.resource.spi.IllegalStateException;
 import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
 
@@ -98,7 +99,9 @@ public class GameController {
         return "redirect:/games/" + game.getId();
     }
 
+
     //Before starting
+
 
     @PostMapping("/{gameId}/join")
     public String joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode) {
@@ -112,6 +115,7 @@ public class GameController {
         return "redirect:/games/{gameId}/play";
 
     }
+
 
     @PostMapping("/{gameId}/start")
     public String startGame(@PathVariable("gameId") Long gameId){
@@ -157,6 +161,15 @@ public class GameController {
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") String symbol ){
         System.out.println("MATCH");
         return "redirect:play?"+ symbol;    
-    }
+
+    //@GetMapping(path="/{gameId}/play/delete/{id}")
+	//public String DeleteUsersGame(@PathVariable("gameId") Long gameId, @PathVariable("id") String id, RedirectAttributes redirAttrs) {
+    //    try {
+      //      gameService.deleteUserGame(gameId, id);
+       // } catch(Exception e) {
+         //   return "redirect:/games?error="+ e.getMessage();
+        //} 
+        //return "redirect:/games/{gameId}/play";
+    //}
 
 }

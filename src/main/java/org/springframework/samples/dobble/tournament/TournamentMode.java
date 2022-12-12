@@ -1,11 +1,11 @@
+package org.springframework.samples.dobble.tournament;
 
-
-package org.springframework.samples.dobble.player;
 
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,16 +13,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.springframework.samples.dobble.tournament.Tournament;
-
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Entity	
 @Getter
 @Setter
-@Table(name="players")
-public class Player {
+@Table(name="tournamentmodes")
+public class TournamentMode {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -30,9 +29,9 @@ public class Player {
 	private long id;
 	
 	
-	@Column(nullable=false, unique=true)
+	@Column(nullable=false)
 	private String name;
 	
-	@ManyToMany(targetEntity=Tournament.class,fetch=FetchType.EAGER,mappedBy = "players")
+	@ManyToMany(targetEntity=Tournament.class,fetch=FetchType.EAGER,mappedBy = "tournamentmodes")
 	private List<Tournament> Tournaments;	
 }

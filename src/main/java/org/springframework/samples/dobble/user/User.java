@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.samples.dobble.game.Game;
+import org.springframework.samples.dobble.tournament.Tournament;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +45,19 @@ public class User{
 
 	@OneToMany(mappedBy = "winner")
 	private List<Game> wonGames;
+
+	
+    @ManyToMany(mappedBy = "users")
+	private List<Tournament> tournaments;
+
+	@ManyToOne
+	private Tournament currentTournament;
+	
+	@OneToMany(mappedBy = "owner")
+	private List<Tournament> ownedTournament;
+
+	@OneToMany(mappedBy = "winner")
+	private List<Tournament> wonTournamnets;
 
 	public String toString(){
 		return this.username;

@@ -22,10 +22,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.dobble.game.Game;
+
 import org.springframework.samples.dobble.game.GameRepository;
 import org.springframework.samples.dobble.game.GameUser;
 import org.springframework.samples.dobble.game.GameUserPk;
 import org.springframework.samples.dobble.game.GameUserRepository;
+
+import org.springframework.samples.dobble.tournament.Tournament;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,6 +80,27 @@ public class UserService {
 		userRepository.save(user);
 
     }
+
+	@Transactional
+    public void setCurrentTournament(User user, Tournament tournament) {
+		Tournament currentTournament= user.getCurrentTournament();
+		if (currentTournament!=null && !currentTournament.isFinished()){
+			currentTournament.removeUser(user);
+		}
+		user.setCurrentTournament(tournament);
+		userRepository.save(user);
+
+    }
+
+	public Optional<User> findUsername(String username) {
+		return userRepository.findById(username);
+	}
+
+	@Transactional(readOnly = true)
+	public Iterable<User> findAll() {
+		return userRepository.findAll();
+	}
+
 
 	
 
