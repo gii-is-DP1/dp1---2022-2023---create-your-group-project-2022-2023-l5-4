@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SymbolRepository extends CrudRepository<Symbol,Long> {
 
-	Symbol findByName(String nombre);
+
 
 }

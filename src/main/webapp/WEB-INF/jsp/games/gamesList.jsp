@@ -26,11 +26,11 @@
             New Game
         </a>
     </div>
-    <table id="games-table"  >
+    <table id="games-list"  >
         <tr>
             <td>
                 
-                <table id="games-table-head" class="table">
+                <table id="games-list-head" class="table">
                 <thead>
                     <tr>
                         <th>ID<span onclick="sortTable(0)" class="glyphicon glyphicon-sort"></span></th>
@@ -47,8 +47,8 @@
         </tr>
         <tr>
             <td>
-                <div id="games-table-body-div">
-                <table id="games-table-body" class="table">
+                <div id="games-list-body-div">
+                <table id="games-list-body" class="table">
                 <tbody>
             
                     <c:forEach items="${games}" var="game">
@@ -147,7 +147,7 @@
 
     function sortTable(n) {
   var table, rows, switching, i, x,x0,x1, y,y0,y1, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("games-table-body");
+  table = document.getElementById("games-list-body");
   switching = true;
   //Set the sorting direction to ascending:
   dir = "asc"; 

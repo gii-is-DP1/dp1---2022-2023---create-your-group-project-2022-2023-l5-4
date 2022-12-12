@@ -1,8 +1,8 @@
-#games-table *::-webkit-scrollbar {
+#games-list *::-webkit-scrollbar {
     width: 5px;
   }
   
-#games-table{
+#games-list{
     border-radius: 20px;
     border: 4px solid @primary-color;
     font-family: cartoon-toy;
@@ -13,19 +13,19 @@
     background-color: @primary-color;
 }
 
-#games-table table {
+#games-list table {
     margin:0;
 }
-#games-table tbody {
+#games-list tbody {
     background-color: @dobble-white;
   }
   
-#games-table-body tbody > tr:hover > td {
+#games-list-body tbody > tr:hover > td {
     background-color: ~"@{primary-color}91";
     text-shadow: -2px -1px 0 white;
   }
 
-#games-table thead {
+#games-list thead {
     background-color: @primary-color;
     color:@secondary-color;
     border: 0px solid;
@@ -33,32 +33,32 @@
     vertical-align:bottom;
   }
 
-#games-table thead span{
+#games-list thead span{
     top:5px;
 }
 
-#games-table .glyphicon-lock{
+#games-list .glyphicon-lock{
     font-size: 15px;
 }
-#games-table .glyphicon-sort{
+#games-list .glyphicon-sort{
     text-shadow: none;
     color:#8a58d0;
     margin:10px;
     font-size: 15px;
 }
-#games-table .glyphicon-sort:hover{
+#games-list .glyphicon-sort:hover{
     color:white;
    
 }
 
-#games-table-head{
+#games-list-head{
     width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
     background-color: @primary-color;
 }
-#games-table-body-div{
+#games-list-body-div{
     overflow: auto;
     max-height: 400px;
     
@@ -107,7 +107,7 @@
 .access-modal-input{
     bottom:50%;
     border-radius: 5px;
-    font-family: cartoon-toy;
+   
     font-size: 18px;
 }
 
@@ -128,3 +128,4 @@
 .alert > * {
     margin: 5px;
 }
+

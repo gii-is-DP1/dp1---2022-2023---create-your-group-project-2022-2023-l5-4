@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -23,6 +24,7 @@ import org.springframework.samples.dobble.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,10 +52,9 @@ public class Game extends BaseEntity {
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "usergames", joinColumns = @JoinColumn(name = "gameId", nullable = false, table = "games"), inverseJoinColumns = @JoinColumn(name = "userId", nullable = false, table = "users"))
+    @OneToMany(mappedBy = "game")
     @Size(max = 6)
-    private Set<User> users;
+    private List<GameUser> users;
 
     @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.EAGER,mappedBy = "games")
 	private List<Tournament> Tournaments;	
@@ -101,20 +102,6 @@ public class Game extends BaseEntity {
 
     public Integer getNumUsers() {
         return this.users.size();
-    }
-
-    private Set<User> getUsersInternal() {
-        if (this.getUsers() == null)
-            setUsers(new HashSet<>());
-        return this.getUsers();
-    }
-
-    public void addUser(User user) {
-        this.getUsersInternal().add(user);
-    }
-
-    public void removeUser(User user) {
-        this.getUsersInternal().remove(user);
     }
 
     public boolean isFinished() {
