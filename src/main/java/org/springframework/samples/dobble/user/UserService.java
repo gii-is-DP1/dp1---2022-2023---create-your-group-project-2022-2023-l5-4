@@ -26,7 +26,7 @@ import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameRepository;
 import org.springframework.samples.dobble.game.GameUser;
 import org.springframework.samples.dobble.game.GameUserPk;
-import org.springframework.samples.dobble.game.GameUserRepository;
+import org.springframework.samples.dobble.game.GameUserService;
 
 import org.springframework.samples.dobble.tournament.Tournament;
 
@@ -43,12 +43,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private UserRepository userRepository;
-	private GameUserRepository gameUserRepository;
+	private GameUserService gameUserService;
 
 	@Autowired
-	public UserService(UserRepository userRepository, GameUserRepository gameUserRepository) {
+	public UserService(UserRepository userRepository, GameUserService gameUserService) {
 		this.userRepository = userRepository;
-		this.gameUserRepository = gameUserRepository;
+		this.gameUserService = gameUserService;
 	}
 
 	@Transactional
@@ -73,8 +73,8 @@ public class UserService {
     public void setCurrentGame(User user, Game game) {
 		Game currentGame = user.getCurrentGame();
 		if (currentGame!=null && !currentGame.isFinished()){
-			GameUser gameUser = gameUserRepository.findById(GameUserPk.of(user,currentGame)).orElse(null);
-			gameUserRepository.delete(gameUser);
+			GameUser gameUser = gameUserService.findGameUser(GameUserPk.of(user,currentGame));
+			gameUserService.delete(gameUser);
 		}
 		user.setCurrentGame(game);
 		userRepository.save(user);
