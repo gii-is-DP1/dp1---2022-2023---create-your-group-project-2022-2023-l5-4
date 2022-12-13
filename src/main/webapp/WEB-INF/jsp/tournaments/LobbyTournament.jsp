@@ -7,7 +7,11 @@
 
 <petclinic:layout pageName="tournaments">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<<<<<<< HEAD
+	<h2>Tournament players:</h2>
+=======
 	<h2>Tournament:</h2>
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 	<div class="container">
 		<br />
 		<c:if test="${message != null}">
@@ -26,12 +30,20 @@
 			<tr>
 				<td><c:out value="${u.username}"/></td>				
 				<td>
-					<a href="/users/edit/${u.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/tournaments/${tournament.id}/play/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
+					<a href="/users/edit/${u.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/tournaments/${tournament.id}/lobby/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
 			</tr>
 		</c:forEach>		
 	</table>
 
+<<<<<<< HEAD
+	<p>
+		<a href="http://localhost:8080/games/${game.id}/play">
+			<button class="w3-button w3-purple">Start Game</button>
+		</a>
+	</p>
+=======
 	<p><button class="w3-button w3-purple" onclick="playTournament('${tournament.id}')">Start Tournament</button></p>
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 	
     
 </petclinic:layout>

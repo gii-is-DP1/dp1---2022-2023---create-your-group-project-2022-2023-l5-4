@@ -99,16 +99,23 @@ public class GameController {
         return "redirect:/games/" + game.getId();
     }
 
+    @GetMapping("/{gameId}/play")
+    public ModelAndView playGame(@PathVariable("gameId") Long gameId) {
+        Game game = this.gameService.findGame(gameId);
+        Iterable<User> mazos=game.getUsers();
+		ModelAndView result=new ModelAndView("games/LobbyGame");
+		result.addObject("users", mazos);
+        result.addObject("game", game);
+		return result;	
 
-    //Before starting
-
+    }
 
     @PostMapping("/{gameId}/join")
-    public String joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode) {
+    public String joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode, RedirectAttributes redirAttrs) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
-            gameService.addGameUser(gameId, userId, accessCode);
+            gameService.addUserGame(gameId, userId, accessCode);
         } catch(Exception e) {
             return "redirect:/games?error="+ e.getMessage();
         } 
@@ -116,43 +123,14 @@ public class GameController {
 
     }
 
-
-    @PostMapping("/{gameId}/start")
-    public String startGame(@PathVariable("gameId") Long gameId){
-        Game game = gameService.findGame(gameId);
-        List<GameUser> users = game.getUsers();
-        Deck cards = Deck.of(cardService.findAll());
-        Map<GameUser, Deck> deal = cards.deal(users, game.getGamemode());
-        Deck centralDeck = cards.getLeftForCenter();
-        game.setCentralDeck(centralDeck);
-        gameService.saveGame(game);
-        users.forEach(user->{
-            user.setCards(deal.get(user));
-            gameUserService.saveGameUser(user);
-        });
-        return "redirect:play";
-    }
-
-
-   
-
-    // In-game related actions
-
-    @GetMapping("/{gameId}/play")
-    public ModelAndView playGame(@PathVariable("gameId") Long gameId) {
-        ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
-        Game game = this.gameService.findGame(gameId);
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User mainPlayer = userService.findUser(username);
-        List<GameUser> players = game.getUsers();
-        players.removeIf(player->player.getUser().equals(mainPlayer));
-        mav.addObject("mainPlayer", mainPlayer);
-        mav.addObject("players", players);
-        mav.addObject("game", game);
-        mav.addObject(game); 
-        return mav; 
+    @GetMapping(path="/{gameId}/play/delete/{id}")
+	public String DeleteUsersGame(@PathVariable("gameId") Long gameId, @PathVariable("id") String id, RedirectAttributes redirAttrs) {
+        try {
+            gameService.deleteUserGame(gameId, id);
+        } catch(Exception e) {
+            return "redirect:/games?error="+ e.getMessage();
+        } 
+        return "redirect:/games/{gameId}/play";
 
     }
 

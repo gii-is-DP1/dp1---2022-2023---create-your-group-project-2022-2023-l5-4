@@ -24,12 +24,20 @@
 		</tr>
 		 <c:forEach items="${users}" var="u">
 			<tr>
-				<td><c:out value="${u.username}"/></td>				
+				<td><c:out value="${u.user.username}"/></td>				
 				<td>
-					<a href="/users/edit/${u.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/games/${game.id}/play/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
+					<a href="/users/edit/${u.user.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/games/${game.id}/play/delete/${u.user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
 			</tr>
 		</c:forEach>		
 	</table>
+<<<<<<< HEAD
+	<p>
+		<a href="http://localhost:8080/games/${game.id}/play">
+			<button class="w3-button w3-purple">Start Game</button>
+		</a>
+	</p>
+=======
 	<p><button class="w3-button w3-purple" onclick="playGame('${game.id}')">Start Game</button></p>
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
     
 </petclinic:layout>

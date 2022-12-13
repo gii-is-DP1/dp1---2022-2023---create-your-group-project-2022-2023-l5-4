@@ -79,10 +79,8 @@ public class GameService {
 		if (!game.validAccessCode(accessCode)) throw new AuthException("Wrong Access Code");
 		
 		if (game.isFull()) throw new IllegalStateException("The game is already full");
-		
-		if (!game.hasStarted() && !game.getUsers().contains(gameUser)) {
-			System.out.println("ENTRA");
-			gameUserRepository.save(gameUser);
+		if (!game.hasStarted()) {
+			game.addUser(user);
 			userService.setCurrentGame(user, game);
 			gameRepository.save(game);
 		}
@@ -90,20 +88,22 @@ public class GameService {
 		
 	}
 
+	@Transactional
+	public void deleteUserGame(Long gameId, String username) throws AuthException, NullPointerException, IllegalStateException{
+		Game game = gameRepository.findById(gameId).orElse(null);
+		User user = userRepository.findById(username).orElse(null);
 
-//	@Transactional
-//	public void deleteUserGame(Long gameId, String username) throws AuthException, NullPointerException, IllegalStateException{
-//		Game game = gameRepository.findById(gameId).orElse(null);
-//		User user = userRepository.findById(username).orElse(null);
-//
-//		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
-//	
-//	if (!game.hasStarted()) {
-//		game.removeUser(user);
-//		userService.setCurrentGame(user, game);
-//  	gameRepository.save(game);
-// }	
-//}
+		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
+		
+		if (!game.hasStarted()) {
+			game.removeUser(user);
+			userService.setCurrentGame(user, game);
+			gameRepository.save(game);
+		}
 
+		
+	}
+
+	
 
 }

@@ -66,6 +66,8 @@ public class User{
 		return this.username;
 	}
 
+<<<<<<< HEAD
+=======
 	void addFriend(User user) {
         if (friends == null)
             friends = new ArrayList<>();
@@ -76,4 +78,5 @@ public class User{
         friends.remove(user);
     }
 
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 }

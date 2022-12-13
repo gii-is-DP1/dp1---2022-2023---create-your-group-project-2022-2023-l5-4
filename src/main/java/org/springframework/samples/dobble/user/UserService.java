@@ -23,17 +23,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.dobble.game.Game;
 
+<<<<<<< HEAD
+=======
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 import org.springframework.samples.dobble.game.GameRepository;
 import org.springframework.samples.dobble.game.GameUser;
 import org.springframework.samples.dobble.game.GameUserPk;
 import org.springframework.samples.dobble.game.GameUserRepository;
 
 import org.springframework.samples.dobble.tournament.Tournament;
+<<<<<<< HEAD
+
+=======
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -159,7 +166,6 @@ public class UserService {
     // }
 
 
-	
 	
 
 }
