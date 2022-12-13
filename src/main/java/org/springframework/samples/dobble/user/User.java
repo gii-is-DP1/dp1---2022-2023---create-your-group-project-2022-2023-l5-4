@@ -28,6 +28,9 @@ public class User{
 
 	public User(){}
 	
+	@ManyToMany(cascade = CascadeType.ALL)
+    private List<User> friends;
+	
 	@Id
 	String username;
 	
@@ -47,8 +50,6 @@ public class User{
 	@OneToMany(mappedBy = "winner")
 	private List<Game> wonGames;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-    private List<User> friends;
 	
     @ManyToMany(mappedBy = "users")
 	private List<Tournament> tournaments;
@@ -66,9 +67,7 @@ public class User{
 		return this.username;
 	}
 
-<<<<<<< HEAD
-=======
-	void addFriend(User user) {
+    public void addFriend(User user) {
         if (friends == null)
             friends = new ArrayList<>();
         friends.add(user);
@@ -78,5 +77,4 @@ public class User{
         friends.remove(user);
     }
 
->>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 }

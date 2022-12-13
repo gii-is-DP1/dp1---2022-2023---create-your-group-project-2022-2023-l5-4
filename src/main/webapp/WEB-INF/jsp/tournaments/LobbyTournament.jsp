@@ -7,11 +7,7 @@
 
 <petclinic:layout pageName="tournaments">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<<<<<<< HEAD
 	<h2>Tournament players:</h2>
-=======
-	<h2>Tournament:</h2>
->>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 	<div class="container">
 		<br />
 		<c:if test="${message != null}">
@@ -35,15 +31,11 @@
 		</c:forEach>		
 	</table>
 
-<<<<<<< HEAD
 	<p>
 		<a href="http://localhost:8080/games/${game.id}/play">
 			<button class="w3-button w3-purple">Start Game</button>
 		</a>
 	</p>
-=======
-	<p><button class="w3-button w3-purple" onclick="playTournament('${tournament.id}')">Start Tournament</button></p>
->>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 	
     
 </petclinic:layout>
