@@ -17,7 +17,7 @@ public class UserServiceTest {
         User u2=new User();
         u2.setUsername("Fernan10");
         u2.setPassword("Dp1test");
-        UserService userService=new UserService(srepo);
+        UserService userService=new UserService(srepo, null);
         try{
             userService.saveUser(u2);
         }catch(Exception e){
