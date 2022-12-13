@@ -21,7 +21,7 @@ public class CreateGameTests extends GameServiceTests{
 
      @Test
      public void createValidGame(){
-         GameService gameService = new GameService(gameRepository, null, null);
+         GameService gameService = new GameService(gameRepository, null, null, null);
          Game game= new Game();
          //Owner can't be Null and must have an username
          User owner = new User();
