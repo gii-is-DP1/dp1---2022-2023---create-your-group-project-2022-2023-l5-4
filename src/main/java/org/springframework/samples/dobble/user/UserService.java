@@ -23,13 +23,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.dobble.game.Game;
 
+<<<<<<< HEAD
+=======
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 import org.springframework.samples.dobble.game.GameRepository;
 import org.springframework.samples.dobble.game.GameUser;
 import org.springframework.samples.dobble.game.GameUserPk;
 import org.springframework.samples.dobble.game.GameUserRepository;
 
 import org.springframework.samples.dobble.tournament.Tournament;
+<<<<<<< HEAD
 
+=======
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -101,7 +112,64 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+    @Transactional(readOnly = true)
+    public User getLoggedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails ud = null;
+        if (principal instanceof UserDetails) {
+            ud = ((UserDetails) principal);
+        }
+        if (ud != null) {
+            return findUser(ud.getUsername());
+        } else {
+            return new User();
+        }
+    }
+
+	@Transactional
+    public List<User> getFriends() {
+        return getLoggedUser().getFriends();
+    }
+
+	@Transactional
+    public Page<User> getFriendsPaged(Pageable page) {
+        Integer limit = (int) page.getOffset() + page.getPageSize();
+        limit = limit > getFriends().size() ? getFriends().size() : limit;
+        return new PageImpl<>(getLoggedUser().getFriends().subList((int) page.getOffset(), limit), page, getLoggedUser().getFriends().size());
+
+    }
+
+	@Transactional
+    public void addFriend(String username) {
+        User user = getLoggedUser();
+        user.addFriend(findUser(username));
+        if(!getLoggedUser().getFriends().contains(findUser(username))){
+            user.addFriend(findUser(username));
+        }
+        saveUser(user);
+    }
+
+    @Transactional
+    public void removeFriend(String username) {
+        User user = getLoggedUser();
+        User friend = findUser(username);
+        if (user.getFriends().contains(friend)) {
+            user.removeFriend(friend);
+            saveUser(user);
+        }
+    }
+
+    // @Transactional
+    // public void addUserToGame(User user, Game game) {
+    //     user.setGame(game);
+    //     saveUser(user);
+    // }
+
 
 	
 
 }
+
+	
+
+

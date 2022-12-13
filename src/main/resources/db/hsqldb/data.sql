@@ -156,7 +156,10 @@ INSERT INTO gamemodes(id, name) VALUES
 (3, 'The Poisoned Gift');
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 -- Initial users, not needed but useful for testing --
 
 INSERT INTO USERS(username, password, enabled) VALUES 
@@ -214,6 +217,26 @@ INSERT INTO gameusers(user_id,game_id) VALUES
 ('User2',8),
 ('User1',9),
 ('User0',10);
+<<<<<<< HEAD
+=======
+
+
+INSERT INTO tournamentModes(id, name) VALUES (1, 'The Well');
+INSERT INTO tournamentModes(id, name) VALUES (2, 'The Tower');
+INSERT INTO tournamentModes(id, name) VALUES (3, 'The Poisoned Gift');
+
+INSERT INTO tournamentModes(id, name) VALUES (4, 'The Well');
+INSERT INTO tournamentModes(id, name) VALUES (5, 'The Tower');
+INSERT INTO tournamentModes(id, name) VALUES (6, 'The Poisoned Gift');
+
+INSERT INTO tournamentModes(id, name) VALUES (7, 'The Well');
+INSERT INTO tournamentModes(id, name) VALUES (8, 'The Tower');
+INSERT INTO tournamentModes(id, name) VALUES (9, 'The Poisoned Gift');
+
+INSERT INTO tournamentModes(id, name) VALUES (10, 'The Well');
+INSERT INTO tournamentModes(id, name) VALUES (11, 'The Tower');
+INSERT INTO tournamentModes(id, name) VALUES (12, 'The Poisoned Gift');
+>>>>>>> 4473549f5febb4ff4e17003273780c7e24408717
 
 
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (1, null, 4, 'LOBBY', 'User17', null);
