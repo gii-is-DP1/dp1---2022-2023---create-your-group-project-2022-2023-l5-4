@@ -28,8 +28,5 @@ public class SymbolService {
 	public Optional<Symbol> findById(long id) {
 		return symbolRepo.findById(id);
 	}
-	@Transactional(readOnly = true)
-	public Symbol findByNombre(String nombre) {
-		return symbolRepo.findByName(nombre);
-	}
+	
 }

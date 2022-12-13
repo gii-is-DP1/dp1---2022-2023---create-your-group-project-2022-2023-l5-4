@@ -11,10 +11,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import org.springframework.samples.dobble.model.BaseEntity;
 import org.springframework.samples.dobble.symbol.Symbol;
 
 
@@ -25,18 +28,15 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name="cards")
-public class Card {
+public class Card extends BaseEntity{
 
-    @Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false, precision=10)
-    private long id;
 
-    private String name;
-
-    @Size(max=8)
+    @Size(min=8,max=8)
     @ManyToMany(fetch=FetchType.EAGER)
-    @JoinTable(name = "symbolcard", joinColumns = @JoinColumn(name = "cardId", nullable = false, table = "cards"), inverseJoinColumns = @JoinColumn(name = "symbolId", nullable = false, table = "symbols"))
+    @JoinTable(name="cardsymbols",
+    joinColumns = @JoinColumn(name="card_id"),
+    inverseJoinColumns = @JoinColumn(name="symbol_id"))
+
 	private List<Symbol> symbols;
     
 }

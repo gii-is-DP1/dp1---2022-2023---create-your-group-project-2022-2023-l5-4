@@ -34,8 +34,8 @@
                 <thead>
                     <tr>
                         <th>ID<span onclick="sortTable(0)" class="glyphicon glyphicon-sort"></span></th>
-                        <th>Tournamentmode<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
-                        <th>Owner</th>
+                        <th style="width:-150px">Num. Games<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="width:150px">Owner</th>
                         <th><span class="glyphicon glyphicon-lock"></span>
                             <span onclick="sortTable(3)" class="glyphicon glyphicon-sort"></span></th>
                         <th></th>
@@ -50,24 +50,19 @@
                 <div id="tournaments-table-body-div">
                 <table id="tournaments-table-body" class="table">
                 <tbody>
-            
-                    <c:forEach items="${tournaments}" var="tournament">
+                    <c:forEach items="${tournaments}" var="tournament" varStatus="status">
                         <spring:url value="/tournaments/{tournamentId}" var="tournamentUrl">
                             <spring:param name="tournamentId" value="${tournament.id}"/>
                         </spring:url>
-                        
-                           
                             <tr onclick="joinTournament('${tournament.id}','${tournament.isPrivate()}')">
                                 <td>
-                                     <c:out value="${tournament.id}"/>
+                                     <c:out value="${tournament.id}"/> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                 </td>
                                 <td>
-                                    <c:forEach items="${tournament.tournamentmodes}" var="p">
-                                        <c:out value="${p.name}"/>,
-                                    </c:forEach>
-                               </td>
+                                    <c:out value="${numpartidas[status.index]}"/> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                </td>
                                 <td>
-                                    <c:out value="${tournament.owner}"/>
+                                    <c:out value="${tournament.owner}"></c:out> 
                                 </td>
                                 <td>
                                     <c:if test="${tournament.isPrivate()}">  
