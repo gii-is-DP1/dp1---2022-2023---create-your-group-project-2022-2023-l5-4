@@ -20,7 +20,7 @@
 <div class="row">
     <style>
         body {
-            background-image: url("/resources/images/fondo.jpg");
+            background-image: url("/resources/images/background.png");
         }
     </style>
 </div>
