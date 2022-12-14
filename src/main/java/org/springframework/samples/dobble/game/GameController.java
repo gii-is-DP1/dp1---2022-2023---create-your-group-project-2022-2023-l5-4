@@ -114,22 +114,36 @@ public class GameController {
         return "redirect:/games/{gameId}/play";
 
     }
+  
+    @GetMapping(path = "/{gameId}/play/delete/{userId}")
+    public String deleteUsersGame(@PathVariable("gameId") Long gameId,
+            @PathVariable("userId") String userId, RedirectAttributes redirAttrs) {
+        try {
+            gameService.deleteGameUser(gameId, userId);
+        } catch (Exception e) {
+            return "redirect:/games?error=" + e.getMessage();
+        }
+        return "redirect:/games/{gameId}/play";
+    }
 
-    @PostMapping("/{gameId}/start")
+    @GetMapping("/{gameId}/start")
     public String startGame(@PathVariable("gameId") Long gameId) {
         Game game = gameService.findGame(gameId);
         List<GameUser> users = game.getUsers();
         Deck cards = Deck.of(cardService.findAll());
+        
         Map<GameUser, Deck> deal = cards.deal(users, game.getGamemode());
         Deck centralDeck = cards.getLeftForCenter();
         game.setCentralDeck(centralDeck);
-        gameService.saveGame(game);
         users.forEach(user -> {
             user.setCards(deal.get(user));
             gameUserService.saveGameUser(user);
         });
+        game.setState(GameState.STARTED);
+        gameService.saveGame(game);
         return "redirect:play";
     }
+
 
     // In-game related actions
 
@@ -137,12 +151,12 @@ public class GameController {
     public ModelAndView playGame(@PathVariable("gameId") Long gameId) {
         ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
         Game game = this.gameService.findGame(gameId);
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User mainPlayer = userService.findUser(username);
+        User mainUser = userService.findUser(username);
+        GameUser mainPlayer = gameUserService.findGameUser(GameUserPk.of(mainUser , game));
         List<GameUser> players = game.getUsers();
-        players.removeIf(player -> player.getUser().equals(mainPlayer));
+        players.removeIf(player -> player.equals(mainPlayer));
         mav.addObject("mainPlayer", mainPlayer);
         mav.addObject("players", players);
         mav.addObject("game", game);
@@ -154,18 +168,11 @@ public class GameController {
     @PostMapping("/{gameId}/match")
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") String symbol) {
         System.out.println("MATCH");
+        Game game = gameService.findGame(gameId);
+        game.getCentralDeck().remove(0);
+        gameService.saveGame(game);
         return "redirect:play?" + symbol;
     }
 
-    @GetMapping(path = "/{gameId}/play/delete/{userId}")
-    public String deleteUsersGame(@PathVariable("gameId") Long gameId,
-            @PathVariable("userId") String userId, RedirectAttributes redirAttrs) {
-        try {
-            gameService.deleteGameUser(gameId, userId);
-        } catch (Exception e) {
-            return "redirect:/games?error=" + e.getMessage();
-        }
-        return "redirect:/games/{gameId}/play";
-    }
 
 }

@@ -1,5 +1,8 @@
 <%@ attribute name="className" required="false" rtexprvalue="true"
               description="class" %>
+<%@ attribute name="value" type="java.lang.Object" required="true" rtexprvalue="true"
+              description="card object" %>
+                            
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
   <style>
@@ -90,42 +93,42 @@ img {object-fit: contain}
   <div class="dobble-card-layout">
     <div class="dobble-card-symbol-container symbol0">
       
-          <dobble:symbol name="no-entry-sign" />
+          <dobble:symbol name="no-entry-sign" symbol="${value.symbols[0]}"/>
       
     </div>
     <div class="dobble-card-symbol-container symbol1">
       
-          <dobble:symbol name="cheese"/>
+          <dobble:symbol name="cheese" symbol="${value.symbols[1]}"/>
       
     </div>
 	<div class="dobble-card-symbol-container symbol2">
 
-             <dobble:symbol name="yin-and-yang"/>
+             <dobble:symbol name="yin-and-yang" symbol="${value.symbols[2]}"/>
 
     </div>
 	<div class="dobble-card-symbol-container symbol3">
             
-            <dobble:symbol name="daisy-flower"/>
+            <dobble:symbol name="daisy-flower" symbol="${value.symbols[3]}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol4">
             
-            <dobble:symbol name="light-bulb"/>
+            <dobble:symbol name="light-bulb" symbol="${value.symbols[4]}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol5">
 	        
-                <dobble:symbol name="apple"/>
+                <dobble:symbol name="apple" symbol="${value.symbols[5]}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol6">
 	        
-               <dobble:symbol name="hammer"/>
+               <dobble:symbol name="hammer" symbol="${value.symbols[6]}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol7">
 	        
-            <dobble:symbol name="key"/>
+            <dobble:symbol name="key" symbol="${value.symbols[7]}"/>
             
     </div>
 	</div>
@@ -141,7 +144,6 @@ img {object-fit: contain}
       const size = 60+40*Math.random()
       const x = 50-size/2 + (50-size/2) *Math.random()*(Math.round(Math.random()) * 2 - 1)
       const y = 50-size/2 + Math.random()*Math.sqrt(Math.abs((100-size)^2-(x-50+size/2)^2))*(Math.round(Math.random()) * 2 - 1)
-      console.log(y)
       const angle = 360*Math.random()
      
       symbol.style.height = size+"%"

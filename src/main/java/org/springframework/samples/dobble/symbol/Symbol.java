@@ -2,8 +2,11 @@
 
 package org.springframework.samples.dobble.symbol;
 
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.ws.rs.DefaultValue;
@@ -38,7 +42,11 @@ public class Symbol extends BaseEntity {
 	@NotNull
 	private List<SymbolVariant> symbolVariants;
 
-
 	@ManyToMany(targetEntity=Card.class,fetch=FetchType.EAGER,mappedBy = "symbols")
-	private List<Card> Cards;	
+	private List<Card> cards;
+
+	public SymbolVariant getVariant(Long symbolSetId){
+		return symbolVariants.stream().filter(variant->variant.getSymbolSet().getId()==symbolSetId).findFirst().get();
+	}
+	
 }

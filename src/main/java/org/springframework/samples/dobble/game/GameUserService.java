@@ -15,8 +15,6 @@ public class GameUserService {
 	private GameUserRepository gameUserRepository;
 	
 
-
-
 	@Autowired
 	public GameUserService(GameUserRepository gameUserRepository) {
 		this.gameUserRepository = gameUserRepository;

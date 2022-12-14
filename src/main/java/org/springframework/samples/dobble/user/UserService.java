@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.dobble.game.Game;
 
-import org.springframework.samples.dobble.game.GameRepository;
+
 import org.springframework.samples.dobble.game.GameUser;
 import org.springframework.samples.dobble.game.GameUserPk;
 import org.springframework.samples.dobble.game.GameUserService;
@@ -33,12 +33,6 @@ import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Mostly used as a facade for all Petclinic controllers Also a placeholder
- * for @Transactional and @Cacheable annotations
- *
- * @author Michael Isvy
- */
 @Service
 public class UserService {
 
@@ -46,10 +40,14 @@ public class UserService {
 	private GameUserService gameUserService;
 
 	@Autowired
-	public UserService(UserRepository userRepository, GameUserService gameUserService) {
+	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
-		this.gameUserService = gameUserService;
 	}
+
+	@Autowired
+    public void setMissionService( GameUserService gameUserService) {
+        this.gameUserService = gameUserService;
+    }
 
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {

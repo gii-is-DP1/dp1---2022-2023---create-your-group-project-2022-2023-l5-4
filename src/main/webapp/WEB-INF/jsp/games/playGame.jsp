@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
+
 <style>
     * {
         margin: 0;
@@ -148,7 +149,7 @@
         <div id="player-wrapper-top" class="player-wrapper top">
             <div class="player player-top">
                 <c:if test="${players[4]!=null}">
-                    <dobble:card className="card"/>
+                    <dobble:card className="card" value="${players[4].cards[0]}"/>
                     <p class="player-name">
                         <c:out value="${players[4].user.usernam.usere}"/>
                     </p>
@@ -158,7 +159,7 @@
         <div id="player-wrapper-left" class="player-wrapper">
             <div class="player player-left">
                 <c:if test="${players[0]!=null}">
-                    <dobble:card className="card"/>
+                    <dobble:card className="card" value="${players[0].cards[0]}"/>
                     <p class="player-name">
                         <c:out value="${players[0].user.username}"/>
                     </p>
@@ -166,7 +167,7 @@
             </div>
             <div class="player player-left">
                 <c:if test="${players[2]!=null}">
-                    <dobble:card className="card"/>
+                    <dobble:card className="card" value="${players[2].cards[0]}"/>
                     <p class="player-name">
                         <c:out value="${players[2].user.username}"/>
                     </p>
@@ -176,7 +177,7 @@
         <div id="player-wrapper-right" class="player-wrapper">
             <div class="player player-right">
                 <c:if test="${players[1]!=null}">
-                    <dobble:card className="card"/>
+                    <dobble:card className="card" value="${players[1].cards[0]}"/>
                     <p class="player-name">
                         <c:out value="${players[1].user.username}"/>
                     </p>
@@ -184,7 +185,7 @@
             </div>
             <div class="player player-right">
                 <c:if test="${players[3]!=null}">
-                    <dobble:card className="card"/>
+                    <dobble:card className="card" value="${players[3].cards[0]}"/>
                     <p class="player-name">
                         <c:out value="${players[3].user.username}"/>
                     </p>
@@ -193,17 +194,18 @@
         </div>
         <div class="player-wrapper" id="central-deck-wrapper">
             <div class="player central-deck">
-                    <dobble:card className="card"/>
+                    <dobble:card className="card" value="${game.centralDeck[0]}"/>
             </div>
         </div>
         <div id="player-wrapper-bottom" class="player-wrapper">
             <div id="main-player" class="player">
                 <c:if test="${mainPlayer!=null}">
-                    <dobble:card className="card"/>
+                    <dobble:card className="card" value="${mainPlayer.cards[0]}"/>
                     <p class="player-name">
-                        <c:out value="${mainPlayer.username}"/>
+                        <c:out value="${mainPlayer.user.username}"/>
                     </p>
-                </c:if>
+                </c:if> 
+                
             </div>
 
         </div>

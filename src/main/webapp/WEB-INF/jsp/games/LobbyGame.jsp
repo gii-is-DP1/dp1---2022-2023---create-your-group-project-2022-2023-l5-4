@@ -22,11 +22,11 @@
 			<th>Users</th>
 			<th>Actions</th>			
 		</tr>
-		 <c:forEach items="${users}" var="u">
+		 <c:forEach items="${user}" var="user">
 			<tr>
-				<td><c:out value="${u.username}"/></td>				
+				<td><c:out value="${user.username}"/></td>				
 				<td>
-					<a href="/users/edit/${u.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/games/${game.id}/play/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
+					<a href="/users/edit/${user.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/games/${game.id}/play/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
 			</tr>
 		</c:forEach>		
 	</table>

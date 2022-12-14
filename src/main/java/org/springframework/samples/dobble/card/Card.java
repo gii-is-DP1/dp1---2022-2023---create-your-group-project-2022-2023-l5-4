@@ -15,14 +15,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.dobble.model.BaseEntity;
 import org.springframework.samples.dobble.symbol.Symbol;
-
+import org.springframework.samples.dobble.symbol.SymbolVariant;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -38,6 +40,7 @@ public class Card extends BaseEntity{
     inverseJoinColumns = @JoinColumn(name="symbol_id"))
 
 	private List<Symbol> symbols;
+
     
 }
 

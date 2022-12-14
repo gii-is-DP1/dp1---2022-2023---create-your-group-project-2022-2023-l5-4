@@ -1,5 +1,6 @@
 package org.springframework.samples.dobble.game;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.dobble.card.Card;
@@ -50,7 +52,7 @@ public class GameUser {
     
     @ManyToMany
     List<Card> cards;
-
+    
     public String toString(){
         return user.toString();
     }
