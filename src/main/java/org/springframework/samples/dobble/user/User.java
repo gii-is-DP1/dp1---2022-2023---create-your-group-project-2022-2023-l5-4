@@ -1,5 +1,6 @@
 package org.springframework.samples.dobble.user;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +26,9 @@ public class User{
 
 	public User(){}
 	
+	@ManyToMany(cascade = CascadeType.ALL)
+    private List<User> friends;
+	
 	@Id
 	String username;
 	
@@ -34,12 +38,6 @@ public class User{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;
-
-	@ManyToMany(mappedBy = "users")
-	private List<Tournament> tournaments;
-	
-    @ManyToMany(mappedBy = "users")
-	private List<Game> games;
 
 	@ManyToOne
 	private Game currentGame;
@@ -53,7 +51,28 @@ public class User{
 	@OneToMany(mappedBy = "winner")
 	private List<Game> wonGames;
 
+	
+    @ManyToMany(mappedBy = "users")
+	private List<Tournament> tournaments;
+	
+	@OneToMany(mappedBy = "owner")
+	private List<Tournament> ownedTournament;
+
+	@OneToMany(mappedBy = "winner")
+	private List<Tournament> wonTournamnets;
+
 	public String toString(){
 		return this.username;
 	}
+
+    public void addFriend(User user) {
+        if (friends == null)
+            friends = new ArrayList<>();
+        friends.add(user);
+    }
+
+    public void removeFriend(User user) {
+        friends.remove(user);
+    }
+
 }

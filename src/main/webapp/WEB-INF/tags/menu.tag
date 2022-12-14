@@ -34,6 +34,12 @@
 					<span>Find games</span>
 				</dobble:menuItem>
 
+				<dobble:menuItem active="${name eq 'friends'}" url="/friends"
+					title="find games">
+					<span class="glyphicon glyphicon-apple" aria-hidden="true"></span>
+					<span>Friends</span>
+				</dobble:menuItem>
+
 
 				<dobble:menuItem active="${name eq 'tournaments'}" url="/tournaments"
 					title="tournaments">
