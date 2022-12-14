@@ -14,30 +14,17 @@
         <thead>
         <tr>
             <th style="width: 200px;">Username</th>
-            <th style="width: 200px;">Authority</th>
-            <th style="width: 200px">Events</th>
+            <th style="width: 200px">Actions</th>
 
         </tr>
         </thead>
         <tbody>
         <c:forEach items="${friendsList}" var="localUser">
             <tr>
+                <td><c:out value="${localUser.username}"/></td>
                 <td>
-                    <spring:url value="/user/{userId}" var="userUrl">
-                        <spring:param name="username" value="${localUser.username}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(userUrl)}"><c:out value="${localUser.username}"/></a>
-                </td>
-                <td>
-                    <c:out value="${localUser.authority}"/>
-                </td>
-                <td>
-                    <spring:url value="/friends/remove/{username}" var="removeFriend">
-                        <spring:param name="Username" value="${localUser.Username}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(removeFriend)}" class="btn">Remove</a>
-                
-                </td>
+					<a href="/friends/remove/${localUser.username}"><span class="glyphicon glyphicon-minus-sign" aria-hden="true"></span></a> 
+				</td>
             </tr>
         </c:forEach>
         </tbody>
