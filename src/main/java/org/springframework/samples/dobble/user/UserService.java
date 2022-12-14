@@ -127,11 +127,13 @@ public class UserService {
 	@Transactional
     public void addFriend(String username) {
         User user = getLoggedUser();
-        user.addFriend(findUser(username));
+		User friend = findUser(username);
         if(!getLoggedUser().getFriends().contains(findUser(username))){
             user.addFriend(findUser(username));
+			friend.addFriend(findUser(user.username));
         }
         saveUser(user);
+		saveUser(friend);
     }
 
     @Transactional
