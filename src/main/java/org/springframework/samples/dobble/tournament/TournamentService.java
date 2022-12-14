@@ -6,6 +6,8 @@ import java.util.NoSuchElementException;
 import javax.resource.spi.IllegalStateException;
 import javax.security.auth.message.AuthException;
 
+import javax.security.auth.message.AuthException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.dobble.game.Game;
