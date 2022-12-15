@@ -140,6 +140,7 @@
     }
 </style>
 
+<dobble:htmlHeader/>
 <div class="game">
     <span class="timer">15:32</span>
     <div class="scoreboard">
@@ -149,9 +150,9 @@
         <div id="player-wrapper-top" class="player-wrapper top">
             <div class="player player-top">
                 <c:if test="${players[4]!=null}">
-                    <dobble:card className="card" value="${players[4].cards[0]}"/>
+                    <dobble:card className="card" value="${players[4]}"/>
                     <p class="player-name">
-                        <c:out value="${players[4].user.usernam.usere}"/>
+                        <c:out value="${players[4].user.username.user}"/>
                     </p>
                 </c:if>
             </div>
@@ -159,7 +160,7 @@
         <div id="player-wrapper-left" class="player-wrapper">
             <div class="player player-left">
                 <c:if test="${players[0]!=null}">
-                    <dobble:card className="card" value="${players[0].cards[0]}"/>
+                    <dobble:card className="card" value="${players[0]}"/>
                     <p class="player-name">
                         <c:out value="${players[0].user.username}"/>
                     </p>
@@ -167,7 +168,7 @@
             </div>
             <div class="player player-left">
                 <c:if test="${players[2]!=null}">
-                    <dobble:card className="card" value="${players[2].cards[0]}"/>
+                    <dobble:card className="card" value="${players[2]}"/>
                     <p class="player-name">
                         <c:out value="${players[2].user.username}"/>
                     </p>
@@ -177,7 +178,7 @@
         <div id="player-wrapper-right" class="player-wrapper">
             <div class="player player-right">
                 <c:if test="${players[1]!=null}">
-                    <dobble:card className="card" value="${players[1].cards[0]}"/>
+                    <dobble:card className="card" value="${players[1]}"/>
                     <p class="player-name">
                         <c:out value="${players[1].user.username}"/>
                     </p>
@@ -185,7 +186,7 @@
             </div>
             <div class="player player-right">
                 <c:if test="${players[3]!=null}">
-                    <dobble:card className="card" value="${players[3].cards[0]}"/>
+                    <dobble:card className="card" value="${players[3]}"/>
                     <p class="player-name">
                         <c:out value="${players[3].user.username}"/>
                     </p>
@@ -194,13 +195,13 @@
         </div>
         <div class="player-wrapper" id="central-deck-wrapper">
             <div class="player central-deck">
-                    <dobble:card className="card" value="${game.centralDeck[0]}"/>
+                    <dobble:card className="card" value="${game}" centralDeck="true"/>
             </div>
         </div>
         <div id="player-wrapper-bottom" class="player-wrapper">
             <div id="main-player" class="player">
                 <c:if test="${mainPlayer!=null}">
-                    <dobble:card className="card" value="${mainPlayer.cards[0]}"/>
+                    <dobble:card className="card" value="${mainPlayer}"/>
                     <p class="player-name">
                         <c:out value="${mainPlayer.user.username}"/>
                     </p>
@@ -216,3 +217,10 @@
         console.log("${player}".cards)
     </script>
 </c:forEach>
+
+
+<script>
+    
+
+
+</script>

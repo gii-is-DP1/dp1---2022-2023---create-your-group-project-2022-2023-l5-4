@@ -91,19 +91,6 @@ public class Game extends BaseEntity {
         return accessCode.toString().hashCode();
     }
 
-    public void removeUser(GameUser user) {
-        this.getUsers().remove(user);
-    }
-
-    private List<GameUser> getGameUserInternal() {
-        if (this.getUsers() == null)
-            setUsers(new ArrayList<GameUser>());
-        return this.getUsers();
-    }
-
-    public void addUser(GameUser user) {
-        this.getGameUserInternal().add(user);
-    }
 
     public void setAccessCode(String accessCode) {
 
@@ -133,4 +120,11 @@ public class Game extends BaseEntity {
         return this.getUsers().size()==this.maxPlayers;
     }
 
+    public Card getCurrentCard(){
+        return centralDeck.get(centralDeck.size()-1);
+    }
+
+    public void nextCard(){
+        centralDeck.remove(getCurrentCard());
+    }
 }

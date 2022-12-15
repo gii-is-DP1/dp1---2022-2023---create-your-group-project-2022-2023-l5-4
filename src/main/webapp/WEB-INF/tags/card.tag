@@ -2,8 +2,13 @@
               description="class" %>
 <%@ attribute name="value" type="java.lang.Object" required="true" rtexprvalue="true"
               description="card object" %>
+<%@ attribute name="centralDeck" type="java.lang.Object" required="false" rtexprvalue="true"
+              description="" %>
+<%@ attribute name="listing" type="java.lang.Object" required="false" rtexprvalue="true"
+              description="" %>
                             
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
   <style>
     /* add your styles here */
@@ -88,47 +93,48 @@ img {object-fit: contain}
   </style>
 
 
+<c:set value="${value.getCurrentCard()}" var="card"/>
 <div class="${className}">
   <div class="dobble-card">
   <div class="dobble-card-layout">
     <div class="dobble-card-symbol-container symbol0">
       
-          <dobble:symbol name="no-entry-sign" symbol="${value.symbols[0]}"/>
+          <dobble:symbol id="symbol0" symbol="${card.symbols[0]}" listing="${listing}"/>
       
     </div>
     <div class="dobble-card-symbol-container symbol1">
       
-          <dobble:symbol name="cheese" symbol="${value.symbols[1]}"/>
+          <dobble:symbol id="symbol1" symbol="${card.symbols[1]}" listing="${listing}"/>
       
     </div>
 	<div class="dobble-card-symbol-container symbol2">
 
-             <dobble:symbol name="yin-and-yang" symbol="${value.symbols[2]}"/>
+             <dobble:symbol id="symbol2" symbol="${card.symbols[2]}" listing="${listing}"/>
 
     </div>
 	<div class="dobble-card-symbol-container symbol3">
             
-            <dobble:symbol name="daisy-flower" symbol="${value.symbols[3]}"/>
+            <dobble:symbol id="symbol3" symbol="${card.symbols[3]}" listing="${listing}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol4">
             
-            <dobble:symbol name="light-bulb" symbol="${value.symbols[4]}"/>
+            <dobble:symbol id="symbol4" symbol="${card.symbols[4]}" listing="${listing}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol5">
 	        
-                <dobble:symbol name="apple" symbol="${value.symbols[5]}"/>
+                <dobble:symbol id="symbol5" symbol="${card.symbols[5]}" listing="${listing}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol6">
 	        
-               <dobble:symbol name="hammer" symbol="${value.symbols[6]}"/>
+               <dobble:symbol id="symbol6" symbol="${card.symbols[6]}" listing="${listing}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol7">
 	        
-            <dobble:symbol name="key" symbol="${value.symbols[7]}"/>
+            <dobble:symbol id="symbol7" symbol="${card.symbols[7]}" listing="${listing}"/>
             
     </div>
 	</div>
@@ -137,15 +143,38 @@ img {object-fit: contain}
 </div>
 <script>
 
-
+  hashCode = (s) => {
+         let hash = 0,
+            i, chr;
+         if (s.length === 0) return hash;
+         for (i = 0; i < s.length; i++) {
+            chr = s.charCodeAt(i);
+            hash = ((hash << 5) - hash) + chr;
+            hash |= 0; // Convert to 32bit integer
+            }
+         return hash
+      }
    symbols = document.querySelectorAll(".symbol")
     
    symbols.forEach(symbol => {
-      const size = 60+40*Math.random()
-      const x = 50-size/2 + (50-size/2) *Math.random()*(Math.round(Math.random()) * 2 - 1)
-      const y = 50-size/2 + Math.random()*Math.sqrt(Math.abs((100-size)^2-(x-50+size/2)^2))*(Math.round(Math.random()) * 2 - 1)
-      const angle = 360*Math.random()
+      let i = symbol.attributes.id.value.replace("symbol","")
+      let r = "${card.getId()}"
+      let s = symbol.attributes.name.value
+      let u = "${listing || centralDeck ? 'unnamed' : value.user.username}"
      
+
+      let hashI = hashCode(i)
+      let hashS = hashCode(s)
+      let hashU = hashCode(u)
+      let hashR = hashCode(""+(1/r))
+      let k = Math.abs(hashS*hashR*hashU*hashI)%100
+
+
+      const size = 60+40*k/100
+      const x = 50-size/2 + (50-size/2) *(k/100)*(Math.round((k/100)) * 2 - 1)
+      const y = 50-size/2 + (k/100)*Math.sqrt(Math.abs((100-size)^2-(x-50+size/2)^2))*(Math.round((k/100)) * 2 - 1)
+      const angle = 360*(k/100)*(Math.round((k/100)) * 2 - 1)   
+   
       symbol.style.height = size+"%"
       symbol.style.width = size+"%"
       symbol.style.left =  x+"%"
@@ -157,7 +186,12 @@ img {object-fit: contain}
     cards = document.querySelectorAll(".dobble-card-layout")
 
    cards.forEach(card => {
-      const angle = 360*Math.random()
+      let r = "${card.getId()}"
+      let u = "${listing || centralDeck ? 'unnamed' : value.user.username}"
+      let hashU = hashCode(u)
+      let hashR = hashCode(""+(1/r))
+      let k = Math.abs(hashR*hashU)%100
+      const angle = 360*(k/100)
       card.style.transform = "rotate("+angle+"deg)"
    })
 

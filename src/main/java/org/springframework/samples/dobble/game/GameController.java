@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.card.CardService;
 import org.springframework.samples.dobble.card.Deck;
+import org.springframework.samples.dobble.symbol.Symbol;
+import org.springframework.samples.dobble.symbol.SymbolService;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
 import org.springframework.security.core.Authentication;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 @Controller
 @RequestMapping("/games")
@@ -43,14 +46,16 @@ public class GameController {
     private UserService userService;
     private CardService cardService;
     private GameUserService gameUserService;
+    private SymbolService symbolService;
 
     @Autowired
     public GameController(GameService gameService, UserService userService, CardService cardService,
-            GameUserService gameUserService) {
+            GameUserService gameUserService, SymbolService symbolService) {
         this.gameService = gameService;
         this.userService = userService;
         this.cardService = cardService;
         this.gameUserService = gameUserService;
+        this.symbolService = symbolService;
     }
 
     // Game entity related actions
@@ -176,12 +181,17 @@ public class GameController {
 
 
     @PostMapping("/{gameId}/match")
-    public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") String symbol) {
+    public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") Long symbolId) {
+        //This method steps are only made for testing at the moment. For the next sprint it will 
+        //fully implement the required mehtod
         System.out.println("MATCH");
         Game game = gameService.findGame(gameId);
-        game.getCentralDeck().remove(0);
+        Symbol symbol = symbolService.findById(symbolId);
+        Boolean test = game.getCurrentCard().getSymbols().contains(symbol);
+        if (test) game.nextCard();;
         gameService.saveGame(game);
-        return "redirect:play?" + symbol;
+        if (game.getCentralDeck().size()==0) return "redirect:play?NoMoreCardsInTheCenter";
+        return "redirect:play?" + test;
     }
 
     @GetMapping(path="/{gameId}/lobby/delete/{id}")

@@ -14,11 +14,11 @@ PetClinic :: a Spring Framework demonstration
     <spring:url value="/resources/images/favicon.png" var="favicon"/>
     <link rel="shortcut icon" type="image/x-icon" href="${favicon}">
 
-    <title>PetClinic :: a Spring Framework demonstration</title>
+    <title>Dobble | Spot It Online</title>
 
     <%-- CSS generated from LESS --%>
-    <spring:url value="/resources/css/dobble.css" var="petclinicCss"/>
-    <link href="${petclinicCss}" rel="stylesheet"/>
+    <spring:url value="/resources/css/dobble.css" var="dobbleCss"/>
+    <link href="${dobbleCss}" rel="stylesheet"/>
 
 
     <%-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --%>

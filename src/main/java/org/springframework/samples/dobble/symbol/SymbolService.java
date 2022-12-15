@@ -30,8 +30,8 @@ public class SymbolService {
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<Symbol> findById(long id) {
-		return symbolRepository.findById(id);
+	public Symbol findById(long id) {
+		return symbolRepository.findById(id).orElse(null);
 	}
 	
 	@Transactional(readOnly = true)

@@ -63,6 +63,14 @@ public class GameUser {
         return this.user.equals(other.getUser()) && this.game.equals(other.getGame());
     }
 
+    public Card getCurrentCard(){
+        return cards.get(cards.size()-1);
+    }
+
+    public void nextCard(){
+        cards.remove(getCurrentCard());
+    }
+
 
 }
 
