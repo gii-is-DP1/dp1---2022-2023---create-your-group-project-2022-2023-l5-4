@@ -35,11 +35,11 @@ public class SymbolController {
 		return result;
 	}
 
-	@GetMapping(path="{symbolId}/variants/{symbolSetId}")
-	public String getSymbolVariant(@PathVariable("symbolId") Long symbolId, @PathVariable("symbolSetId") Long symbolSetId){
-		SymbolVariant symbol = symbolService.findSymbolVariant(symbolSetId, symbolId);
-		SymbolSet symbolSet = symbol.getSymbolSet();
-		return "redirect:/%s/%s".formatted(symbolSet.getPath(),symbol.getFileName());
-	}
+	// @GetMapping(path="{symbolId}/variants/{symbolSetId}")
+	// public String getSymbolVariant(@PathVariable("symbolId") Long symbolId, @PathVariable("symbolSetId") Long symbolSetId){
+	// 	SymbolVariant symbol = symbolService.findSymbolVariant(symbolSetId, symbolId);
+	// 	SymbolSet symbolSet = symbol.getSymbolSet();
+	// 	return "redirect:/%s/%s".formatted(symbolSet.getPath(), symbol.getFileName());
+	// }
 	
 }
