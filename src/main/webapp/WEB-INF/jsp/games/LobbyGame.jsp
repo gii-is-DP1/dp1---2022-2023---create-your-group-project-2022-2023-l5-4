@@ -42,7 +42,7 @@
 		</c:forEach>		
 	</table>
 	<p>
-		<a href="/games/${game.id}/play">
+		<a href="/games/${game.id}/start">
 			<button class="w3-button w3-purple">Start Game</button>
 		</a>
 	</p>
