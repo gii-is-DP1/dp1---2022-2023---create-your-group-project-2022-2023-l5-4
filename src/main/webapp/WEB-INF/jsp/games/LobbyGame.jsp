@@ -24,12 +24,27 @@
 		</tr>
 		 <c:forEach items="${user}" var="user">
 			<tr>
-				<td><c:out value="${user.username}"/></td>				
+				<td><c:out value="${u.user.username}"/></td>				
 				<td>
-					<a href="/users/edit/${user.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/games/${game.id}/play/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
+					<a href="/users/edit/${u.user.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;
+					<a href="/games/${game.id}/play/delete/${u.user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
+					<c:choose>
+						<c:when test="${(loggedUser.getFriends().contains(u))}"> 
+						<a href="/friends/remove/${u.user.username}"><span class="glyphicon glyphicon-minus-sign" aria-hden="true"></span></a> 
+							</c:when>
+							<c:otherwise>
+								<a href="/friends/add/${u.user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a> 
+									</c:otherwise></c:choose>
+					
+						
+				</td>
 			</tr>
 		</c:forEach>		
 	</table>
-	<p><button class="w3-button w3-purple" onclick="playGame('${game.id}')">Start Game</button></p>
+	<p>
+		<a href="/games/${game.id}/play">
+			<button class="w3-button w3-purple">Start Game</button>
+		</a>
+	</p>
     
 </petclinic:layout>

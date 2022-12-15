@@ -108,10 +108,10 @@ public class GameController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
             gameService.addGameUser(gameId, userId, accessCode);
-        } catch (Exception e) {
-            return "redirect:/games?error=" + e.getMessage();
-        }
-        return "redirect:/games/{gameId}/play";
+        } catch(Exception e) {
+            return "redirect:/games?error="+ e.getMessage();
+        } 
+        return "redirect:/games/{gameId}/lobby";
 
     }
   
@@ -164,6 +164,16 @@ public class GameController {
         return mav;
 
     }
+    @GetMapping("/{gameId}/lobby")
+    public ModelAndView lobbyGame(@PathVariable("gameId") Long gameId) {
+        Game game = this.gameService.findGame(gameId);
+        Iterable<GameUser> mazos=game.getUsers();
+		ModelAndView result=new ModelAndView("games/LobbyGame");
+		result.addObject("users", mazos);
+        result.addObject("game", game);
+		return result;	
+    }
+
 
     @PostMapping("/{gameId}/match")
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") String symbol) {
@@ -172,6 +182,16 @@ public class GameController {
         game.getCentralDeck().remove(0);
         gameService.saveGame(game);
         return "redirect:play?" + symbol;
+    }
+
+    @GetMapping(path="/{gameId}/lobby/delete/{id}")
+	public String DeleteUsersGame(@PathVariable("gameId") Long gameId, @PathVariable("id") String id, RedirectAttributes redirAttrs) {
+       try {
+            gameService.deleteUserGame(gameId, id);
+       } catch(Exception e) {
+           return "redirect:/games?error="+ e.getMessage();
+        } 
+        return "redirect:/games/{gameId}/lobby";
     }
 
 

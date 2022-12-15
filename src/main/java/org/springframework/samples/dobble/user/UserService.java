@@ -21,6 +21,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.samples.dobble.game.Game;
 
 
@@ -29,7 +32,8 @@ import org.springframework.samples.dobble.game.GameUserPk;
 import org.springframework.samples.dobble.game.GameUserService;
 
 import org.springframework.samples.dobble.tournament.Tournament;
-
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -97,6 +101,54 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public Iterable<User> findAll() {
 		return userRepository.findAll();
+	}
+
+    @Transactional(readOnly = true)
+    public User getLoggedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails ud = null;
+        if (principal instanceof UserDetails) {
+            ud = ((UserDetails) principal);
+        }
+        if (ud != null) {
+            return findUser(ud.getUsername());
+        } else {
+            return new User();
+        }
+    }
+
+	@Transactional
+    public List<User> getFriends() {
+        return getLoggedUser().getFriends();
+    }
+	
+	@Transactional
+    public void addFriend(String username) {
+        User user = getLoggedUser();
+		User friend = findUser(username);
+        if(!getLoggedUser().getFriends().contains(findUser(username))){
+            user.addFriend(findUser(username));
+			friend.addFriend(findUser(user.username));
+        }
+        saveUser(user);
+		saveUser(friend);
+    }
+
+    @Transactional
+    public void removeFriend(String username) {
+        User user = getLoggedUser();
+        User friend = findUser(username);
+        if (user.getFriends().contains(friend)) {
+            user.removeFriend(friend);
+            saveUser(user);
+        }
+    }
+
+	@Transactional
+    public Page<User> getFriendsPaged(Pageable page) {
+        Integer limit = (int) page.getOffset() + page.getPageSize();
+        limit = limit > getFriends().size() ? getFriends().size() : limit;
+        return new PageImpl<>(getLoggedUser().getFriends().subList((int) page.getOffset(), limit), page, getLoggedUser().getFriends().size());
 	}
 
 

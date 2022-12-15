@@ -6,8 +6,13 @@ import java.util.NoSuchElementException;
 import javax.resource.spi.IllegalStateException;
 import javax.security.auth.message.AuthException;
 
+import javax.security.auth.message.AuthException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.dobble.game.Game;
+import org.springframework.samples.dobble.game.GameMode;
+import org.springframework.samples.dobble.game.GameRepository;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserRepository;
 import org.springframework.samples.dobble.user.UserService;
@@ -17,8 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TournamentService {
 
-	private TournamentRepository tournamentRepository;
+	private static TournamentRepository tournamentRepository;
 	private UserRepository userRepository;
+	private GameRepository gameRepository;
 	private UserService userService;
 
 	@Autowired
@@ -29,8 +35,8 @@ public class TournamentService {
 	}
 
 	@Transactional(readOnly = true)
-	public Iterable<TournamentMode> findTournamentModes() throws DataAccessException {
-		return tournamentRepository.findTournamentModes();
+	public Iterable<GameMode> findGameModes() throws DataAccessException {
+		return tournamentRepository.findGameModes();
 	}
 
 	@Transactional(readOnly = true)
@@ -49,7 +55,7 @@ public class TournamentService {
 	}
 
 	@Transactional
-	public Tournament saveTournament(Tournament tournament) {
+	public static Tournament saveTournament(Tournament tournament) {
 		return tournamentRepository.save(tournament);
 	}
 

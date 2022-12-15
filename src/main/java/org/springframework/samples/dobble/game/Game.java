@@ -1,5 +1,6 @@
 package org.springframework.samples.dobble.game;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -40,7 +41,7 @@ public class Game extends BaseEntity {
     public Game() {
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "gamemodeId")
     @NotNull
     private GameMode gamemode;
@@ -58,7 +59,7 @@ public class Game extends BaseEntity {
     @Size(max = 6)
     private List<GameUser> users;
 
-    @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.EAGER,mappedBy = "games")
+    @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.LAZY,mappedBy = "games",cascade = CascadeType.ALL)
 	private List<Tournament> Tournaments;	
     
     @ManyToMany
@@ -88,6 +89,20 @@ public class Game extends BaseEntity {
 
     private Integer hashCode(String accessCode) {
         return accessCode.toString().hashCode();
+    }
+
+    public void removeUser(GameUser user) {
+        this.getUsers().remove(user);
+    }
+
+    private List<GameUser> getGameUserInternal() {
+        if (this.getUsers() == null)
+            setUsers(new ArrayList<GameUser>());
+        return this.getUsers();
+    }
+
+    public void addUser(GameUser user) {
+        this.getGameUserInternal().add(user);
     }
 
     public void setAccessCode(String accessCode) {

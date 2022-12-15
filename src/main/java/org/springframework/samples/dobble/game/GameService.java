@@ -87,6 +87,7 @@ public class GameService {
 	}
 
 	@Transactional
+<<<<<<< HEAD
 	public void deleteGameUser(Long gameId, String username)
 			throws AuthException, NullPointerException, IllegalStateException {
 		Game game = gameRepository.findById(gameId).orElse(null);
@@ -100,5 +101,43 @@ public class GameService {
 			userService.setCurrentGame(user, null);
 		}
 	}
+=======
+	public void addGameUserTournament(Long gameId, String username) throws AuthException, NullPointerException, IllegalStateException{
+		Game game = gameRepository.findById(gameId).orElse(null);
+		User user = userRepository.findById(username).orElse(null);
+		GameUser gameUser = new GameUser(user, game);
+
+		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
+
+		
+		if (game.isFull()) throw new IllegalStateException("The game is already full");
+		
+	
+		System.out.println("ENTRA");
+		gameUserRepository.save(gameUser);
+		userService.setCurrentGame(user, game);
+		gameRepository.save(game);
+	
+
+		
+	}
+
+
+	@Transactional
+	public void deleteUserGame(Long gameId, String username) throws AuthException, NullPointerException, IllegalStateException{
+		Game game = gameRepository.findById(gameId).orElse(null);
+		User user = userRepository.findById(username).orElse(null);
+		GameUser gameUser = new GameUser(user, game);
+		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
+	
+	if (!game.hasStarted()) {
+		game.removeUser(gameUser);
+		gameUserRepository.save(gameUser);
+		userService.setCurrentGame(user, game);
+  	gameRepository.save(game);
+ }	
+}
+
+>>>>>>> a588e8900efe238ceaa4aba42bca4b68fb2dac21
 
 }
