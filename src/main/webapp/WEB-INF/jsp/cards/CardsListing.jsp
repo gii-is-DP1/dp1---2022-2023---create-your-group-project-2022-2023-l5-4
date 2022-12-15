@@ -17,6 +17,10 @@
         height: 200px;
         width: 200px;
     }
+
+	.card:hover .listingId{
+		opacity: 1;
+	}
 </style>
 
 
@@ -33,10 +37,20 @@
 
 
 <script>
-	 symbols = document.querySelectorAll(".symbol")
+	
+	allSymbolsDim = () =>{
+		symbols.forEach(symbol=>{symbol.style.opacity="0.5"})	
+	}
+
+	allSymbolsHighlight = () => {
+		symbols.forEach(symbol=>{symbol.style.opacity="1"})	
+	}
+
+
+	symbols = document.querySelectorAll(".symbol")
 	 symbols.forEach(symbol=>{
 		 symbol.onclick=(event)=>{
-			symbols.forEach(symbol=>{symbol.style.opacity="0.5"})	
+			allSymbolsDim()
 			document.getElementsByName(symbol.getAttribute('name')).forEach( match => {
 				match.style.opacity="1"
 			}
@@ -46,7 +60,9 @@
 
 		document.getElementsByTagName("body")[0].onclick = (event)=>{
 			if (event.target !== event.currentTarget) return
-			symbols.forEach(symbol=>{symbol.style.opacity="1"})	
+			allSymbolsHighlight()
 		}
+
+		
 	
 </script>

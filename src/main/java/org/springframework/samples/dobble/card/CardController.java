@@ -1,6 +1,7 @@
 package org.springframework.samples.dobble.card;
 
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class CardController{
 	public ModelAndView indexCards(){
 		List<Card> cards=cardService.findAll();
 		Game mockGame = new Game();
+		Collections.reverse(cards);
 		mockGame.setCentralDeck(cards);
 		ModelAndView result=new ModelAndView(CARD_LIST_VIEW);
 		result.addObject("mockGame", mockGame);

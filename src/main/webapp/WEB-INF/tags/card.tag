@@ -90,12 +90,34 @@
    transform:rotate(357deg) translate(115%) rotate(-357deg);
 }
 img {object-fit: contain}
+
+.listingId{
+   display:block;
+   font-size: 150px;
+   font-weight: bolder;
+   color: lightgray;
+   opacity:0.5;
+   text-align:center;
+   vertical-align:middle;
+   width: 100%;
+   height:fit-content;
+   top:-15px;
+   vertical-align:middle;
+   position: absolute;
+   z-index:0;
+   pointer-events: none
+}
   </style>
 
 
 <c:set value="${value.getCurrentCard()}" var="card"/>
 <div class="${className}">
   <div class="dobble-card">
+<c:if test="${listing==true}">
+<div class="listingId">
+   <c:out value="${card.getId()}"/>
+</div>
+</c:if>
   <div class="dobble-card-layout">
     <div class="dobble-card-symbol-container symbol0">
       
