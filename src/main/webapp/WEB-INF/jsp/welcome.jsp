@@ -17,4 +17,11 @@
         
     </ul></p>
 </div>
+<div class="row">
+    <style>
+        body {
+            background-image: url("/resources/images/background.png");
+        }
+    </style>
+</div>
 </dobble:layout>

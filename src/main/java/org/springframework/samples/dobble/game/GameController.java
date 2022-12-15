@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.card.CardService;
 import org.springframework.samples.dobble.card.Deck;
+import org.springframework.samples.dobble.symbol.Symbol;
+import org.springframework.samples.dobble.symbol.SymbolService;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
 import org.springframework.security.core.Authentication;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 @Controller
 @RequestMapping("/games")
@@ -43,13 +46,16 @@ public class GameController {
     private UserService userService;
     private CardService cardService;
     private GameUserService gameUserService;
+    private SymbolService symbolService;
 
     @Autowired
-    public GameController(GameService gameService, UserService userService, CardService cardService, GameUserService gameUserService) {
+    public GameController(GameService gameService, UserService userService, CardService cardService,
+            GameUserService gameUserService, SymbolService symbolService) {
         this.gameService = gameService;
         this.userService = userService;
         this.cardService = cardService;
         this.gameUserService = gameUserService;
+        this.symbolService = symbolService;
     }
 
     // Game entity related actions
@@ -99,6 +105,7 @@ public class GameController {
         return "redirect:/games/" + game.getId();
     }
 
+    // Before starting
 
     @PostMapping("/{gameId}/join")
     public String joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode) {
@@ -112,23 +119,37 @@ public class GameController {
         return "redirect:/games/{gameId}/lobby";
 
     }
+  
+    @GetMapping(path = "/{gameId}/play/delete/{userId}")
+    public String deleteUsersGame(@PathVariable("gameId") Long gameId,
+            @PathVariable("userId") String userId, RedirectAttributes redirAttrs) {
+        try {
+            gameService.deleteGameUser(gameId, userId);
+        } catch (Exception e) {
+            return "redirect:/games?error=" + e.getMessage();
+        }
+        return "redirect:/games/{gameId}/play";
+    }
 
-
-    @PostMapping("/{gameId}/start")
-    public String startGame(@PathVariable("gameId") Long gameId){
+    @GetMapping("/{gameId}/start")
+    public String startGame(@PathVariable("gameId") Long gameId) {
         Game game = gameService.findGame(gameId);
         List<GameUser> users = game.getUsers();
         Deck cards = Deck.of(cardService.findAll());
+        
         Map<GameUser, Deck> deal = cards.deal(users, game.getGamemode());
         Deck centralDeck = cards.getLeftForCenter();
         game.setCentralDeck(centralDeck);
-        gameService.saveGame(game);
-        users.forEach(user->{
+        users.forEach(user -> {
             user.setCards(deal.get(user));
             gameUserService.saveGameUser(user);
         });
+        game.setState(GameState.STARTED);
+        gameService.saveGame(game);
         return "redirect:play";
     }
+
+
     // In-game related actions
 
     @GetMapping("/{gameId}/play")
@@ -137,17 +158,17 @@ public class GameController {
         Game game = this.gameService.findGame(gameId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User mainPlayer = userService.findUser(username);
+        User mainUser = userService.findUser(username);
+        GameUser mainPlayer = gameUserService.findGameUser(GameUserPk.of(mainUser , game));
         List<GameUser> players = game.getUsers();
-        players.removeIf(player->player.getUser().equals(mainPlayer));
+        players.removeIf(player -> player.equals(mainPlayer));
         mav.addObject("mainPlayer", mainPlayer);
         mav.addObject("players", players);
         mav.addObject("game", game);
-        mav.addObject(game); 
-        return mav; 
+        mav.addObject(game);
+        return mav;
 
     }
-
     @GetMapping("/{gameId}/lobby")
     public ModelAndView lobbyGame(@PathVariable("gameId") Long gameId) {
         Game game = this.gameService.findGame(gameId);
@@ -158,21 +179,30 @@ public class GameController {
 		return result;	
     }
 
-    
+
     @PostMapping("/{gameId}/match")
-    public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") String symbol ){
+    public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") Long symbolId) {
+        //This method steps are only made for testing at the moment. For the next sprint it will 
+        //fully implement the required mehtod
         System.out.println("MATCH");
-        return "redirect:play?"+ symbol;    
+        Game game = gameService.findGame(gameId);
+        Symbol symbol = symbolService.findById(symbolId);
+        Boolean test = game.getCurrentCard().getSymbols().contains(symbol);
+        if (test) game.nextCard();;
+        gameService.saveGame(game);
+        if (game.getCentralDeck().size()==0) return "redirect:play?NoMoreCardsInTheCenter";
+        return "redirect:play?" + test;
     }
 
     @GetMapping(path="/{gameId}/lobby/delete/{id}")
 	public String DeleteUsersGame(@PathVariable("gameId") Long gameId, @PathVariable("id") String id, RedirectAttributes redirAttrs) {
        try {
-            gameService.deleteUserGame(gameId, id);
+            gameService.deleteGameUser(gameId, id);
        } catch(Exception e) {
            return "redirect:/games?error="+ e.getMessage();
         } 
         return "redirect:/games/{gameId}/lobby";
     }
+
 
 }

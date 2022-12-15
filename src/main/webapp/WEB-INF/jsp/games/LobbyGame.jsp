@@ -22,7 +22,7 @@
 			<th>Users</th>
 			<th>Actions</th>			
 		</tr>
-		 <c:forEach items="${users}" var="u">
+		 <c:forEach items="${user}" var="user">
 			<tr>
 				<td><c:out value="${u.user.username}"/></td>				
 				<td>
@@ -42,7 +42,7 @@
 		</c:forEach>		
 	</table>
 	<p>
-		<a href="http://localhost:8080/games/${game.id}/play">
+		<a href="/games/${game.id}/start">
 			<button class="w3-button w3-purple">Start Game</button>
 		</a>
 	</p>
