@@ -10,26 +10,33 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SymbolService {
+	private SymbolRepository symbolRepository;
+	private SymbolVariantRepository symbolVariantRepository;
 	@Autowired
-	private SymbolRepository symbolRepo;
-	
+	public SymbolService(SymbolRepository symbolRepository, SymbolVariantRepository symbolVariantRepository){
+		this.symbolRepository = symbolRepository;
+		this.symbolVariantRepository = symbolVariantRepository;
+	}
+
 
 	@Transactional(readOnly = true)
 	public Iterable<Symbol> findAll() {
-		return symbolRepo.findAll();
+		return symbolRepository.findAll();
 	}
 
 	@Transactional
 	public void save(Symbol symbol) {
-		symbolRepo.save(symbol);
+		symbolRepository.save(symbol);
 	}
 
 	@Transactional(readOnly = true)
-	public Optional<Symbol> findById(long id) {
-		return symbolRepo.findById(id);
+	public Symbol findById(long id) {
+		return symbolRepository.findById(id).orElse(null);
 	}
+	
 	@Transactional(readOnly = true)
-	public Symbol findByNombre(String nombre) {
-		return symbolRepo.findByName(nombre);
+	public SymbolVariant findSymbolVariant(long symbolSetId, long symboId) {
+		return symbolVariantRepository.findBySetAndSymbol(symbolSetId,symboId);
 	}
+	
 }

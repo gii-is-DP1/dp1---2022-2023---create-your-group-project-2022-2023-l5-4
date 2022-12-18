@@ -1,6 +1,8 @@
 package org.springframework.samples.dobble.game;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import javax.resource.spi.IllegalStateException;
@@ -8,6 +10,7 @@ import javax.security.auth.message.AuthException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserRepository;
 import org.springframework.samples.dobble.user.UserService;
@@ -18,14 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class GameService {
 
 	private GameRepository gameRepository;
-	private UserRepository userRepository;
+	private GameUserService gameUserService;
 	private UserService userService;
 
 	@Autowired
-	public GameService(GameRepository gameRepository, UserRepository userRepository, UserService userService) {
+	public GameService(GameRepository gameRepository, GameUserService gameUserService, UserService userService) {
 		this.gameRepository = gameRepository;
-		this.userRepository = userRepository;
 		this.userService = userService;
+		this.gameUserService = gameUserService;
 	}
 
 	@Transactional(readOnly = true)
@@ -34,7 +37,7 @@ public class GameService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Game> findAllUnstartedGames()  throws DataAccessException {
+	public List<Game> findAllUnstartedGames() throws DataAccessException {
 		return gameRepository.findAllUnstarted();
 	}
 
@@ -64,24 +67,57 @@ public class GameService {
 	}
 
 	@Transactional
-	public void addUserGame(Long gameId, String username, String accessCode) throws AuthException, NullPointerException, IllegalStateException{
+	public void addGameUser(Long gameId, String username, String accessCode) throws AuthException, NullPointerException, IllegalStateException{
 		Game game = gameRepository.findById(gameId).orElse(null);
-		User user = userRepository.findById(username).orElse(null);
+		User user = userService.findUser(username);
+		GameUser gameUser = new GameUser(user, game);
 
 		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
 
 		if (!game.validAccessCode(accessCode)) throw new AuthException("Wrong Access Code");
 		
 		if (game.isFull()) throw new IllegalStateException("The game is already full");
-		if (!game.hasStarted()) {
-			game.addUser(user);
+		
+		if (!game.hasStarted() && !game.getUsers().contains(gameUser)) {
+			gameUserService.saveGameUser(gameUser);
 			userService.setCurrentGame(user, game);
-			gameRepository.save(game);
 		}
 
 		
 	}
 
+	@Transactional
+	public void deleteGameUser(Long gameId, String username)
+			throws AuthException, NullPointerException, IllegalStateException {
+		Game game = gameRepository.findById(gameId).orElse(null);
+		User user = userService.findUser(username);
+		GameUser gameUser = gameUserService.findGameUser(GameUserPk.of(user, game));
+		if (game == null || user == null)
+			throw new NullPointerException("Neither user or game can be null");
+
+		if (!game.hasStarted()) {
+			gameUserService.delete(gameUser);
+			userService.setCurrentGame(user, null);
+		}
+	}
+	public void addGameUserTournament(Long gameId, String username) throws AuthException, NullPointerException, IllegalStateException{
+		Game game = gameRepository.findById(gameId).orElse(null);
+		User user = userService.findUser(username);
+		GameUser gameUser = new GameUser(user, game);
+
+		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
+
+		
+		if (game.isFull()) throw new IllegalStateException("The game is already full");
+		
 	
+		System.out.println("ENTRA");
+		gameUserService.saveGameUser(gameUser);
+		userService.setCurrentGame(user, game);
+		gameRepository.save(game);
+	
+
+		
+	}
 
 }

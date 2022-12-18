@@ -18,9 +18,10 @@
     </ul></p>
 </div>
 <div class="row">
-    <div class="col-md-12">
-        <spring:url value="/resources/images/logoPNG_3.png" htmlEscape="true" var="UniImage"/>
-        <img class="img-responsive" src="${UniImage}"/>
-        </div>
+    <style>
+        body {
+            background-image: url("/resources/images/background.png");
+        }
+    </style>
 </div>
 </dobble:layout>

@@ -16,6 +16,7 @@
 package org.springframework.samples.dobble.owner;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -25,18 +26,24 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
+
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
+
+
+
 import org.springframework.samples.dobble.model.Person;
 import org.springframework.samples.dobble.pet.Pet;
 import org.springframework.samples.dobble.user.User;
+
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -63,8 +70,11 @@ public class Owner extends Person {
 	@Digits(fraction = 0, integer = 10)
 	private String telephone;
 
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private Set<Pet> pets;
+
+
 	
 	//
 	@OneToOne(cascade = CascadeType.ALL)

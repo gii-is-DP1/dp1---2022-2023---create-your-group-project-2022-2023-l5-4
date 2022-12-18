@@ -1,5 +1,6 @@
 package org.springframework.samples.dobble.game;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -8,7 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -17,12 +20,15 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.model.BaseEntity;
+import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.samples.dobble.user.User;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +41,7 @@ public class Game extends BaseEntity {
     public Game() {
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "gamemodeId")
     @NotNull
     private GameMode gamemode;
@@ -49,11 +55,13 @@ public class Game extends BaseEntity {
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "usergames", joinColumns = @JoinColumn(name = "gameId", nullable = false, table = "games"), inverseJoinColumns = @JoinColumn(name = "userId", nullable = false, table = "users"))
+    @OneToMany(mappedBy = "game")
     @Size(max = 6)
-    private Set<User> users;
+    private List<GameUser> users;
 
+    @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.LAZY,mappedBy = "games",cascade = CascadeType.ALL)
+	private List<Tournament> Tournaments;	
+    
     @ManyToMany
     @JoinTable(name = "gamecards")
     private List<Card> centralDeck;
@@ -63,7 +71,6 @@ public class Game extends BaseEntity {
     private GameState state;
 
     @Min(2)
-
     @Max(6)
     @ColumnDefault("6")
     private Integer maxPlayers;
@@ -84,6 +91,7 @@ public class Game extends BaseEntity {
         return accessCode.toString().hashCode();
     }
 
+
     public void setAccessCode(String accessCode) {
 
         if (!(accessCode == null || accessCode == ""))
@@ -100,20 +108,6 @@ public class Game extends BaseEntity {
         return this.users.size();
     }
 
-    private Set<User> getUsersInternal() {
-        if (this.getUsers() == null)
-            setUsers(new HashSet<>());
-        return this.getUsers();
-    }
-
-    public void addUser(User user) {
-        this.getUsersInternal().add(user);
-    }
-
-    public void removeUser(User user) {
-        this.getUsersInternal().remove(user);
-    }
-
     public boolean isFinished() {
         return this.state == GameState.FINISHED;
     }
@@ -126,4 +120,11 @@ public class Game extends BaseEntity {
         return this.getUsers().size()==this.maxPlayers;
     }
 
+    public Card getCurrentCard(){
+        return centralDeck.get(centralDeck.size()-1);
+    }
+
+    public void nextCard(){
+        centralDeck.remove(getCurrentCard());
+    }
 }
