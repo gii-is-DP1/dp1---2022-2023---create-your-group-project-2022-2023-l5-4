@@ -35,7 +35,7 @@
 			<tr>
 				<td><c:out value="${u.username}"/></td>				
 				<td>
-					<a href="/users/edit/${u.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/tournaments/${tournament.id}/lobby/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
+					<a href="/users/profile/${u.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;<a href="/tournaments/${tournament.id}/lobby/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> <a href="/friends/add/${u.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a></td>
 			</tr>
 		</c:forEach>		
 	</table>

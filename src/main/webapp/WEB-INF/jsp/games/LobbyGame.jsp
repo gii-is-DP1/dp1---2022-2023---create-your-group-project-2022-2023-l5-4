@@ -26,7 +26,7 @@
 			<tr>
 				<td><c:out value="${user.user.username}"/></td>				
 				<td>
-					<a href="/users/edit/${user.user.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;
+					<a href="/users/profile/${user.user.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;
 					<a href="/games/${game.id}/lobby/delete/${user.user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
 					<a href="/friends/add/${user.user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a> 
 									

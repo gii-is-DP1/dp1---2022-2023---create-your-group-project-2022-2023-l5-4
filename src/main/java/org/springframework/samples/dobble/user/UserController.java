@@ -97,6 +97,13 @@ public class UserController {
 		result.addObject("user", userService.findUsername(username));
 		return result;
 	}
+
+	@GetMapping(path="/users/profile/{username}")
+	public ModelAndView UserProfile(@PathVariable("username") String username){		
+		ModelAndView result=new ModelAndView("users/ProfileUser");
+		result.addObject("user", userService.findUsername(username));
+		return result;
+	}
    
 
 
