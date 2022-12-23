@@ -218,18 +218,36 @@ INSERT INTO gameusers(user_id,game_id) VALUES
 
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (1, null, 4, 'LOBBY', 'User17', null);
 INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (2, null, 6, 'LOBBY', 'User16', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (3, 1234, 2, 'LOBBY',  'User15', null);
+INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (3, null, 2, 'LOBBY',  'User15', null);
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (4, null, 6, 'LOBBY', 'User14', null);
 INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (5, null, 6, 'LOBBY', 'User13', null);
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (6, null, 3, 'LOBBY', 'User12', null);
-INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (7, 1234, 4, 'LOBBY', 'User9', null);
+INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (7, null, 4, 'LOBBY', 'User9', null);
 INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (8, null, 6, 'LOBBY', 'User11', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (9, 1234, 6, 'LOBBY', 'User10', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (10, 1234, 2, 'LOBBY', 'User8', null);
+INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (9, null, 6, 'LOBBY', 'admin1', null);
+INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (10, null, 2, 'LOBBY', 'User8', null);
 
-INSERT INTO GAMEMODETOURNAMENT(tournament_id, game_mode_id) VALUES (2,1);
-INSERT INTO GAMEMODETOURNAMENT(tournament_id, game_mode_id) VALUES (2,2);
-INSERT INTO GAMEMODETOURNAMENT(tournament_id, game_mode_id) VALUES (2,3);
+INSERT INTO GAMEMODETOURNAMENT(tournament_id, game_mode_id) VALUES 
+(1,1), 
+(1,2), 
+(2,1), 
+(2,2), 
+(2,3), 
+(3,2),
+(3,3),
+(4,1), 
+(5,1), 
+(5,2),
+(5,3),
+(6,1), 
+(7,1), 
+(7,3),
+(8,1), 
+(8,3),
+(9,2),
+(9,3), 
+(10,2),
+(10,3);
 
 INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User17',1);
 INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User16',2);

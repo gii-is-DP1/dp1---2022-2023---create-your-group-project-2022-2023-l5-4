@@ -102,13 +102,9 @@ public class TournamentController {
         return "redirect:/tournaments/" + tournament.getId();
     }
 
-    @GetMapping("/{tournamentId}/lobby")
-    public ModelAndView lobbyTournament(@PathVariable("tournamentId") Long tournamentId) {
+    @GetMapping("/{tournamentId}/play")
+    public String playTournament(@PathVariable("tournamentId") Long tournamentId) {
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
-        Iterable<User> mazos=tournament.getUsers();
-		ModelAndView result=new ModelAndView("tournaments/LobbyTournament");
-		result.addObject("users", mazos);
-        result.addObject("tournament", tournament);
         Game game = new Game();
         List<GameUser> gameusers = new ArrayList<>();
         game.setGamemode(tournament.getGamemodes().get(0));
@@ -124,7 +120,6 @@ public class TournamentController {
                 gameusers.add(gameUser);
         }
         gameService.saveGame(game);
-        result.addObject("game", game);
         List<Game> games = tournament.getGames();
         games.add(game);
         tournament.setGames(games);
@@ -133,8 +128,17 @@ public class TournamentController {
             mode.remove(0);
             tournament.setGamemodes(mode);
         }
-        
         TournamentService.saveTournament(tournament);
+		return "redirect:/games/"+game.getId()+"/start";	
+    }
+
+    @GetMapping("/{tournamentId}/lobby")
+    public ModelAndView lobbyTournament(@PathVariable("tournamentId") Long tournamentId) {
+        Tournament tournament = this.tournamentService.findTournament(tournamentId);
+        Iterable<User> mazos=tournament.getUsers();
+		ModelAndView result=new ModelAndView("tournaments/LobbyTournament");
+		result.addObject("users", mazos);
+        result.addObject("tournament", tournament);
 		return result;	
     }
 
@@ -154,7 +158,14 @@ public class TournamentController {
     @GetMapping(path="/{tournamentId}/lobby/delete/{id}")
 	public String DeleteUsersTournament(@PathVariable("tournamentId") Long tournamentId, @PathVariable("id") String id, RedirectAttributes redirAttrs) {
         try {
-            tournamentService.deleteUserTournament(tournamentId, id);
+            Tournament tournament = this.tournamentService.findTournament(tournamentId);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userId = authentication.getName();
+            if(tournament.getOwner().getUsername().compareTo(userId)==0 && tournament.getNumUsers()>1){
+                tournamentService.deleteUserTournament(tournamentId, id);
+            }else{
+                return "redirect:/tournaments/"+tournamentId+"/lobby?error=You are not allowed to do this action";
+            }
         } catch(Exception e) {
             return "redirect:/tournaments?error="+ e.getMessage();
         } 

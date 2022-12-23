@@ -6,6 +6,15 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="tournaments">
+	<c:if test="${param.error!=null}">
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-alert"></span>
+            <label>
+                ERROR:  
+            </label>
+            <c:out value="${param.error}"></c:out>
+        </div>
+    </c:if>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<h2>Tournament players:</h2>
 	<div class="container">
@@ -26,13 +35,13 @@
 			<tr>
 				<td><c:out value="${u.username}"/></td>				
 				<td>
-					<a href="/users/edit/${u.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;<a href="/tournaments/${tournament.id}/lobby/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> </td>
+					<a href="/users/profile/${u.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;<a href="/tournaments/${tournament.id}/lobby/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a> <a href="/friends/add/${u.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a></td>
 			</tr>
 		</c:forEach>		
 	</table>
 
 	<p>
-		<a href="http://localhost:8080/games/${game.id}/play">
+		<a href="/tournaments/${tournament.id}/play">
 			<button class="w3-button w3-purple">Start Game</button>
 		</a>
 	</p>
