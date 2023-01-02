@@ -196,10 +196,17 @@ public class GameController {
 
     @GetMapping(path="/{gameId}/lobby/delete/{id}")
 	public String DeleteUsersGame(@PathVariable("gameId") Long gameId, @PathVariable("id") String id, RedirectAttributes redirAttrs) {
-       try {
-            gameService.deleteGameUser(gameId, id);
-       } catch(Exception e) {
-           return "redirect:/games?error="+ e.getMessage();
+        try {
+            Game game = this.gameService.findGame(gameId);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String userId = authentication.getName();
+            if(game.getOwner().getUsername().compareTo(userId)==0 && game.getNumUsers()>1){
+                gameService.deleteGameUser(gameId, userId);
+            }else{
+                return "redirect:/games/"+gameId+"/lobby?error=You are not allowed to do this action";
+            }
+        } catch(Exception e) {
+            return "redirect:/games?error="+ e.getMessage();
         } 
         return "redirect:/games/{gameId}/lobby";
     }
