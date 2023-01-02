@@ -13,7 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.samples.dobble.game.Game;
+import org.springframework.samples.dobble.statistics.Achievement;
 import org.springframework.samples.dobble.tournament.Tournament;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -38,6 +40,9 @@ public class User{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;
+
+	@ManyToMany
+	private Set<Achievement> achievements;
 
 	@ManyToOne
 	private Game currentGame;
@@ -73,6 +78,10 @@ public class User{
 
     public void removeFriend(User user) {
         friends.remove(user);
+    }
+
+    public ModelAndView getAchievements() {
+        return null;
     }
 
 }
