@@ -15,7 +15,6 @@ import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameMode;
 import org.springframework.samples.dobble.game.GameService;
 import org.springframework.samples.dobble.game.GameState;
-import org.springframework.samples.dobble.game.GameUser;
 import org.springframework.samples.dobble.game.GameUserService;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
@@ -97,35 +96,35 @@ public class TournamentController {
         return "redirect:/tournaments/" + tournament.getId();
     }
 
-    @GetMapping("/{tournamentId}/play")
-    public String playTournament(@PathVariable("tournamentId") Long tournamentId) {
-        Tournament tournament = this.tournamentService.findTournament(tournamentId);
-        Game game = new Game();
-        List<GameUser> gameusers = new ArrayList<>();
-        game.setGamemode(tournament.getGamemodes().get(0));
-        game.setOwner(tournament.getOwner());
-        game.setMaxPlayers(tournament.getMaxPlayers());
-        game.setWinner(null);
-        game.setState(GameState.LOBBY);
-        gameService.saveGame(game);
-        for(User user: tournament.getUsers()){
-                GameUser gameUser = new GameUser(user, game);
-                userService.setCurrentGame(user, game);
-                gameUserService.saveGameUser(gameUser);
-                gameusers.add(gameUser);
-        }
-        gameService.saveGame(game);
-        List<Game> games = tournament.getGames();
-        games.add(game);
-        tournament.setGames(games);
-        if(tournament.getGamemodes().size()>1){
-            List<GameMode> mode = tournament.getGamemodes();
-            mode.remove(0);
-            tournament.setGamemodes(mode);
-        }
-        TournamentService.saveTournament(tournament);
-		return "redirect:/games/"+game.getId()+"/start";	
-    }
+    // @GetMapping("/{tournamentId}/play")
+    // public String playTournament(@PathVariable("tournamentId") Long tournamentId) {
+    //     Tournament tournament = this.tournamentService.findTournament(tournamentId);
+    //     Game game = new Game();
+    //     List<GameUser> gameusers = new ArrayList<>();
+    //     game.setGamemode(tournament.getGamemodes().get(0));
+    //     game.setOwner(tournament.getOwner());
+    //     game.setMaxPlayers(tournament.getMaxPlayers());
+    //     game.setWinner(null);
+    //     game.setState(GameState.LOBBY);
+    //     gameService.saveGame(game);
+    //     for(User user: tournament.getUsers()){
+    //             GameUser gameUser = new GameUser(user, game);
+    //             userService.setCurrentGame(user, game);
+    //             gameUserService.saveGameUser(gameUser);
+    //             gameusers.add(gameUser);
+    //     }
+    //     gameService.saveGame(game);
+    //     List<Game> games = tournament.getGames();
+    //     games.add(game);
+    //     tournament.setGames(games);
+    //     if(tournament.getGamemodes().size()>1){
+    //         List<GameMode> mode = tournament.getGamemodes();
+    //         mode.remove(0);
+    //         tournament.setGamemodes(mode);
+    //     }
+    //     TournamentService.saveTournament(tournament);
+	// 	return "redirect:/games/"+game.getId()+"/start";	
+    // }
 
     @GetMapping("/{tournamentId}/lobby")
     public ModelAndView lobbyTournament(@PathVariable("tournamentId") Long tournamentId) {

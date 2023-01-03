@@ -46,7 +46,7 @@ public final class GenericIdToEntityConverter implements ConditionalGenericConve
             return null;
         }
 
-        Integer id = (Integer) this.conversionService.convert(source, sourceType, TypeDescriptor.valueOf(Integer.class));
+        Long id = (Long) this.conversionService.convert(source, sourceType, TypeDescriptor.valueOf(Long.class));
 
         Object entity = entityManager.find(targetType.getType(), id);
         if (entity == null) {
