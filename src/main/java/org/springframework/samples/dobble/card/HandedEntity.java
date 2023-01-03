@@ -20,11 +20,19 @@ public class HandedEntity {
     private List<Card> cards;
 
     public Card getCurrentCard() {
-        return cards.get(cards.size()-1);
+        try{
+            return cards.get(cards.size()-1);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public Card nextCard() {
-        cards.remove(cards.size()-1);
+        try {
+            cards.remove(cards.size()-1);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
         return getCurrentCard();
     }
 

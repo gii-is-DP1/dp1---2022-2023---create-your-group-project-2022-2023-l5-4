@@ -4,9 +4,9 @@ public enum GameState {
     LOBBY{@Override
     public String toString() {
         return "LOBBY";
-    }}, STARTED{@Override
+    }}, ON_PLAY{@Override
     public String toString() {
-        return "STARTED";
+        return "ON PLAY";
     }}, FINISHED{@Override
     public String toString() {
         return "FINISHED";

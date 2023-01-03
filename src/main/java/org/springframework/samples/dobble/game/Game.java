@@ -124,6 +124,9 @@ public class Game extends HandedEntity {
         return this.state != GameState.LOBBY;
     }
 
+    public boolean isOnPlay() {
+        return this.state == GameState.ON_PLAY;
+    }
     public boolean isFull() {
         return this.getUsers().size()==this.maxPlayers;
     }

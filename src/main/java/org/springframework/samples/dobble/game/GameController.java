@@ -8,6 +8,7 @@ import javax.enterprise.inject.Model;
 import javax.resource.spi.IllegalStateException;
 import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
+import javax.ws.rs.POST;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.card.Card;
@@ -134,10 +135,11 @@ public class GameController {
             user.setCards(deal.get(user));
             userService.saveUser(user);
         });
-        game.setState(GameState.STARTED);
+        game.setState(GameState.ON_PLAY);
         gameService.saveGame(game);
         return "redirect:play";
     }
+
 
 
     // In-game related actions

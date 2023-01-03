@@ -2,6 +2,8 @@ package org.springframework.samples.dobble.game;
 
 import java.util.List;
 
+import javax.swing.text.rtf.RTFEditorKit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.card.CardService;
 import org.springframework.samples.dobble.symbol.Symbol;
@@ -83,8 +85,12 @@ public class MatchController {
     @PostMapping("/match")
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") Symbol symbol,  @ModelAttribute("user") User user) {
         //This method steps are only made for testing at the moment. For the next sprint it will 
-        //fully implement the required mehtoda
+        //fully implement the required mehtod
+
         Game game = gameService.findGame(gameId);
+
+        if (!game.isOnPlay() || game.getUsers().contains(user)) return "noauth...todo";
+
         Boolean symbolMatches = game.getCurrentCard().matches(symbol);
         Boolean userMatches = true;
         switch (game.getGamemode().getName()) {
@@ -95,13 +101,16 @@ public class MatchController {
                 userMatches = user.getUsername()!=null && user.getUsername().equals(userService.getSessionUser());
                 break;  
         }
-        System.out.println("HEEEEEEEEEEEEERE");
-        System.out.println(symbolMatches);
-        System.out.println(userMatches);
+        
+    
         if (symbolMatches && userMatches) gameUserService.makePlay(game, user);
-       
-        if (game.getCards().size()==0) return "redirect:/games/{gameId}/play?NoMoreCardsInTheCenter";
-        return "redirect:/games/{gameId}/play?" + userMatches;
+        
+        if (user.getCards().size()==0) {
+            gameService.endGame(game, user);
+            return "redirect:/games/{gameId}/results";
+        }
+        
+        return "redirect:/games/{gameId}/play";
     }
     
 }

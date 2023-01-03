@@ -63,5 +63,11 @@ public class GameService {
 	public void deleteGameById(Long gameId) {
 		gameRepository.deleteById(gameId);
 	}
+
+    public void endGame(Game game, User winner) {
+		game.setWinner(winner);
+		game.setState(GameState.FINISHED);
+		saveGame(game);
+    }
 	
 }
