@@ -28,8 +28,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.samples.dobble.game.Game;
 
 
-import org.springframework.samples.dobble.game.GameUser;
-import org.springframework.samples.dobble.game.GameUserPk;
 import org.springframework.samples.dobble.game.GameUserService;
 
 import org.springframework.samples.dobble.tournament.Tournament;

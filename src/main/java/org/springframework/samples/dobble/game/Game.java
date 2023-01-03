@@ -5,7 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -19,7 +23,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.samples.dobble.card.Card;
-import org.springframework.samples.dobble.card.Hand;
+import org.springframework.samples.dobble.card.HandedEntity;
 import org.springframework.samples.dobble.model.BaseEntity;
 import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.samples.dobble.user.User;
@@ -37,10 +41,14 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "games")
-public class Game extends BaseEntity {
+public class Game extends HandedEntity {
 
     public Game() {
     }
+    
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Long id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "gamemodeId")
@@ -56,19 +64,15 @@ public class Game extends BaseEntity {
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @OneToMany(mappedBy = "game")
-    @Size(max = 6)
-    private List<GameUser> users;
+    @ManyToMany
+    @Size(min = 1, max = 6)
+    @JoinTable(name = "gameusers", 
+    joinColumns = @JoinColumn(name="gameId"), 
+    inverseJoinColumns = @JoinColumn(name="userId"))
+    private List<User> users;
 
     @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.LAZY,mappedBy = "games",cascade = CascadeType.ALL)
 	private List<Tournament> Tournaments;	
-    
-    @ManyToMany
-    @JoinTable(name = "gamecards")
-    private List<Card> centralDeck;
-
-    @Transient
-    private Hand hand;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'LOBBY'")
@@ -124,9 +128,4 @@ public class Game extends BaseEntity {
         return this.getUsers().size()==this.maxPlayers;
     }
 
-    
-    public Hand getHand() {
-        if (this.hand==null) this.hand = Hand.of(centralDeck);
-        return hand;
-    }
 }

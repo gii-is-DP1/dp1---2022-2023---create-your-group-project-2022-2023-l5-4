@@ -52,9 +52,8 @@ public class MatchController {
         Game game = this.gameService.findGame(gameId);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User mainUser = userService.findUser(username);
-        GameUser mainPlayer = gameUserService.findGameUser(GameUserPk.of(mainUser , game));
-        List<GameUser> players = game.getUsers();
+        User mainPlayer = userService.findUser(username);
+        List<User> players = game.getUsers();
         players.removeIf(player -> player.equals(mainPlayer));
         mav.addObject("mainPlayer", mainPlayer);
         mav.addObject("players", players);
@@ -86,7 +85,7 @@ public class MatchController {
         //This method steps are only made for testing at the moment. For the next sprint it will 
         //fully implement the required mehtoda
         Game game = gameService.findGame(gameId);
-        Boolean symbolMatches = game.getHand().getCurrentCard().matches(symbol);
+        Boolean symbolMatches = game.getCurrentCard().matches(symbol);
         Boolean userMatches = true;
         switch (game.getGamemode().getName()) {
             case "The Poisoned Gift":
@@ -101,7 +100,7 @@ public class MatchController {
         System.out.println(userMatches);
         if (symbolMatches && userMatches) gameUserService.makePlay(game, user);
        
-        if (game.getCentralDeck().size()==0) return "redirect:/games/{gameId}/play?NoMoreCardsInTheCenter";
+        if (game.getCards().size()==0) return "redirect:/games/{gameId}/play?NoMoreCardsInTheCenter";
         return "redirect:/games/{gameId}/play?" + userMatches;
     }
     

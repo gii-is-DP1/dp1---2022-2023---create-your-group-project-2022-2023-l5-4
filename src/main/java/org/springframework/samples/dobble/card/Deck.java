@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.samples.dobble.game.GameMode;
-import org.springframework.samples.dobble.game.GameUser;
+import org.springframework.samples.dobble.user.User;
 
 
 public class Deck extends ArrayList<Card> {
@@ -30,8 +30,8 @@ public class Deck extends ArrayList<Card> {
        Collections.shuffle(this);
     }
 
-    public Map<GameUser,Deck> deal(List<GameUser> users, GameMode gameMode) {
-        Map<GameUser,Deck> deal = new HashMap<>();
+    public Map<User,Deck> deal(List<User> users, GameMode gameMode) {
+        Map<User,Deck> deal = new HashMap<>();
         this.shuffle();
         switch (gameMode.getName()) {
             case "The Well": 
@@ -49,13 +49,13 @@ public class Deck extends ArrayList<Card> {
         return deal;
     }
 
-    private void dealForThePoisonedGift(Map<GameUser, Deck> deal, List<GameUser> users) {
+    private void dealForThePoisonedGift(Map<User, Deck> deal, List<User> users) {
         //Same as the Tower
         dealForTheTower(deal, users);
     }
     
-    private void dealForTheTower(Map<GameUser, Deck> deal, List<GameUser> users) {
-        for(GameUser user : users){ 
+    private void dealForTheTower(Map<User, Deck> deal, List<User> users) {
+        for(User user : users){ 
             int i = users.indexOf(user);
             deal.put(user, Deck.of(this.get(i)));
         }
@@ -63,10 +63,10 @@ public class Deck extends ArrayList<Card> {
     }
     
  
-    private void dealForTheWell(Map<GameUser,Deck> deal, List<GameUser> users) {
+    private void dealForTheWell(Map<User,Deck> deal, List<User> users) {
         Integer cardsPerUser = (this.size()-1)/users.size();
         int i = 0;
-        for(GameUser user : users){ 
+        for(User user : users){ 
             deal.put(user, Deck.of(this.subList(i, i+cardsPerUser)));
             i += cardsPerUser;
         }

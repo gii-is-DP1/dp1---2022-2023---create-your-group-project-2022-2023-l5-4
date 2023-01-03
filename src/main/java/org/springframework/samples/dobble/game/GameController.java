@@ -124,15 +124,15 @@ public class GameController {
     @GetMapping("/{gameId}/start")
     public String startGame(@PathVariable("gameId") Long gameId) {
         Game game = gameService.findGame(gameId);
-        List<GameUser> users = game.getUsers();
+        List<User> users = game.getUsers();
         Deck cards = Deck.of(cardService.findAll());
         
-        Map<GameUser, Deck> deal = cards.deal(users, game.getGamemode());
+        Map<User, Deck> deal = cards.deal(users, game.getGamemode());
         Deck centralDeck = cards.getLeftForCenter();
-        game.setCentralDeck(centralDeck);
+        game.setCards(centralDeck);
         users.forEach(user -> {
             user.setCards(deal.get(user));
-            gameUserService.saveGameUser(user);
+            userService.saveUser(user);
         });
         game.setState(GameState.STARTED);
         gameService.saveGame(game);

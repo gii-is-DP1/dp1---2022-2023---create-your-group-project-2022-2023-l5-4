@@ -152,7 +152,7 @@
                 <c:if test="${players[4]!=null}">
                     <dobble:card className="card" value="${players[4]}"/>
                     <p class="player-name">
-                        <c:out value="${players[4].user.username.user}"/>
+                        <c:out value="${players[4].username}"/>
                     </p>
                 </c:if>
             </div>
@@ -162,7 +162,7 @@
                 <c:if test="${players[0]!=null}">
                     <dobble:card className="card" value="${players[0]}"/>
                     <p class="player-name">
-                        <c:out value="${players[0].user.username}"/>
+                        <c:out value="${players[0].username}"/>
                     </p>
                 </c:if>
             </div>
@@ -170,7 +170,7 @@
                 <c:if test="${players[2]!=null}">
                     <dobble:card className="card" value="${players[2]}"/>
                     <p class="player-name">
-                        <c:out value="${players[2].user.username}"/>
+                        <c:out value="${players[2].username}"/>
                     </p>
                 </c:if>
             </div>
@@ -180,7 +180,7 @@
                 <c:if test="${players[1]!=null}">
                     <dobble:card className="card" value="${players[1]}"/>
                     <p class="player-name">
-                        <c:out value="${players[1].user.username}"/>
+                        <c:out value="${players[1].username}"/>
                     </p>
                 </c:if>
             </div>
@@ -188,7 +188,7 @@
                 <c:if test="${players[3]!=null}">
                     <dobble:card className="card" value="${players[3]}"/>
                     <p class="player-name">
-                        <c:out value="${players[3].user.username}"/>
+                        <c:out value="${players[3].username}"/>
                     </p>
                 </c:if>
             </div>
@@ -203,7 +203,7 @@
                 <c:if test="${mainPlayer!=null}">
                     <dobble:card className="card" value="${mainPlayer}"/>
                     <p class="player-name">
-                        <c:out value="${mainPlayer.user.username}"/>
+                        <c:out value="${mainPlayer.username}"/>
                     </p>
                 </c:if> 
                 

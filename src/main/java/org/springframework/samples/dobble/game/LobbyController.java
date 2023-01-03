@@ -1,6 +1,9 @@
 package org.springframework.samples.dobble.game;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +40,7 @@ public class LobbyController {
     @GetMapping
     public ModelAndView lobbyGame(@PathVariable("gameId") Long gameId) {
         Game game = this.gameService.findGame(gameId);
-        Iterable<GameUser> mazos=game.getUsers();
+        List<User> mazos=game.getUsers();
 		ModelAndView result=new ModelAndView("games/LobbyGame");
 		result.addObject("users", mazos);
         result.addObject("game", game);
