@@ -44,11 +44,6 @@ public class TournamentController {
     private TournamentService tournamentService;
     private GameUserService gameUserService;
 
-
-    @ModelAttribute("gamemodes")
-    public Iterable<GameMode> populateGameModes() {
-        return this.tournamentService.findGameModes();
-    }
     @Autowired
     public TournamentController(TournamentService tournamentService, UserService userService, GameUserService gameUserService, GameService gameService) {
         this.tournamentService = tournamentService;
@@ -84,7 +79,7 @@ public class TournamentController {
     public ModelAndView initCreationForm() {
         ModelAndView result=new ModelAndView(VIEWS_TOURNAMENTS_CREATE_OR_UPDATE_FORM);	
 		result.addObject("tournament", new Tournament());
-		result.addObject("allGamemodes", populateGameModes());
+		result.addObject("gamemodes", tournamentService.findGameModes());
 		return result;
     }
 
@@ -98,7 +93,7 @@ public class TournamentController {
         if (result.hasErrors())
             return VIEWS_TOURNAMENTS_CREATE_OR_UPDATE_FORM;
         tournament.setState(TournamentState.LOBBY);
-        this.tournamentService.saveTournament(tournament);
+        tournamentService.saveTournament(tournament);
         return "redirect:/tournaments/" + tournament.getId();
     }
 
@@ -137,7 +132,35 @@ public class TournamentController {
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
         Iterable<User> mazos=tournament.getUsers();
 		ModelAndView result=new ModelAndView("tournaments/LobbyTournament");
-		result.addObject("users", mazos);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        Boolean isOwner = tournament.getOwner().getUsername().compareTo(userId)==0;
+		result.addObject("isowner", isOwner);
+        result.addObject("users", mazos);
+        result.addObject("allGameModes", tournamentService.findGameModes());
+        result.addObject("tournament", tournament);
+		return result;	
+    }
+
+    @PostMapping(path="/{id}/lobby")
+	public String grabarParlamentario(@ModelAttribute("tournament")  Tournament tournamentForm, @PathVariable("id") long id) {
+		Tournament tournament = this.tournamentService.findTournament(id);
+        tournament.setOwner(tournamentForm.getOwner());
+        tournament.setGamemodes(tournamentForm.getGamemodes());
+        TournamentService.saveTournament(tournament);
+		return "redirect:/tournaments/"+id+"/lobby";
+    }
+
+    @GetMapping("/{tournamentId}/edit")
+    public ModelAndView editTournament(@PathVariable("tournamentId") Long tournamentId) {
+        Tournament tournament = this.tournamentService.findTournament(tournamentId);
+        Iterable<User> mazos=tournament.getUsers();
+        List<String> users = new ArrayList<String>();
+        for(User u:mazos){
+            users.add(u.getUsername());
+        }
+		ModelAndView result=new ModelAndView("tournaments/createOrUpdateGameForm");
+        result.addObject("users", users);
         result.addObject("tournament", tournament);
 		return result;	
     }
