@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.samples.dobble.card.Card;
+import org.springframework.samples.dobble.card.Hand;
 import org.springframework.samples.dobble.model.BaseEntity;
 import org.springframework.samples.dobble.user.User;
 
@@ -52,6 +53,9 @@ public class GameUser {
     
     @ManyToMany
     List<Card> cards;
+
+    @Transient
+    private Hand hand;
     
     public String toString(){
         return user.toString();
@@ -63,14 +67,10 @@ public class GameUser {
         return this.user.equals(other.getUser()) && this.game.equals(other.getGame());
     }
 
-    public Card getCurrentCard(){
-        return cards.get(cards.size()-1);
+    public Hand getHand() {
+        if (this.hand==null) this.hand = Hand.of(cards);
+        return hand;
     }
-
-    public void nextCard(){
-        cards.remove(getCurrentCard());
-    }
-
 
 }
 

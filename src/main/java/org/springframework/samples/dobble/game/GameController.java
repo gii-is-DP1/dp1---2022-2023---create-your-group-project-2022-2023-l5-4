@@ -112,7 +112,7 @@ public class GameController {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
-            gameService.addGameUser(gameId, userId, accessCode);
+            gameUserService.addGameUser(gameId, userId, accessCode);
         } catch(Exception e) {
             return "redirect:/games?error="+ e.getMessage();
         } 

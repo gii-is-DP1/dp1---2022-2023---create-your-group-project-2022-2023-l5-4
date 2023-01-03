@@ -110,7 +110,7 @@ img {object-fit: contain}
   </style>
 
 
-<c:set value="${value.getCurrentCard()}" var="card"/>
+<c:set value="${value.getHand().getCurrentCard()}" var="card"/>
 <div class="${className}">
   <div class="dobble-card">
 <c:if test="${listing==true}">
@@ -118,49 +118,50 @@ img {object-fit: contain}
    <c:out value="${card.getId()}"/>
 </div>
 </c:if>
+
+
   <div class="dobble-card-layout">
     <div class="dobble-card-symbol-container symbol0">
       
-          <dobble:symbol id="symbol0" symbol="${card.symbols[0]}" listing="${listing}"/>
+          <dobble:symbol id="symbol0" symbol="${card.symbols[0]}" listing="${listing}" user="${centralDeck ? null : value.user}"/>
       
     </div>
     <div class="dobble-card-symbol-container symbol1">
       
-          <dobble:symbol id="symbol1" symbol="${card.symbols[1]}" listing="${listing}"/>
+          <dobble:symbol id="symbol1" symbol="${card.symbols[1]}" listing="${listing}" user="${centralDeck ? null : value.user}"/>
       
     </div>
 	<div class="dobble-card-symbol-container symbol2">
 
-             <dobble:symbol id="symbol2" symbol="${card.symbols[2]}" listing="${listing}"/>
+             <dobble:symbol id="symbol2" symbol="${card.symbols[2]}" listing="${listing}" user="${centralDeck ? null : value.user}"/>
 
     </div>
 	<div class="dobble-card-symbol-container symbol3">
             
-            <dobble:symbol id="symbol3" symbol="${card.symbols[3]}" listing="${listing}"/>
+            <dobble:symbol id="symbol3" symbol="${card.symbols[3]}" listing="${listing}" user="${centralDeck ? null : value.user}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol4">
             
-            <dobble:symbol id="symbol4" symbol="${card.symbols[4]}" listing="${listing}"/>
+            <dobble:symbol id="symbol4" symbol="${card.symbols[4]}" listing="${listing}" user="${centralDeck ? null : value.user}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol5">
 	        
-                <dobble:symbol id="symbol5" symbol="${card.symbols[5]}" listing="${listing}"/>
+                <dobble:symbol id="symbol5" symbol="${card.symbols[5]}" listing="${listing}" user="${centralDeck ? null : value.user}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol6">
 	        
-               <dobble:symbol id="symbol6" symbol="${card.symbols[6]}" listing="${listing}"/>
+               <dobble:symbol id="symbol6" symbol="${card.symbols[6]}" listing="${listing}" user="${centralDeck ? null : value.user}"/>
             
     </div>
 	<div class="dobble-card-symbol-container symbol7">
 	        
-            <dobble:symbol id="symbol7" symbol="${card.symbols[7]}" listing="${listing}"/>
+            <dobble:symbol id="symbol7" symbol="${card.symbols[7]}" listing="${listing}" user="${centralDeck ? null : value.user}"/>
             
     </div>
 	</div>
-	      
   </div>
 </div>
 <script>

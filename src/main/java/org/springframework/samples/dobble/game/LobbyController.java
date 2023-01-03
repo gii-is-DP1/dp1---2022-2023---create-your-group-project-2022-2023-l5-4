@@ -47,7 +47,7 @@ public class LobbyController {
     @GetMapping(path="/delete/{id}")
 	public String DeleteUsersGame(@PathVariable("gameId") Long gameId, @PathVariable("id") String id, RedirectAttributes redirAttrs) {
        try {
-            gameService.deleteGameUser(gameId, id);
+            gameUserService.deleteGameUser(gameId, id);
        } catch(Exception e) {
            return "redirect:/games?error="+ e.getMessage();
         } 

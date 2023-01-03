@@ -70,7 +70,7 @@ public class MatchController {
     public String deleteUsersGame(@PathVariable("gameId") Long gameId,
             @PathVariable("userId") String userId, RedirectAttributes redirAttrs) {
         try {
-            gameService.deleteGameUser(gameId, userId);
+            gameUserService.deleteGameUser(gameId, userId);
         } catch (Exception e) {
             return "redirect:/games?error=" + e.getMessage();
         }
@@ -82,17 +82,27 @@ public class MatchController {
 
 
     @PostMapping("/match")
-    public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") Long symbolId) {
+    public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") Symbol symbol,  @ModelAttribute("user") User user) {
         //This method steps are only made for testing at the moment. For the next sprint it will 
-        //fully implement the required mehtod
-        System.out.println("MATCH");
+        //fully implement the required mehtoda
         Game game = gameService.findGame(gameId);
-        Symbol symbol = symbolService.findById(symbolId);
-        Boolean test = game.getCurrentCard().getSymbols().contains(symbol);
-        if (test) game.nextCard();;
-        gameService.saveGame(game);
-        if (game.getCentralDeck().size()==0) return "redirect:play?NoMoreCardsInTheCenter";
-        return "redirect:play?" + test;
+        Boolean symbolMatches = game.getHand().getCurrentCard().matches(symbol);
+        Boolean userMatches = true;
+        switch (game.getGamemode().getName()) {
+            case "The Poisoned Gift":
+                userMatches = user.getUsername()!=null && !user.getUsername().equals(userService.getSessionUser());
+                break;  
+            default:
+                userMatches = user.getUsername()!=null && user.getUsername().equals(userService.getSessionUser());
+                break;  
+        }
+        System.out.println("HEEEEEEEEEEEEERE");
+        System.out.println(symbolMatches);
+        System.out.println(userMatches);
+        if (symbolMatches && userMatches) gameUserService.makePlay(game, user);
+       
+        if (game.getCentralDeck().size()==0) return "redirect:/games/{gameId}/play?NoMoreCardsInTheCenter";
+        return "redirect:/games/{gameId}/play?" + userMatches;
     }
     
 }

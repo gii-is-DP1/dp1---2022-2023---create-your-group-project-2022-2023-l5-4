@@ -34,9 +34,15 @@ public class Deck extends ArrayList<Card> {
         Map<GameUser,Deck> deal = new HashMap<>();
         this.shuffle();
         switch (gameMode.getName()) {
-            case "The Well": dealForTheWell(deal, users);
-            case "The Tower": dealForTheTower(deal, users);
-            case "The Poisoned Gift": dealForThePoisonedGift(deal, users);
+            case "The Well": 
+                dealForTheWell(deal, users);
+                break;
+            case "The Tower": 
+                dealForTheTower(deal, users);
+                break;
+            case "The Poisoned Gift":
+                dealForThePoisonedGift(deal, users);
+                break;
             default: dealForTheWell(deal, users);
         }
        

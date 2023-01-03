@@ -41,6 +41,16 @@ public class Card extends BaseEntity{
 
 	private List<Symbol> symbols;
 
-    
+    public Boolean matches(Symbol symbol) {
+        return this.symbols.contains(symbol);
+    }
+
+    public Symbol matchingSymbol(Card other) {
+        return other.getSymbols()
+        .stream()
+        .filter(symbol->matches(symbol))
+        .findAny()
+        .orElse(null);
+    }
 }
 

@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.samples.dobble.card.Card;
+import org.springframework.samples.dobble.card.Hand;
 import org.springframework.samples.dobble.model.BaseEntity;
 import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.samples.dobble.user.User;
@@ -65,6 +66,9 @@ public class Game extends BaseEntity {
     @ManyToMany
     @JoinTable(name = "gamecards")
     private List<Card> centralDeck;
+
+    @Transient
+    private Hand hand;
 
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'LOBBY'")
@@ -120,11 +124,9 @@ public class Game extends BaseEntity {
         return this.getUsers().size()==this.maxPlayers;
     }
 
-    public Card getCurrentCard(){
-        return centralDeck.get(centralDeck.size()-1);
-    }
-
-    public void nextCard(){
-        centralDeck.remove(getCurrentCard());
+    
+    public Hand getHand() {
+        if (this.hand==null) this.hand = Hand.of(centralDeck);
+        return hand;
     }
 }

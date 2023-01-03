@@ -21,14 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class GameService {
 
 	private GameRepository gameRepository;
-	private GameUserService gameUserService;
 	private UserService userService;
 
 	@Autowired
-	public GameService(GameRepository gameRepository, GameUserService gameUserService, UserService userService) {
+	public GameService(GameRepository gameRepository, UserService userService) {
 		this.gameRepository = gameRepository;
 		this.userService = userService;
-		this.gameUserService = gameUserService;
 	}
 
 	@Transactional(readOnly = true)
@@ -65,59 +63,5 @@ public class GameService {
 	public void deleteGameById(Long gameId) {
 		gameRepository.deleteById(gameId);
 	}
-
-	@Transactional
-	public void addGameUser(Long gameId, String username, String accessCode) throws AuthException, NullPointerException, IllegalStateException{
-		Game game = gameRepository.findById(gameId).orElse(null);
-		User user = userService.findUser(username);
-		GameUser gameUser = new GameUser(user, game);
-
-		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
-
-		if (!game.validAccessCode(accessCode)) throw new AuthException("Wrong Access Code");
-		
-		if (game.isFull()) throw new IllegalStateException("The game is already full");
-		
-		if (!game.hasStarted() && !game.getUsers().contains(gameUser)) {
-			gameUserService.saveGameUser(gameUser);
-			userService.setCurrentGame(user, game);
-		}
-
-		
-	}
-
-	@Transactional
-	public void deleteGameUser(Long gameId, String username)
-			throws AuthException, NullPointerException, IllegalStateException {
-		Game game = gameRepository.findById(gameId).orElse(null);
-		User user = userService.findUser(username);
-		GameUser gameUser = gameUserService.findGameUser(GameUserPk.of(user, game));
-		if (game == null || user == null)
-			throw new NullPointerException("Neither user or game can be null");
-
-		if (!game.hasStarted()) {
-			gameUserService.delete(gameUser);
-			userService.setCurrentGame(user, null);
-		}
-	}
-	public void addGameUserTournament(Long gameId, String username) throws AuthException, NullPointerException, IllegalStateException{
-		Game game = gameRepository.findById(gameId).orElse(null);
-		User user = userService.findUser(username);
-		GameUser gameUser = new GameUser(user, game);
-
-		if (game == null || user == null) throw new NullPointerException("Neither user or game can be null");
-
-		
-		if (game.isFull()) throw new IllegalStateException("The game is already full");
-		
 	
-		System.out.println("ENTRA");
-		gameUserService.saveGameUser(gameUser);
-		userService.setCurrentGame(user, game);
-		gameRepository.save(game);
-	
-
-		
-	}
-
 }
