@@ -50,7 +50,7 @@
 						<td><mvc:label path="gamemodes">Gamemodes:</mvc:label></td>
 						<td>
 							<mvc:select path="gamemodes" multiple="multiple" size="3"> 
-								<mvc:options items="${allGameModes}" itemValue="name" itemLabel="name"></mvc:options>
+								<mvc:options items="${gamemodes}" itemValue="name" itemLabel="name"></mvc:options>
 							</mvc:select>
 						</td>
 					</tr>

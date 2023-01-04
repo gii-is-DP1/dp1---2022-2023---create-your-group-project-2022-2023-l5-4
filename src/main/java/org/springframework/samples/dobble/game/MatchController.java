@@ -50,8 +50,15 @@ public class MatchController {
 
     @GetMapping
     public ModelAndView playGame(@PathVariable("gameId") Long gameId) {
-        ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
+        
         Game game = this.gameService.findGame(gameId);
+        
+        if (!game.hasStarted()) return new ModelAndView("redirect:/games?error=TheGameHasNotStartedYet");
+        if (game.isFinished()) return new ModelAndView("redirect:/games/{gameId}/results");
+
+        if (!game.getUsers().contains(userService.getSessionUser())) return new ModelAndView("redirect:/games?error=noAuth");
+        
+        ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User mainPlayer = userService.findUser(username);
@@ -89,16 +96,16 @@ public class MatchController {
 
         Game game = gameService.findGame(gameId);
 
-        if (!game.isOnPlay() || game.getUsers().contains(user)) return "noauth...todo";
 
         Boolean symbolMatches = game.getCurrentCard().matches(symbol);
-        Boolean userMatches = true;
-        switch (game.getGamemode().getName()) {
-            case "The Poisoned Gift":
-                userMatches = user.getUsername()!=null && !user.getUsername().equals(userService.getSessionUser());
+        Boolean userMatches;
+
+        switch (game.getGamemode()) {
+            case THE_POISONED_GIFT:
+                userMatches = user.getUsername()!=null && !user.equals(userService.getSessionUser());
                 break;  
             default:
-                userMatches = user.getUsername()!=null && user.getUsername().equals(userService.getSessionUser());
+                userMatches = user.getUsername()!=null && user.equals(userService.getSessionUser());
                 break;  
         }
         
@@ -109,7 +116,7 @@ public class MatchController {
             gameService.endGame(game, user);
             return "redirect:/games/{gameId}/results";
         }
-        
+
         return "redirect:/games/{gameId}/play";
     }
     

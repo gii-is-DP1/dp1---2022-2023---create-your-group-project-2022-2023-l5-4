@@ -50,8 +50,7 @@ public class Game extends HandedEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-    @JoinColumn(name = "gamemodeId")
+    @Enumerated(EnumType.STRING)
     @NotNull
     private GameMode gamemode;
 

@@ -148,15 +148,6 @@ INSERT INTO cardsymbols(card_id, symbol_id) VALUES
 (54,30),(54,26),(54,39),(54,1),(54,50),(54,12),(54,16),(54,7),
 (55,6),(55,28),(55,31),(55,30),(55,47),(55,20),(55,3),(55,35);
 
--- Gamemodes --
-
-INSERT INTO gamemodes(id, name) VALUES 
-(1, 'The Well'),
-(2, 'The Tower'),
-(3, 'The Poisoned Gift');
-
-
-
 -- Initial users, not needed but useful for testing --
 
 INSERT INTO USERS(username, password, enabled) VALUES 
@@ -181,17 +172,17 @@ INSERT INTO USERS(username, password, enabled) VALUES
 
 -- Initial games, not needed but useful for testing --
 
-INSERT INTO games(id, access_code, max_players, state, gamemode_Id, owner_Id, winner_Id) VALUES 
-(1, null, 4, 'LOBBY', 1, 'User17', null),
-(2, null, 6, 'LOBBY', 1, 'User16', null),
-(3, 1234, 2, 'LOBBY', 2, 'User15', null),
-(4, null, 6, 'LOBBY', 3, 'User14', null),
-(5, null, 6, 'LOBBY', 3, 'User13', null),
-(6, null, 3, 'LOBBY', 1, 'User12', null),
-(7, 1234, 4, 'LOBBY', 1, 'User9', null),
-(8, null, 6, 'LOBBY', 2, 'User11', null),
-(9, 1234, 6, 'LOBBY', 2, 'User10', null),
-(10, 1234, 2, 'LOBBY', 1, 'User8', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winner_Id) VALUES 
+(1, null, 4, 'LOBBY', 'THE_TOWER', 'User17', null),
+(2, null, 6, 'LOBBY', 'THE_TOWER', 'User16', null),
+(3, 1234, 2, 'LOBBY', 'THE_WELL', 'User15', null),
+(4, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User14', null),
+(5, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User13', null),
+(6, null, 3, 'LOBBY', 'THE_TOWER', 'User12', null),
+(7, 1234, 4, 'LOBBY', 'THE_TOWER', 'User9', null),
+(8, null, 6, 'LOBBY', 'THE_WELL', 'User11', null),
+(9, 1234, 6, 'LOBBY', 'THE_WELL', 'User10', null),
+(10, 1234, 2, 'LOBBY', 'THE_TOWER', 'User8', null);
 
 
 -- Initial users into games --
@@ -227,27 +218,27 @@ INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (9, null, 6, 'LOBBY', 'admin1', null);
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (10, null, 2, 'LOBBY', 'User8', null);
 
-INSERT INTO GAMEMODETOURNAMENT(tournament_id, game_mode_id) VALUES 
-(1,1), 
-(1,2), 
-(2,1), 
-(2,2), 
-(2,3), 
-(3,2),
-(3,3),
-(4,1), 
-(5,1), 
-(5,2),
-(5,3),
-(6,1), 
-(7,1), 
-(7,3),
-(8,1), 
-(8,3),
-(9,2),
-(9,3), 
-(10,2),
-(10,3);
+INSERT INTO TOURNAMENT_GAMEMODES(tournament_id, gamemode) VALUES 
+(1,'THE_TOWER'), 
+(1,'THE_WELL'), 
+(2,'THE_TOWER'), 
+(2,'THE_WELL'), 
+(2,'THE_POISONED_GIFT'), 
+(3,'THE_WELL'),
+(3,'THE_POISONED_GIFT'),
+(4,'THE_TOWER'), 
+(5,'THE_TOWER'), 
+(5,'THE_WELL'),
+(5,'THE_POISONED_GIFT'),
+(6,'THE_TOWER'), 
+(7,'THE_TOWER'), 
+(7,'THE_POISONED_GIFT'),
+(8,'THE_TOWER'), 
+(8,'THE_POISONED_GIFT'),
+(9,'THE_WELL'),
+(9,'THE_POISONED_GIFT'), 
+(10,'THE_WELL'),
+(10,'THE_POISONED_GIFT');
 
 INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User17',1);
 INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User16',2);

@@ -51,6 +51,11 @@ public class TournamentController {
         this.gameUserService = gameUserService;
     }
 
+    @ModelAttribute("gamemodes")
+    public List<GameMode> populateGameModes() {
+        return List.of(GameMode.THE_TOWER, GameMode.THE_WELL, GameMode.THE_POISONED_GIFT);
+    }
+
     @GetMapping
     public ModelAndView indexUnstartedTournaments() {
         ModelAndView mav = new ModelAndView(VIEW_INDEX_TOURNAMENTS);
@@ -78,7 +83,6 @@ public class TournamentController {
     public ModelAndView initCreationForm() {
         ModelAndView result=new ModelAndView(VIEWS_TOURNAMENTS_CREATE_OR_UPDATE_FORM);	
 		result.addObject("tournament", new Tournament());
-		result.addObject("gamemodes", tournamentService.findGameModes());
 		return result;
     }
 
@@ -136,7 +140,6 @@ public class TournamentController {
         Boolean isOwner = tournament.getOwner().getUsername().compareTo(userId)==0;
 		result.addObject("isowner", isOwner);
         result.addObject("users", mazos);
-        result.addObject("allGameModes", tournamentService.findGameModes());
         result.addObject("tournament", tournament);
 		return result;	
     }

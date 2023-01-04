@@ -85,4 +85,8 @@ public class User extends HandedEntity {
         return null;
     }
 
+	public Boolean equals(User other) {
+		return this.username.equals(other.getUsername());
+	}
+
 }

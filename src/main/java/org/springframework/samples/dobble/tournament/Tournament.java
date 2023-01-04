@@ -1,5 +1,8 @@
 package org.springframework.samples.dobble.tournament;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -39,9 +42,9 @@ public class Tournament extends BaseEntity {
     public Tournament() {
     }
 
-    @Size(max=10, min=2)
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "gamemodetournament", joinColumns = @JoinColumn(name = "tournamentId", nullable = false, table = "tournaments"), inverseJoinColumns = @JoinColumn(name = "gameModeId", nullable = false, table = "gameModes"))
+    @ElementCollection(targetClass = GameMode.class)
+    @Column(name="gamemode")
+    @Enumerated(EnumType.STRING)
 	private List<GameMode> gamemodes;
 
     @ManyToOne

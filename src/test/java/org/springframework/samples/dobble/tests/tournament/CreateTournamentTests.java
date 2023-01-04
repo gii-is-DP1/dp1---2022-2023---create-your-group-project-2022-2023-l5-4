@@ -28,10 +28,8 @@ public class CreateTournamentTests extends TournamentServiceTests{
         tour.setOwner(owner);
         tour.setMaxPlayers(4);
 
-        GameMode gameMode = new GameMode();
-        GameMode gameMode1 = new GameMode();
-        gameMode.setName("The Well");
-        gameMode1.setName("The Tower");
+        GameMode gameMode = GameMode.THE_WELL;
+        GameMode gameMode1 = GameMode.THE_TOWER;
         List<GameMode> res = new ArrayList<>();
         res.add(gameMode1);
         res.add(gameMode);
