@@ -11,8 +11,8 @@
 
     <table class="table table-striped">
         <tr>
-            <c:forEach items="${tournament.gamemodes}" var="p">
-                <c:out value="${p.name}"/>,
+            <c:forEach items="${tournament.gamemodes}" var="gamemode">
+                <c:out value="${gamemode}"/>,
             </c:forEach>
         </tr>
         <tr>

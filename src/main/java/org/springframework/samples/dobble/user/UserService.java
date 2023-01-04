@@ -73,10 +73,10 @@ public class UserService {
 
     }
 
-	public String getSessionUser() {
+	public User getSessionUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String userId = authentication.getName();
-		return userId;
+		String username = authentication.getName();
+		return findUser(username);
 	}
 
 	@Transactional

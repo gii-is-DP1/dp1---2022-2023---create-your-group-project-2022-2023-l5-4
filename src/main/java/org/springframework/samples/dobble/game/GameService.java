@@ -30,11 +30,6 @@ public class GameService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<GameMode> findGameModes() throws DataAccessException {
-		return gameRepository.findGameModes();
-	}
-
-	@Transactional(readOnly = true)
 	public List<Game> findAllUnstartedGames() throws DataAccessException {
 		return gameRepository.findAllUnstarted();
 	}

@@ -62,14 +62,17 @@ public class GameController {
     // Game entity related actions
     @ModelAttribute("gamemodes")
     public List<GameMode> populateGameModes() {
-        return this.gameService.findGameModes();
+        return List.of(GameMode.values());
     }
 
     @GetMapping
     public ModelAndView indexUnstartedGames() {
         ModelAndView mav = new ModelAndView(VIEW_INDEX_GAMES);
+        System.out.println("MODEL IS OK");
         List<Game> games = this.gameService.findAllUnstartedGames();
+        System.out.println("GAMESERVICEISOK");
         mav.addObject("games", games);
+        System.out.println("MAV ADD OK");
         return mav;
 
     }

@@ -75,7 +75,6 @@ public class GameUserService {
 		if (game.isFull()) throw new IllegalStateException("The game is already full");
 		
 	
-		System.out.println("ENTRA");
 		game.getUsers().add(user);
 		gameService.saveGame(game);
 		userService.setCurrentGame(user, game);
@@ -84,16 +83,16 @@ public class GameUserService {
 
 
 	public void makePlay(Game game, User user) {
-		switch (game.getGamemode().getName()) {
-			case "The Tower":
+		switch (game.getGamemode()) {
+			case THE_TOWER:
 				user.getCards().add(game.getCurrentCard());
 				game.nextCard();
 				break;
-			case "The Well":
+			case THE_WELL:
 				game.getCards().add(user.getCurrentCard());
 				user.nextCard();
 				break;
-			case "The Poisoned Gift":
+			case THE_POISONED_GIFT:
 				user.getCards().add(game.getCurrentCard());
 				game.nextCard();
 				break;
