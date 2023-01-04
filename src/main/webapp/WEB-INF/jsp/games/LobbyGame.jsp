@@ -24,14 +24,11 @@
 		</tr>
 		 <c:forEach items="${users}" var="user">
 			<tr>
-				<td><c:out value="${user.user.username}"/></td>				
+				<td><c:out value="${user.username}"/></td>				
 				<td>
-					<a href="/users/profile/${user.user.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;
-					<a href="/games/${game.id}/lobby/delete/${user.user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
-					<a href="/friends/add/${user.user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a> 
-									
-					
-						
+					<a href="/users/profile/${user.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;
+					<a href="/games/${game.id}/lobby/delete/${user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
+					<a href="/friends/add/${user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a> 		
 				</td>
 			</tr>
 		</c:forEach>		

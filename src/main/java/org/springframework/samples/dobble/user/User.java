@@ -12,8 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.samples.dobble.card.HandedEntity;
 import org.springframework.samples.dobble.game.Game;
+import org.springframework.samples.dobble.statistics.Achievement;
 import org.springframework.samples.dobble.tournament.Tournament;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +25,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "users")
-public class User{
+public class User extends HandedEntity {
 
 	public User(){}
 	
@@ -38,6 +41,9 @@ public class User{
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;
+
+	@ManyToMany
+	private Set<Achievement> achievements;
 
 	@ManyToOne
 	private Game currentGame;
@@ -74,5 +80,13 @@ public class User{
     public void removeFriend(User user) {
         friends.remove(user);
     }
+
+    public ModelAndView getAchievements() {
+        return null;
+    }
+
+	public Boolean equals(User other) {
+		return this.username.equals(other.getUsername());
+	}
 
 }

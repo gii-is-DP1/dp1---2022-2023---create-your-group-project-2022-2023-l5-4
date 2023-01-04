@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameService;
-import org.springframework.samples.dobble.game.GameUser;
 import org.springframework.samples.dobble.symbol.SymbolService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +35,7 @@ public class CardController{
 		List<Card> cards=cardService.findAll();
 		Game mockGame = new Game();
 		Collections.reverse(cards);
-		mockGame.setCentralDeck(cards);
+		mockGame.setCards(cards);
 		ModelAndView result=new ModelAndView(CARD_LIST_VIEW);
 		result.addObject("mockGame", mockGame);
 		return result;

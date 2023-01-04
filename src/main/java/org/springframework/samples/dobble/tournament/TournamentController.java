@@ -15,7 +15,6 @@ import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameMode;
 import org.springframework.samples.dobble.game.GameService;
 import org.springframework.samples.dobble.game.GameState;
-import org.springframework.samples.dobble.game.GameUser;
 import org.springframework.samples.dobble.game.GameUserService;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
@@ -44,17 +43,17 @@ public class TournamentController {
     private TournamentService tournamentService;
     private GameUserService gameUserService;
 
-
-    @ModelAttribute("gamemodes")
-    public Iterable<GameMode> populateGameModes() {
-        return this.tournamentService.findGameModes();
-    }
     @Autowired
     public TournamentController(TournamentService tournamentService, UserService userService, GameUserService gameUserService, GameService gameService) {
         this.tournamentService = tournamentService;
         this.userService = userService;
         this.gameService = gameService;
         this.gameUserService = gameUserService;
+    }
+
+    @ModelAttribute("gamemodes")
+    public List<GameMode> populateGameModes() {
+        return List.of(GameMode.THE_TOWER, GameMode.THE_WELL, GameMode.THE_POISONED_GIFT);
     }
 
     @GetMapping
@@ -84,7 +83,6 @@ public class TournamentController {
     public ModelAndView initCreationForm() {
         ModelAndView result=new ModelAndView(VIEWS_TOURNAMENTS_CREATE_OR_UPDATE_FORM);	
 		result.addObject("tournament", new Tournament());
-		result.addObject("allGamemodes", populateGameModes());
 		return result;
     }
 
@@ -98,46 +96,73 @@ public class TournamentController {
         if (result.hasErrors())
             return VIEWS_TOURNAMENTS_CREATE_OR_UPDATE_FORM;
         tournament.setState(TournamentState.LOBBY);
-        this.tournamentService.saveTournament(tournament);
+        tournamentService.saveTournament(tournament);
         return "redirect:/tournaments/" + tournament.getId();
     }
 
-    @GetMapping("/{tournamentId}/play")
-    public String playTournament(@PathVariable("tournamentId") Long tournamentId) {
-        Tournament tournament = this.tournamentService.findTournament(tournamentId);
-        Game game = new Game();
-        List<GameUser> gameusers = new ArrayList<>();
-        game.setGamemode(tournament.getGamemodes().get(0));
-        game.setOwner(tournament.getOwner());
-        game.setMaxPlayers(tournament.getMaxPlayers());
-        game.setWinner(null);
-        game.setState(GameState.LOBBY);
-        gameService.saveGame(game);
-        for(User user: tournament.getUsers()){
-                GameUser gameUser = new GameUser(user, game);
-                userService.setCurrentGame(user, game);
-                gameUserService.saveGameUser(gameUser);
-                gameusers.add(gameUser);
-        }
-        gameService.saveGame(game);
-        List<Game> games = tournament.getGames();
-        games.add(game);
-        tournament.setGames(games);
-        if(tournament.getGamemodes().size()>1){
-            List<GameMode> mode = tournament.getGamemodes();
-            mode.remove(0);
-            tournament.setGamemodes(mode);
-        }
-        TournamentService.saveTournament(tournament);
-		return "redirect:/games/"+game.getId()+"/start";	
-    }
+    // @GetMapping("/{tournamentId}/play")
+    // public String playTournament(@PathVariable("tournamentId") Long tournamentId) {
+    //     Tournament tournament = this.tournamentService.findTournament(tournamentId);
+    //     Game game = new Game();
+    //     List<GameUser> gameusers = new ArrayList<>();
+    //     game.setGamemode(tournament.getGamemodes().get(0));
+    //     game.setOwner(tournament.getOwner());
+    //     game.setMaxPlayers(tournament.getMaxPlayers());
+    //     game.setWinner(null);
+    //     game.setState(GameState.LOBBY);
+    //     gameService.saveGame(game);
+    //     for(User user: tournament.getUsers()){
+    //             GameUser gameUser = new GameUser(user, game);
+    //             userService.setCurrentGame(user, game);
+    //             gameUserService.saveGameUser(gameUser);
+    //             gameusers.add(gameUser);
+    //     }
+    //     gameService.saveGame(game);
+    //     List<Game> games = tournament.getGames();
+    //     games.add(game);
+    //     tournament.setGames(games);
+    //     if(tournament.getGamemodes().size()>1){
+    //         List<GameMode> mode = tournament.getGamemodes();
+    //         mode.remove(0);
+    //         tournament.setGamemodes(mode);
+    //     }
+    //     TournamentService.saveTournament(tournament);
+	// 	return "redirect:/games/"+game.getId()+"/start";	
+    // }
 
     @GetMapping("/{tournamentId}/lobby")
     public ModelAndView lobbyTournament(@PathVariable("tournamentId") Long tournamentId) {
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
         Iterable<User> mazos=tournament.getUsers();
 		ModelAndView result=new ModelAndView("tournaments/LobbyTournament");
-		result.addObject("users", mazos);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        Boolean isOwner = tournament.getOwner().getUsername().compareTo(userId)==0;
+		result.addObject("isowner", isOwner);
+        result.addObject("users", mazos);
+        result.addObject("tournament", tournament);
+		return result;	
+    }
+
+    @PostMapping(path="/{id}/lobby")
+	public String grabarParlamentario(@ModelAttribute("tournament")  Tournament tournamentForm, @PathVariable("id") long id) {
+		Tournament tournament = this.tournamentService.findTournament(id);
+        tournament.setOwner(tournamentForm.getOwner());
+        tournament.setGamemodes(tournamentForm.getGamemodes());
+        TournamentService.saveTournament(tournament);
+		return "redirect:/tournaments/"+id+"/lobby";
+    }
+
+    @GetMapping("/{tournamentId}/edit")
+    public ModelAndView editTournament(@PathVariable("tournamentId") Long tournamentId) {
+        Tournament tournament = this.tournamentService.findTournament(tournamentId);
+        Iterable<User> mazos=tournament.getUsers();
+        List<String> users = new ArrayList<String>();
+        for(User u:mazos){
+            users.add(u.getUsername());
+        }
+		ModelAndView result=new ModelAndView("tournaments/createOrUpdateGameForm");
+        result.addObject("users", users);
         result.addObject("tournament", tournament);
 		return result;	
     }

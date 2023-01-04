@@ -19,6 +19,7 @@ package org.springframework.samples.dobble.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.dom4j.util.UserDataDocumentFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -27,11 +28,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.samples.dobble.game.Game;
 
 
-import org.springframework.samples.dobble.game.GameUser;
-import org.springframework.samples.dobble.game.GameUserPk;
 import org.springframework.samples.dobble.game.GameUserService;
 
 import org.springframework.samples.dobble.tournament.Tournament;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -41,17 +41,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private UserRepository userRepository;
-	private GameUserService gameUserService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
-	@Autowired
-    public void setMissionService( GameUserService gameUserService) {
-        this.gameUserService = gameUserService;
-    }
 
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
@@ -73,15 +68,16 @@ public class UserService {
 
 	@Transactional
     public void setCurrentGame(User user, Game game) {
-		Game currentGame = user.getCurrentGame();
-		if (currentGame!=null && !currentGame.isFinished()){
-			GameUser gameUser = gameUserService.findGameUser(GameUserPk.of(user,currentGame));
-			gameUserService.delete(gameUser);
-		}
 		user.setCurrentGame(game);
 		userRepository.save(user);
 
     }
+
+	public User getSessionUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		return findUser(username);
+	}
 
 	@Transactional
     public void setCurrentTournament(User user, Tournament tournament) {
