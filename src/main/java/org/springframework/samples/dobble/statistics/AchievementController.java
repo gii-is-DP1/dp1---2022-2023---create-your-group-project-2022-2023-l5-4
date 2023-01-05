@@ -41,7 +41,7 @@ public class AchievementController {
     }
 
     @Transactional(readOnly = true)
-    @GetMapping("/")
+    @GetMapping()
     public ModelAndView showAchievements(){
         ModelAndView result=new ModelAndView(ACHIEVEMENTS_LISTING_VIEW);
         result.addObject("achievements", service.getAchievements());
