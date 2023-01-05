@@ -130,4 +130,8 @@ public class Game extends HandedEntity {
         return this.getUsers().size()==this.maxPlayers;
     }
 
+    public boolean isNew() {
+		return this.id == null;
+	}
+
 }
