@@ -78,7 +78,7 @@
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/users/edit/"/><sec:authentication property="name"/>"
-													class="btn btn-primary btn-block btn-sm">Account Details</a>
+													class="btn btn-primary btn-block btn-sm">Change Password</a>
 											</p>
 										</div>
 									</div>

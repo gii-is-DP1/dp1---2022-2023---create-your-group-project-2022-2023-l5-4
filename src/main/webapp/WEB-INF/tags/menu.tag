@@ -49,7 +49,24 @@
 
 			</ul>
 
-
+			<style>
+				.circulo {
+					position: relative;
+					margin-top: auto;
+					margin-left: 34%;
+					width: 50px;
+					height: 50px;
+					border-radius: 50%;
+					border: 2px solid #000;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					background-color: #808080;
+  				}
+				.glyphicon-user {
+    				color: #fff;
+  				}
+			</style>
 
 
 			<ul class="nav navbar-nav navbar-right">
@@ -69,42 +86,33 @@
 							<li>
 								<div class="navbar-login">
 									<div class="row">
-										<div class="col-lg-4">
+										<div class="col-lg-12">
+											<div class="circulo">
+												<span class="glyphicon glyphicon-user icon-size" style="font-size: 24px;"></span>
+											</div>
 											<p class="text-center">
-												<span class="glyphicon glyphicon-user icon-size"></span>
-											</p>
-										</div>
-										<div class="col-lg-8">
-											<p class="text-left">
 												<strong><sec:authentication property="name"/></strong>
 											</p>
+											<li class="divider"></li>
 											<p class="text-left">
-												<a href="<c:url value="/logout" />"
-													class="btn btn-primary btn-block btn-sm">Logout</a>
+												<a href="<c:url value="/statistics/achievements/"/>"
+													class="btn btn-primary btn-block btn-sm">My profile</a>
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/users/edit/"/><sec:authentication property="name"/>"
-													class="btn btn-primary btn-block btn-sm">Account Details</a>
+													class="btn btn-primary btn-block btn-sm">Change Password</a>
+											</p>
+											<p class="text-left">
+												<a href="<c:url value="/logout" />"
+													class="btn btn-primary btn-block btn-danger btn-sm">Logout</a>
 											</p>
 										</div>
 									</div>
 								</div>
 							</li>
 							<li class="divider"></li>
-                            <li> 
-								<div class="navbar-login navbar-login-session">
-									<div class="row">
-										<div class="col-lg-12">
-											<p>
-												<a href="<c:url value="/statistics/achievements/" />" class="btn btn-primary btn-block">My Profile</a>
-												<a href="#" class="btn btn-danger btn-block">Change
-													Password</a>
-											</p>
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul></li>
+						</ul>
+					</li>
 				</sec:authorize>
 			</ul>
 		</div>

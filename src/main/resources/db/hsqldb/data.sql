@@ -207,16 +207,17 @@ INSERT INTO gameusers(user_id,game_id) VALUES
 ('User0',10);
 
 
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (1, null, 4, 'LOBBY', 'User17', null);
-INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (2, null, 6, 'LOBBY', 'User16', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (3, null, 2, 'LOBBY',  'User15', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (4, null, 6, 'LOBBY', 'User14', null);
-INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (5, null, 6, 'LOBBY', 'User13', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (6, null, 3, 'LOBBY', 'User12', null);
-INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (7, null, 4, 'LOBBY', 'User9', null);
-INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (8, null, 6, 'LOBBY', 'User11', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (9, null, 6, 'LOBBY', 'admin1', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (10, null, 2, 'LOBBY', 'User8', null);
+INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES 
+(1, null, 4, 'LOBBY', 'User17', null)
+,(2, null, 6, 'LOBBY', 'User16', null)
+,(3, null, 2, 'LOBBY',  'User15', null)
+,(4, null, 6, 'LOBBY', 'User14', null)
+,(5, null, 6, 'LOBBY', 'User13', null)
+,(6, null, 3, 'LOBBY', 'User12', null)
+,(7, null, 4, 'LOBBY', 'User9', null)
+,(8, null, 6, 'LOBBY', 'User11', null)
+,(9, null, 6, 'LOBBY', 'admin1', null)
+,(10, null, 2, 'LOBBY', 'User8', null);
 
 INSERT INTO TOURNAMENT_GAMEMODES(tournament_id, gamemode) VALUES 
 (1,'THE_TOWER'), 
@@ -240,23 +241,24 @@ INSERT INTO TOURNAMENT_GAMEMODES(tournament_id, gamemode) VALUES
 (10,'THE_WELL'),
 (10,'THE_POISONED_GIFT');
 
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User17',1);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User16',2);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User15',3);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User14',4);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User13',5);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User12',6);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User11',7);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User10',8);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User9',9);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User8',10);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User7',1);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User6',1);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User5',1);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User4',2);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User3',2);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User2',8);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User1',9);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User0',10);
+INSERT INTO usertournaments(user_id,tournament_id) VALUES 
+('User17',1)
+,('User16',2)
+,('User15',3)
+,('User14',4)
+,('User13',5)
+,('User12',6)
+,('User11',7)
+,('User10',8)
+,('User9',9)
+,('User8',10)
+,('User7',1)
+,('User6',1)
+,('User5',1)
+,('User4',2)
+,('User3',2)
+,('User2',8)
+,('User1',9)
+,('User0',10);
 
 
