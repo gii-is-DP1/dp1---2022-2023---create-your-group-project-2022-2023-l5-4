@@ -45,7 +45,7 @@ public class User extends HandedEntity {
 	@ManyToMany
 	private Set<Achievement> achievements;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Game currentGame;
 
 	@ManyToOne

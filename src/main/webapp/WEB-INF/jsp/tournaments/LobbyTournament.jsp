@@ -47,12 +47,9 @@
 						</td>
 					</tr>
 					<tr>
-						<td><mvc:label path="gamemodes">Gamemodes:</mvc:label></td>
-						<td>
-							<mvc:select path="gamemodes" multiple="multiple" size="3"> 
-								<mvc:options items="${gamemodes}" itemValue="name" itemLabel="name"></mvc:options>
-							</mvc:select>
-						</td>
+						<div class="control-group">
+							<dobble:selectField label="Gamemode" name="gamemodes" names="${gamemodes}" size="3"/>
+						</div>
 					</tr>
 					<tr>
 						<td></td>
@@ -111,6 +108,7 @@
 	#isPrivateBody {
         display: none;
     }
+	
 </style>
 <script>
     let isPrivate = false;

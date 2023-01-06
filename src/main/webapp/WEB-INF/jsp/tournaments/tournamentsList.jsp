@@ -26,22 +26,21 @@
             New Tournament
         </a>
     </div>
-    <table id="tournaments-table"  >
+    <table  id="tournaments-table">
         <tr>
             <td>
-                
                 <table id="tournaments-table-head" class="table">
-                <thead>
-                    <tr>
+                    <thead>
+                      <tr>
                         <th>ID<span onclick="sortTable(0)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="width:-150px">Num. Games<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="width:150px">Owner</th>
-                        <th><span class="glyphicon glyphicon-lock"></span>
-                            <span onclick="sortTable(3)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: absolute; left: 10%;">Num. Games<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: absolute; left: 24%;">Owner</th>
+                        <th style="position: absolute; left: 70%;"><span class="glyphicon glyphicon-lock"></span>
+                          <span onclick="sortTable(3)" class="glyphicon glyphicon-sort"></span></th>
                         <th></th>
-                        <th style="width:150px">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></th>
-                    </tr>
-                </thead>
+                        <th style="position: absolute; left: 80%;">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></th>
+                      </tr>
+                    </thead>
                 </table>
             </td>
         </tr>
@@ -56,20 +55,19 @@
                         </spring:url>
                             <tr onclick="joinTournament('${tournament.id}','${tournament.isPrivate()}')">
                                 <td>
-                                     <c:out value="${tournament.id}"/> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <c:out value="${tournament.id}"/> 
                                 </td>
                                 <td>
-                                    <c:out value="${numpartidas[status.index]}"/> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <c:out value="${numpartidas[status.index]}"/> 
                                 </td>
                                 <td>
-                                    <c:out value="${tournament.owner}"></c:out> 
+                                    <c:out value="${tournament.owner}"></c:out>
                                 </td>
                                 <td>
                                     <c:if test="${tournament.isPrivate()}">  
                                         <span class="glyphicon glyphicon-lock private-tournament-lock"></span>
                                     </c:if>
                                 </td>
-                                
                                 <td>
                                     <a onmouseenter="enableJoinTournament=false" onmouseleave="enableJoinTournament=true" href="${tournamentUrl}">Details</a>
                                 </td>
