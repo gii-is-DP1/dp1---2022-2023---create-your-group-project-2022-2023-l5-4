@@ -109,6 +109,7 @@ public class TournamentController {
         game.setOwner(tournament.getOwner());
         game.setMaxPlayers(tournament.getMaxPlayers());
         game.setWinner(null);
+        game.setAccessCode(""+tournament.getAccessCode());
         game.setState(GameState.LOBBY);
         for(User user: tournament.getUsers()){
                 user.setCurrentGame(game);

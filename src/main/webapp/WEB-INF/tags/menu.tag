@@ -21,35 +21,29 @@
 		</div>
 		<div class="navbar-collapse collapse" id="main-navbar">
 			<ul class="nav navbar-nav">
-
 				<dobble:menuItem active="${name eq 'home'}" url="/"
 					title="home page">
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-					<span>Home</span>
+					<span class="menuItemSpan">Home</span>
 				</dobble:menuItem>
-
 				<dobble:menuItem active="${name eq 'games'}" url="/games"
 					title="find games">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find games</span>
+					<span class="menuItemSpan">Find games</span>
 				</dobble:menuItem>
-
-				<dobble:menuItem active="${name eq 'friends'}" url="/friends"
-					title="find games">
-					<span class="glyphicon glyphicon-apple" aria-hidden="true"></span>
-					<span>Friends</span>
-				</dobble:menuItem>
-
-
 				<dobble:menuItem active="${name eq 'tournaments'}" url="/tournaments"
 					title="tournaments">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Tournaments</span>
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span class="menuItemSpan">Find tournaments</span>
 				</dobble:menuItem>
 
 			</ul>
 
 			<style>
+				.menuItemSpan {
+					margin-top: 50px;
+					font-size: 185%;
+				}
 				.circulo {
 					position: relative;
 					margin-top: auto;
@@ -95,12 +89,16 @@
 											</p>
 											<li class="divider"></li>
 											<p class="text-left">
-												<a href="<c:url value="/statistics/achievements/"/>"
+												<a href="<c:url value="/statistics/achievements/byUser/"/><sec:authentication property="name"/>"
 													class="btn btn-primary btn-block btn-sm">My profile</a>
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/users/edit/"/><sec:authentication property="name"/>"
 													class="btn btn-primary btn-block btn-sm">Change Password</a>
+											</p>
+											<p class="text-left">
+												<a href="<c:url value="/friends/" />"
+													class="btn btn-primary btn-block btn-success btn-sm">Friends</a>
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/logout" />"

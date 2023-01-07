@@ -1,11 +1,11 @@
 
 -- Users--
-INSERT INTO users(username,password,enabled) VALUES 
-('admin1','4dm1n',TRUE),
-('owner1','0wn3r',TRUE),
-('antbarjim1','123abc',TRUE),
-('adrgarpor','0wn3r',TRUE),
-('edurobrus','0wn3r',TRUE);
+INSERT INTO users(username,password,email,enabled) VALUES 
+('admin1','4dm1n','admin1@alum.us.es',TRUE),
+('owner1','0wn3r','owner1@alum.us.es',TRUE),
+('antbarjim1','123abc','antbarjim1@alum.us.es',TRUE),
+('adrgarpor','0wn3r','adrgarpor@alum.us.es',TRUE),
+('edurobrus','0wn3r','edurobrus@alum.us.es',TRUE);
 -- Authorities --
 INSERT INTO authorities(id,username,authority) VALUES 
 (1,'admin1','admin'),
@@ -150,25 +150,25 @@ INSERT INTO cardsymbols(card_id, symbol_id) VALUES
 
 -- Initial users, not needed but useful for testing --
 
-INSERT INTO USERS(username, password, enabled) VALUES 
-('User0','p4ssw0rd',TRUE),
-('User1','p4ssw0rd',TRUE),
-('User2','p4ssw0rd',TRUE),
-('User3','p4ssw0rd',TRUE),
-('User4','p4ssw0rd',TRUE),
-('User5','p4ssw0rd',TRUE),
-('User6','p4ssw0rd',TRUE),
-('User7','p4ssw0rd',TRUE),
-('User8','p4ssw0rd',TRUE),
-('User9','p4ssw0rd',TRUE),
-('User10','p4ssw0rd',TRUE),
-('User11','p4ssw0rd',TRUE),
-('User12','p4ssw0rd',TRUE),
-('User13','p4ssw0rd',TRUE),
-('User14','p4ssw0rd',TRUE),
-('User15','p4ssw0rd',TRUE),
-('User16','p4ssw0rd',TRUE),
-('User17','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, email, enabled) VALUES 
+('User0','p4ssw0rd','User0@alum.us.es',TRUE),
+('User1','p4ssw0rd','User1@alum.us.es',TRUE),
+('User2','p4ssw0rd','User2@alum.us.es',TRUE),
+('User3','p4ssw0rd','User3@alum.us.es',TRUE),
+('User4','p4ssw0rd','User4@alum.us.es',TRUE),
+('User5','p4ssw0rd','User5@alum.us.es',TRUE),
+('User6','p4ssw0rd','User6@alum.us.es',TRUE),
+('User7','p4ssw0rd','User7@alum.us.es',TRUE),
+('User8','p4ssw0rd','User8@alum.us.es',TRUE),
+('User9','p4ssw0rd','User9@alum.us.es',TRUE),
+('User10','p4ssw0rd','User10@alum.us.es',TRUE),
+('User11','p4ssw0rd','User11@alum.us.es',TRUE),
+('User12','p4ssw0rd','User12@alum.us.es',TRUE),
+('User13','p4ssw0rd','User13@alum.us.es',TRUE),
+('User14','p4ssw0rd','User14@alum.us.es',TRUE),
+('User15','p4ssw0rd','User15@alum.us.es',TRUE),
+('User16','p4ssw0rd','User16@alum.us.es',TRUE),
+('User17','p4ssw0rd','User17@alum.us.es',TRUE);
 
 -- Initial games, not needed but useful for testing --
 
@@ -261,4 +261,19 @@ INSERT INTO usertournaments(user_id,tournament_id) VALUES
 ,('User1',9)
 ,('User0',10);
 
+INSERT INTO achievement (id, name, description, badge_image, threshold, metric) VALUES 
+(1, 'Achievement 1', 'First time you play', '/resources/images/achievement/badge1.png', 1000, 'POINTS'),
+(2, 'Achievement 2', 'Catch the same symbol more than three times in a game', '/resources/images/achievement/badge2.png', 1000, 'POINTS'),
+(3, 'Achievement 3', 'Play more than 1000 cards', '/resources/images/achievement/badge3.png', 1000, 'POINTS'),
+(4, 'Achievement 4', 'You have won 10 games', '/resources/images/achievement/badge4.png', 10, 'GAMES_WON'),
+(5, 'Achievement 5', 'You have won 100 games', '/resources/images/achievement/badge5.png', 100, 'GAMES_WON'),
+(6, 'Achievement 6', 'You have won 1000 games', '/resources/images/achievement/badge6.png', 1000, 'GAMES_WON'),
+(7, 'Achievement 7', 'You have scored 100 points', '/resources/images/achievement/badge7.png', 1000, 'POINTS'),
+(8, 'Achievement 8', 'You have scored 1000 points', '/resources/images/achievement/badge8.png', 1000, 'POINTS'),
+(9, 'Achievement 9', 'You have scored 10000 points', '/resources/images/achievement/badge9.png', 1000, 'POINTS'),
+(10, 'Achievement 10', 'You have completed 10 games', '/resources/images/achievement/badge10.png', 10, 'GAMES_WON'),
+(11, 'Achievement 11', 'You have completed 100 games', '/resources/images/achievement/badge11.png', 100, 'GAMES_WON'),
+(12, 'Achievement 12', 'You have completed 1000 games', '/resources/images/achievement/badge12.png', 1000, 'GAMES_WON');
 
+INSERT INTO user_achievement (username, achievement_id) VALUES 
+('admin1', 3);
