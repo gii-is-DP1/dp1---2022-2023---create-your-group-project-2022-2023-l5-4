@@ -2,11 +2,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="achievements">
+<dobble:layout pageName="achievements">
+    
     <h2>Achievements</h2>
-
     <table id="achievementsTable" class="table table-striped">
         <thead>
         <tr>
@@ -58,5 +58,11 @@
         </c:forEach>
         </tbody>
     </table>
+    <style>
+        body {
+        overflow: scroll; /* Agrega una barra de scroll vertical y horizontal */
+        }
+
+    </style>
     <a class="btn btn-default" href="/statistics/achievements/new">Create new achievement</a>
-</petclinic:layout>
+</dobble:layout>
