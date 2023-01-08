@@ -40,9 +40,9 @@ public class LobbyController {
     @GetMapping
     public ModelAndView lobbyGame(@PathVariable("gameId") Long gameId) {
         Game game = this.gameService.findGame(gameId);
-        List<User> mazos=game.getUsers();
-		ModelAndView result=new ModelAndView("games/LobbyGame");
-		result.addObject("users", mazos);
+        List<GameUser> gameUsers = game.getGameUsers();
+		ModelAndView result = new ModelAndView("games/LobbyGame");
+		result.addObject("gameUsers", gameUsers);
         result.addObject("game", game);
 		return result;	
     }

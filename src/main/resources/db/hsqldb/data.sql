@@ -186,25 +186,25 @@ INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winne
 
 
 -- Initial users into games --
-INSERT INTO gameusers(user_id,game_id) VALUES 
-('User17',1),
-('User16',2),
-('User15',3),
-('User14',4),
-('User13',5),
-('User12',6),
-('User11',7),
-('User10',8),
-('User9',9),
-('User8',10),
-('User7',1),
-('User6',1),
-('User5',1),
-('User4',2),
-('User3',2),
-('User2',8),
-('User1',9),
-('User0',10);
+INSERT INTO gameusers(game_id, user_id) VALUES 
+(1,'User17'),
+(1,'User7'),
+(1,'User6'),
+(1,'User5'),
+(2,'User16'),
+(2,'User3'),
+(2,'User4'),
+(3,'User15'),
+(4,'User14'),
+(5,'User13'),
+(6,'User12'),
+(7,'User11'),
+(8,'User10'),
+(8,'User2'),
+(9,'User9'),
+(9,'User1'),
+(10,'User8'),
+(10,'User0');
 
 
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (1, null, 4, 'LOBBY', 'User17', null);

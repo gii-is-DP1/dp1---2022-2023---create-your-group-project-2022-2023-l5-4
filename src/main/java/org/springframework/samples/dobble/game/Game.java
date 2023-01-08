@@ -63,12 +63,9 @@ public class Game extends HandedEntity {
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "game")
     @Size(min = 1, max = 6)
-    @JoinTable(name = "gameusers", 
-    joinColumns = @JoinColumn(name="gameId"), 
-    inverseJoinColumns = @JoinColumn(name="userId"))
-    private List<User> users;
+    private List<GameUser> gameUsers;
 
     @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.LAZY,mappedBy = "games",cascade = CascadeType.ALL)
 	private List<Tournament> Tournaments;	
@@ -83,36 +80,23 @@ public class Game extends HandedEntity {
     private Integer maxPlayers;
 
     @ColumnDefault("null")
-    private Integer accessCode;
-
-    public Integer getAccessCode() {
-        return null;
-    }
+    private String accessCode;
 
     public Boolean isPrivate() {
         System.out.println(this.accessCode != null);
         return this.accessCode != null;
     }
 
-    private Integer hashCode(String accessCode) {
-        return accessCode.toString().hashCode();
-    }
-
-
-    public void setAccessCode(String accessCode) {
-
-        if (!(accessCode == null || accessCode == ""))
-            this.accessCode = hashCode(accessCode);
-    }
-
     public Boolean validAccessCode(String accessCode) {
-        if (this.accessCode != null)
-            return this.accessCode.equals(hashCode(accessCode));
-        return true;
+        return this.accessCode == null || this.accessCode == accessCode;
     }
 
     public Integer getNumUsers() {
-        return this.users.size();
+        return this.getGameUsers().size();
+    }
+    public List<GameUser> getGameUsers() {
+        if (this.gameUsers == null) gameUsers = new ArrayList<>();
+        return this.gameUsers;
     }
 
     public boolean isFinished() {
@@ -127,7 +111,7 @@ public class Game extends HandedEntity {
         return this.state == GameState.ON_PLAY;
     }
     public boolean isFull() {
-        return this.getUsers().size()==this.maxPlayers;
+        return this.getGameUsers().size()==this.maxPlayers;
     }
 
     public boolean isNew() {

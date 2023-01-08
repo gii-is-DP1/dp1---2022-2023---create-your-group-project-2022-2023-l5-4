@@ -22,18 +22,18 @@
 			<th>Users</th>
 			<th>Actions</th>			
 		</tr>
-		 <c:forEach items="${users}" var="user">
+		 <c:forEach items="${gameUsers}" var="gameUser">
 			<tr>
-				<td><c:out value="${user.username}"/></td>				
+				<td><c:out value="${gameUser.user.username}"/></td>				
 				<td>
-					<a href="/users/profile/${user.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;
-					<a href="/games/${game.id}/lobby/delete/${user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
+					<a href="/users/profile/${gameUser.user.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;
+					<a href="/games/${game.id}/lobby/delete/${gameUser.user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
 					<c:choose>
 						<c:when test = "${loggedUser.getFriends().contains(user)}"> 
-							<a href="/friends/remove/${user.username}"><span class="glyphicon glyphicon-minus-sign" aria-hden="true"></span></a> 		
+							<a href="/friends/remove/${gameUser.user.username}"><span class="glyphicon glyphicon-minus-sign" aria-hden="true"></span></a> 		
 						</c:when>
 						<c:otherwise>
-							<a href="/friends/add/${user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a>
+							<a href="/friends/add/${gameUser.user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a>
 						</c:otherwise>
 					</c:choose>
 					</td>

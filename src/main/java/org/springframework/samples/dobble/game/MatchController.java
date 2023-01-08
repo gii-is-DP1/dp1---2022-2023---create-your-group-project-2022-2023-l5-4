@@ -56,14 +56,15 @@ public class MatchController {
         if (!game.hasStarted()) return new ModelAndView("redirect:/games?error=TheGameHasNotStartedYet");
         if (game.isFinished()) return new ModelAndView("redirect:/games/{gameId}/results");
 
-        if (!game.getUsers().contains(userService.getSessionUser())) return new ModelAndView("redirect:/games?error=noAuth");
+        if (!GameUser.userListOf(game.getGameUsers()).contains(userService.getLoggedUser())) return new ModelAndView("redirect:/games?error=noAuth");
         
         ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User mainPlayer = userService.findUser(username);
-        List<User> players = game.getUsers();
-        players.removeIf(player -> player.equals(mainPlayer));
+        List<GameUser> players = game.getGameUsers();
+        GameUser mainPlayer = players.stream()
+            .filter(gameUser->gameUser.getUser() == userService.getLoggedUser())
+            .findFirst()
+            .get();
+        players.remove(mainPlayer);
         mav.addObject("mainPlayer", mainPlayer);
         mav.addObject("players", players);
         mav.addObject("game", game);
@@ -93,28 +94,30 @@ public class MatchController {
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") Symbol symbol,  @ModelAttribute("user") User user) {
         //This method steps are only made for testing at the moment. For the next sprint it will 
         //fully implement the required mehtod
+       
 
+        if (user.getUsername() == null) return "redirect:/games/{gameId}/play";
         Game game = gameService.findGame(gameId);
-
+        GameUser gameUser = gameUserService.findById(GameUserPk.of(user, game));
 
         Boolean symbolMatches = game.getCurrentCard().matches(symbol);
         Boolean userMatches;
 
         switch (game.getGamemode()) {
             case THE_POISONED_GIFT:
-                userMatches = user.getUsername()!=null && !user.equals(userService.getSessionUser());
+                userMatches = !user.equals(userService.getLoggedUser());
                 break;  
             default:
-                userMatches = user.getUsername()!=null && user.equals(userService.getSessionUser());
+                userMatches = user.equals(userService.getLoggedUser());
                 break;  
         }
         
     
-        if (symbolMatches && userMatches) gameUserService.makePlay(game, user);
+        if (symbolMatches && userMatches) gameUserService.makePlay(game, gameUser);
         
-        if (user.getCards().size()==0) {
+        if (gameUser.getCards().size()==0) {
             gameService.endGame(game, user);
-            return "redirect:/games/{gameId}/results";
+            return "redirect:/games/{gameId}";
         }
 
         return "redirect:/games/{gameId}/play";

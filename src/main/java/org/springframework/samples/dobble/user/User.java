@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "users")
-public class User extends HandedEntity {
+public class User {
 
 	public User(){}
 	
