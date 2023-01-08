@@ -24,15 +24,19 @@
 		</tr>
 		 <c:forEach items="${users}" var="user">
 			<tr>
-				<td><c:out value="${user.user.username}"/></td>				
+				<td><c:out value="${user.username}"/></td>				
 				<td>
-					<a href="/users/edit/${user.user.username}"><span class="glyphicon glyphicon-pencil warning" aria-hden="true"></span></a>&nbsp;
-					<a href="/games/${game.id}/lobby/delete/${user.user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
-					<a href="/friends/add/${user.user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a> 
-									
-					
-						
-				</td>
+					<a href="/users/profile/${user.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;
+					<a href="/games/${game.id}/lobby/delete/${user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
+					<c:choose>
+						<c:when test = "${loggedUser.getFriends().contains(user)}"> 
+							<a href="/friends/remove/${user.username}"><span class="glyphicon glyphicon-minus-sign" aria-hden="true"></span></a> 		
+						</c:when>
+						<c:otherwise>
+							<a href="/friends/add/${user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a>
+						</c:otherwise>
+					</c:choose>
+					</td>
 			</tr>
 		</c:forEach>		
 	</table>

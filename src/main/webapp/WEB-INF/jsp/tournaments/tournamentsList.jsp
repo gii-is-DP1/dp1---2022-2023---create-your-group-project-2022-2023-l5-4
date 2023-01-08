@@ -26,22 +26,21 @@
             New Tournament
         </a>
     </div>
-    <table id="tournaments-table"  >
+    <table  id="tournaments-table">
         <tr>
             <td>
-                
                 <table id="tournaments-table-head" class="table">
-                <thead>
-                    <tr>
+                    <thead>
+                      <tr>
                         <th>ID<span onclick="sortTable(0)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="width:-150px">Num. Games<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="width:150px">Owner</th>
-                        <th><span class="glyphicon glyphicon-lock"></span>
-                            <span onclick="sortTable(3)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: absolute; left: 10%;">Num. Games<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: absolute; left: 23%;">Owner</th>
+                        <th style="position: absolute; left: 45%;"><span class="glyphicon glyphicon-lock"></span>
+                          <span onclick="sortTable(3)" class="glyphicon glyphicon-sort"></span></th>
                         <th></th>
-                        <th style="width:150px">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></th>
-                    </tr>
-                </thead>
+                        <th style="position: absolute; left: 80%;">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></th>
+                      </tr>
+                    </thead>
                 </table>
             </td>
         </tr>
@@ -56,20 +55,19 @@
                         </spring:url>
                             <tr onclick="joinTournament('${tournament.id}','${tournament.isPrivate()}')">
                                 <td>
-                                     <c:out value="${tournament.id}"/> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <c:out value="${tournament.id}"/> 
                                 </td>
                                 <td>
-                                    <c:out value="${numpartidas[status.index]}"/> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                    <c:out value="${numpartidas[status.index]}"/> 
                                 </td>
                                 <td>
-                                    <c:out value="${tournament.owner}"></c:out> 
+                                    <c:out value="${tournament.owner}"></c:out>
                                 </td>
                                 <td>
                                     <c:if test="${tournament.isPrivate()}">  
                                         <span class="glyphicon glyphicon-lock private-tournament-lock"></span>
                                     </c:if>
                                 </td>
-                                
                                 <td>
                                     <a onmouseenter="enableJoinTournament=false" onmouseleave="enableJoinTournament=true" href="${tournamentUrl}">Details</a>
                                 </td>
@@ -96,11 +94,35 @@
             </div>
             </td>
         </tr>
-        
+        <style>
+            body {
+                background-image: url("/resources/images/background.png");
+            }
+        </style>
     </table>
 
     <script>
-        function goto(url){
+                // Obtén el elemento del body
+        var body = document.getElementsByTagName("body")[0];
+
+        // Establece la posición inicial de la imagen de fondo
+        body.style.backgroundPosition = "0px 0px";
+
+        // Crea una función que se ejecutará cada 10 milisegundos
+        setInterval(function() {
+        // Obtén la posición actual de la imagen de fondo
+        var currentPos = body.style.backgroundPosition;
+        // Divide la posición en dos variables para poder modificarlas individualmente
+        var xPos = currentPos.split(" ")[0];
+        var yPos = currentPos.split(" ")[1];
+        // Incrementa la posición en 10 píxeles
+        xPos = parseInt(xPos) + 1 + "px";
+        yPos = parseInt(yPos) + 1 + "px";
+        // Establece la nueva posición de la imagen de fondo
+        body.style.backgroundPosition = xPos + " " + yPos;
+            }, 100);
+
+    function goto(url){
             window.location=url
     }
     

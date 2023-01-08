@@ -18,12 +18,23 @@ import org.springframework.samples.dobble.tournament.Tournament;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
-@Entity
-@Table(name = "gamemodes")
-public class GameMode extends NamedEntity{
-    public GameMode(){}
-    @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.EAGER,mappedBy = "gamemodes", cascade = CascadeType.ALL)
-	private List<Tournament> Tournaments;
+public enum GameMode {
+  
+    THE_TOWER("The Tower"),
+    THE_WELL("The Well"),
+    THE_POISONED_GIFT("The Poisoned Gift");
+
+    private String gamemodeName; 
+    private GameMode(String gamemodeName){
+        this.gamemodeName = gamemodeName;
+    };
+
+    public String toString() {
+        return gamemodeName;
+    }
+
+
 }

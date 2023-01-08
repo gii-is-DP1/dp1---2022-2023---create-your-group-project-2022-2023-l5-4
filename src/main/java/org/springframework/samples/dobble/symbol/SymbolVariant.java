@@ -19,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name="symbolvariants")
-public class SymbolVariant extends NamedEntity{
+public class SymbolVariant extends NamedEntity {
 	
 	@NotNull
 	private String fileName;

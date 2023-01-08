@@ -48,5 +48,10 @@ public class Symbol extends BaseEntity {
 	public SymbolVariant getVariant(Long symbolSetId){
 		return symbolVariants.stream().filter(variant->variant.getSymbolSet().getId()==symbolSetId).findFirst().get();
 	}
+
+	
+	public String toString(){
+		return this.getId().toString();
+	}
 	
 }

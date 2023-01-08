@@ -35,11 +35,6 @@ public class TournamentService {
 	}
 
 	@Transactional(readOnly = true)
-	public Iterable<GameMode> findGameModes() throws DataAccessException {
-		return tournamentRepository.findGameModes();
-	}
-
-	@Transactional(readOnly = true)
 	public List<Tournament> findAllUnstartedTournaments()  throws DataAccessException {
 		return tournamentRepository.findAllUnstarted();
 	}
