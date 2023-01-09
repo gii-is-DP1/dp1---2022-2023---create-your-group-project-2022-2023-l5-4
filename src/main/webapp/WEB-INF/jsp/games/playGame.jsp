@@ -17,7 +17,7 @@
         
     }
 
-    .gamecomment {
+    .gameboard {
         margin: 5px auto 5px auto;
         display: grid;
         height: 100%;
@@ -104,7 +104,7 @@
 
     }
 
-    .scorecomment {
+    .scoreboard {
         position: fixed;
         display: flex;
         flex: 1;
@@ -146,8 +146,6 @@
 <dobble:htmlHeader/>
 <div class="game">
     <span class="timer">15:32</span>
-    <div class="scorecomment">
-        <p>Scorecomment:</p>
     <div class="scoreboard">
         <p>Scoreboard:</p>
         <p class="player-name">
@@ -155,7 +153,7 @@
         </p>
 
     </div>
-    <div class="gamecomment">
+    <div class="gameboard">
         <div id="player-wrapper-top" class="player-wrapper top">
             <div class="player player-top">
                 <c:if test="${players[4]!=null}">

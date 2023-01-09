@@ -121,7 +121,7 @@ public class GameController {
     }
 
 
-    @GetMapping("/{gameId}/start")
+    @PostMapping("/{gameId}/start")
     public String startGame(@PathVariable("gameId") Long gameId) {
         Game game = gameService.findGame(gameId);
         List<GameUser> gameUsers = game.getGameUsers();
