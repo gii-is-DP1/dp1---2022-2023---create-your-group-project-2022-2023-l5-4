@@ -60,24 +60,28 @@ public class CommentController {
 	
 	@PostMapping(path="/{ForumId}/save")
 	public String salvarOrgano(   @ModelAttribute("comment")  Comment comment, @PathVariable("ForumId") long ForumId){	
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
-		User user = userService.findUser(userId);
-		Optional<Forum> forum = forumService.findById(ForumId);
-		comment.setUser(user);
-		comment.setForum(forum.get());
-		List<String> PALABRAS_INAPROPIADAS = Arrays.asList(
-        	"mierda", "puta", "cabrón", "coño", "joder", "marica", "polla", "puto", "zorra"
-      	);
-		for (String palabra : PALABRAS_INAPROPIADAS) {
-			if (comment.getText().contains(palabra)) {
-				comment.setText("***");
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String userId = authentication.getName();
+			User user = userService.findUser(userId);
+			Optional<Forum> forum = forumService.findById(ForumId);
+			comment.setUser(user);
+			comment.setForum(forum.get());
+			List<String> PALABRAS_INAPROPIADAS = Arrays.asList(
+				"mierda", "puta", "cabrón", "coño", "joder", "marica", "polla", "puto", "zorra"
+			);
+			for (String palabra : PALABRAS_INAPROPIADAS) {
+				if (comment.getText().contains(palabra)) {
+					comment.setText("***");
+				}
 			}
+			commentsService.save(comment);
+			ModelAndView result=listadoOrganos(ForumId);		
+			result.addObject("mensaje", "Comment saved sucessfully!");		
+			result.addObject("tipomensaje", "success");
+		}catch(Exception e){
+			System.out.println(e.getMessage());
 		}
-		commentsService.save(comment);
-		ModelAndView result=listadoOrganos(ForumId);		
-		result.addObject("mensaje", "Comment saved sucessfully!");		
-		result.addObject("tipomensaje", "success");
 		return "redirect:/";
 	}
 	

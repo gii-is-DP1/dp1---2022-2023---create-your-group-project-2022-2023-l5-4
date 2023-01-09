@@ -6,11 +6,40 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="mvc"%>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<!-- Botón para abrir la ventana modal -->
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalWindow">
-		Abrir ventana modal
-	</button>
+	  
+	  <style>
+		.chat-button {
+			position:relative;
+			left:80%;
+			top:100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: #fff;
+			background-color: #6d1bb9;
+			border: none;
+			border-radius: 0.25rem;
+		}
+	  
+		.chat-button h4 {
+			font-family: "Montserrat", sans-serif;
+			}
+
+			/* Hover effect for the button */
+			.chat-button:hover {
+			background-color: #ddd;
+			color: #333;
+			}
+
+			/* Icon for the button */
+			.chat-button i {
+			color: #2196f3;
+			}
+
+
+	  </style>
 	
 	<!-- Contenido de la ventana modal -->
 	<div class="modal fade" id="modalWindow" tabindex="-1" role="dialog" aria-labelledby="modalWindowLabel" aria-hidden="true">

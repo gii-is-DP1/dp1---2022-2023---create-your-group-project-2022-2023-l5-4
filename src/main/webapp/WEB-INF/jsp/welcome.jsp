@@ -6,17 +6,18 @@
 <!-- %@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %-->  
 
 <dobble:layout pageName="home">
+  <%@ include file="/WEB-INF/jsp/comments/CommentsListing.jsp" %>
+    
     <div class="row">
-    <h2 class="title">Project ${title}</h2>
+    <h2 class="title">&nbspProject ${title}</h2>
     <h2>&nbsp</h2>
-    <p><h2 class="subtitle">Group ${group}</h2></p>
+    <p><h2 class="subtitle">&nbsp Group ${group}</h2></p>
     <p><ul>
         <c:forEach items="${persons}" var="person">
-            <li class="persons-list">${person.firstName}&nbsp${person.lastName}</li>
+            <h4 class="persons-list">${person.firstName}&nbsp${person.lastName}</h4>
         </c:forEach>
-        
+     
     </ul></p>
-    <%@ include file="/WEB-INF/jsp/comments/CommentsListing.jsp" %>
 </div>
 <div class="row">
     <style>
@@ -73,6 +74,10 @@
         }
     
         .persons-list {
+          position: relative;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
           font-family: 'Press Start 2P', cursive;
           color: #850808;
           text-align: center;
