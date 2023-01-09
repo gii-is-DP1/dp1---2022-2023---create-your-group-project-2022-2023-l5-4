@@ -230,7 +230,6 @@
         url: window.location.href+"/checkForUpdate?lastUpdatedAt=${game.updatedAt}",
         asynch: false,
         success: function(result) {
-            console.log(result)
             if (result== "reload") window.location.reload()
         } 
     }
