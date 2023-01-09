@@ -29,7 +29,7 @@
            <dobble:slider id="isPrivateSlider" label="Set Private"></dobble:slider>
            <div id="isPrivateBody" style="visibility:hidden;">
             <div class="control-group">
-                <dobble:inputField label="Access Code" name="accessCode"/>
+                <dobble:inputField id="accessCodeInput" label="Access Code" name="accessCode"/>
             </div>
            </div>
         </div>
@@ -51,12 +51,18 @@
     let isPrivate = false;
 
         const slider =  document.getElementById("isPrivateSlider")
-        const isPrivateBody =  document.getElementById("isPrivateBody");
+        const isPrivateBody =  document.getElementById("isPrivateBody")
+        const accessCodeInput = document.getElementById("accessCodeInput")
         slider.onchange = function (){
-            console.log("SLID")
-            isPrivate = (this.checked)? true : false;
-            if (isPrivate) isPrivateBody.style.visibility="visible"
-            else isPrivateBody.style.visibility="hidden"
+            isPrivate = (this.checked)? true : false
+            if (isPrivate){
+                isPrivateBody.style.visibility="visible"
+                accessCodeInput.value=""
+            }
+            else {
+                isPrivateBody.style.visibility="hidden"
+                accessCodeInput.value=null
+            }
         }
     
 

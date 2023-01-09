@@ -1,7 +1,15 @@
 package org.springframework.samples.dobble.game;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.rtf.RTFEditorKit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +25,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -49,21 +60,39 @@ public class MatchController {
     }
 
     @GetMapping
-    public ModelAndView playGame(@PathVariable("gameId") Long gameId) {
+    public ModelAndView playGame(@PathVariable("gameId") Long gameId, HttpServletResponse response, HttpServletRequest request) {
+        
+        // response.addHeader("Refresh", "1");
         
         Game game = this.gameService.findGame(gameId);
+        
+        response.setHeader("Last-Modified",game.getUpdatedAt().toString());
+        response.setHeader("Expires", ZonedDateTime.now().plusDays(1).withZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME));
+        try {
+            LocalDateTime lastUpdated = LocalDateTime.parse(request.getHeader("If-Modified-Since"));
+          
+            if (!game.getUpdatedAt().isAfter(lastUpdated)) {
+                response.setStatus(304);
+                return null;       
+                } 
+        } catch (NullPointerException e) {
+  
+        }
+        
         
         if (!game.hasStarted()) return new ModelAndView("redirect:/games?error=TheGameHasNotStartedYet");
         if (game.isFinished()) return new ModelAndView("redirect:/games/{gameId}/results");
 
-        if (!game.getUsers().contains(userService.getSessionUser())) return new ModelAndView("redirect:/games?error=noAuth");
+        if (!GameUser.userListOf(game.getGameUsers()).contains(userService.getLoggedUser())) return new ModelAndView("redirect:/games?error=noAuth");
         
         ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User mainPlayer = userService.findUser(username);
-        List<User> players = game.getUsers();
-        players.removeIf(player -> player.equals(mainPlayer));
+        List<GameUser> players = game.getGameUsers();
+        GameUser mainPlayer = players.stream()
+            .filter(gameUser->gameUser.getUser() == userService.getLoggedUser())
+            .findFirst()
+            .get();
+        players.remove(mainPlayer);
+        mav.addObject("updatedAt", LocalDate.now());
         mav.addObject("mainPlayer", mainPlayer);
         mav.addObject("players", players);
         mav.addObject("game", game);
@@ -72,6 +101,19 @@ public class MatchController {
 
     }
 
+    @GetMapping("/checkForUpdate")
+    @ResponseBody
+    public String checkForUpdate(@PathVariable("gameId") Long gameId, @RequestParam("lastUpdatedAt") String lastUpdatedAtString){
+        
+        Game game = this.gameService.findGame(gameId);
+        try {
+            LocalDateTime lastUpdatedAt = LocalDateTime.parse(lastUpdatedAtString);
+            if (!game.getUpdatedAt().isAfter(lastUpdatedAt)) return "";       
+        } catch (NullPointerException e) {
+            return e.getMessage();
+        }
+        return "reload";
+    }
 
       
     @GetMapping(path = "/delete/{userId}")
@@ -93,28 +135,30 @@ public class MatchController {
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") Symbol symbol,  @ModelAttribute("user") User user) {
         //This method steps are only made for testing at the moment. For the next sprint it will 
         //fully implement the required mehtod
+       
 
+        if (user.getUsername() == null) return "redirect:/games/{gameId}/play";
         Game game = gameService.findGame(gameId);
-
+        GameUser gameUser = gameUserService.findById(GameUserPk.of(user, game));
 
         Boolean symbolMatches = game.getCurrentCard().matches(symbol);
         Boolean userMatches;
 
         switch (game.getGamemode()) {
             case THE_POISONED_GIFT:
-                userMatches = user.getUsername()!=null && !user.equals(userService.getSessionUser());
+                userMatches = !user.equals(userService.getLoggedUser());
                 break;  
             default:
-                userMatches = user.getUsername()!=null && user.equals(userService.getSessionUser());
+                userMatches = user.equals(userService.getLoggedUser());
                 break;  
         }
         
     
-        if (symbolMatches && userMatches) gameUserService.makePlay(game, user);
+        if (symbolMatches && userMatches) gameUserService.makePlay(game, gameUser);
         
-        if (user.getCards().size()==0) {
+        if (gameUser.getCards().size()==0) {
             gameService.endGame(game, user);
-            return "redirect:/games/{gameId}/results";
+            return "redirect:/games/{gameId}";
         }
 
         return "redirect:/games/{gameId}/play";
