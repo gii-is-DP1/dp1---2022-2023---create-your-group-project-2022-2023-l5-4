@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.dobble.comment.Comment;
+import org.springframework.samples.dobble.forum.ForumService;
 import org.springframework.samples.dobble.model.Person;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WelcomeController {
 	
+		@Autowired
+		private ForumService forumService;
 	
 	  @GetMapping({"/","/welcome"})
 	  public String welcome(Map<String, Object> model) {
@@ -39,12 +44,13 @@ public class WelcomeController {
 		person6.setFirstName("Maria de los Remedios");
 		person6.setLastName("Zoido");
 		persons.add(person6);
+		List<Comment> comments = forumService.findById(1).get().getComments();
+		model.put("formid", 1);
+		model.put("comment", new Comment());		
+		model.put("comments", comments);
 		model.put("persons", persons);
 		model.put("title", "Dobble");
-		model.put("group", "Developers");
-		
-			    
-
+		model.put("group", "Developers");  
 	    return "welcome";
 	  }
 }

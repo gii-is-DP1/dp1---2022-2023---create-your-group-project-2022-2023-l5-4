@@ -277,3 +277,17 @@ INSERT INTO achievement (id, name, description, badge_image, threshold, metric) 
 
 INSERT INTO user_achievement (username, achievement_id) VALUES 
 ('admin1', 3);
+
+INSERT INTO forum(id,name,creation_date) VALUES
+(1,'Symbols','2021-01-01 01:01:01')
+,(2,'Cards','2021-02-01 01:01:01')
+,(3,'GameModes','2021-03-01 01:01:01');
+
+INSERT INTO comment(id,text,date,forum_id,user_id) VALUES 
+(1,'El mio es el de la us','2021-01-01 01:01:02',1,'User17')
+,(2,'El mio es el de ajedrez','2021-01-01 01:01:03',1,'User17')
+,(3,'El mio es el perrete','2021-01-01 01:01:09',1,'User17')
+,(4,'A mi no me gusta ninguna','2021-01-01 01:01:11',1,'User17')
+,(5,'Las cartas no coincidian','2021-04-01 01:01:02',2,'User17')
+,(6,'dilo por ti','2021-04-01 01:01:02',2,'User17')
+,(7,'yo estoy en racha','2021-04-01 01:01:02',2,'User17');

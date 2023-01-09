@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.dobble.card.HandedEntity;
+import org.springframework.samples.dobble.comment.Comment;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.statistics.Achievement;
 import org.springframework.samples.dobble.tournament.Tournament;
@@ -70,7 +71,9 @@ public class User extends HandedEntity {
 	@OneToMany(mappedBy = "winner")
 	private List<Game> wonGames;
 
-	
+	@OneToMany(cascade = CascadeType.REMOVE)
+	private List<Comment> comments;
+
     @ManyToMany(mappedBy = "users")
 	private List<Tournament> tournaments;
 	
