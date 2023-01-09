@@ -95,8 +95,12 @@ public class TournamentController {
         if (result.hasErrors())
             return VIEWS_TOURNAMENTS_CREATE_OR_UPDATE_FORM;
         tournament.setState(TournamentState.LOBBY);
-        tournamentService.saveTournament(tournament);
-        return "redirect:/tournaments/" + tournament.getId();
+        if(tournament.getGamemodes().size()==0){
+            return "redirect:/tournaments?error="+ "Tournament Finished";
+        }else{
+            tournamentService.saveTournament(tournament);
+            return "redirect:/tournaments/" + tournament.getId() + "/lobby";
+        }
     }
 
     @GetMapping("/{tournamentId}/play")
@@ -122,7 +126,7 @@ public class TournamentController {
         List<Game> games = tournament.getGames();
         games.add(game);
         tournament.setGames(games);
-        if(tournament.getGamemodes().size()>1){
+        if(tournament.getGamemodes().size()>0){
             List<GameMode> mode = tournament.getGamemodes();
             mode.remove(0);
             tournament.setGamemodes(mode);
@@ -174,6 +178,10 @@ public class TournamentController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
             tournamentService.addUserTournament(tournamentId, userId, accessCode);
+            Tournament tournament = tournamentService.findTournament(tournamentId);
+            if(tournament.getGamemodes().size()==0){
+                return "redirect:/tournaments?error="+ "Tournament Finished";
+            }
         } catch(Exception e) {
             return "redirect:/tournaments?error="+ e.getMessage();
         } 
