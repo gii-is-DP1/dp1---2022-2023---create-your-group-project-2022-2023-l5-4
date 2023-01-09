@@ -65,10 +65,7 @@ public class MatchController {
         // response.addHeader("Refresh", "1");
         
         Game game = this.gameService.findGame(gameId);
-        
-        System.out.println("WWWWW");
-        System.out.println(game.getState());
-        System.out.println(!game.hasStarted());
+    
         if (!game.hasStarted()) return new ModelAndView("redirect:/games?error=TheGameHasNotStartedYet");
         if (game.isFinished()) return new ModelAndView("redirect:/games/{gameId}");
 

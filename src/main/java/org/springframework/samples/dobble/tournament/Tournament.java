@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -44,7 +45,7 @@ public class Tournament extends BaseEntity {
     public Tournament() {
     }
 
-    @ElementCollection(targetClass = GameMode.class)
+    @ElementCollection
     @Column(name="gamemode")
     @Enumerated(EnumType.STRING)
 	private List<GameMode> gamemodes;
@@ -64,7 +65,7 @@ public class Tournament extends BaseEntity {
     private List<User> users;
 
     @Size(max=8)
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "gametournament", joinColumns = @JoinColumn(name = "tournamentId", nullable = false, table = "tournaments"), inverseJoinColumns = @JoinColumn(name = "gameId", nullable = false, table = "games"))
 	private List<Game> games;
 
