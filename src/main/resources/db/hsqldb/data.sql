@@ -9,10 +9,10 @@ INSERT INTO users(username,password,email,enabled) VALUES
 -- Authorities --
 INSERT INTO authorities(id,username,authority) VALUES 
 (1,'admin1','admin'),
-(2,'owner1','owner'),
-(4,'antbarjim1','owner'),
+(2,'owner1','user'),
+(4,'antbarjim1','user'),
 (5,'adrgarpor','admin'),
-(6,'edurobrus','owner');
+(6,'edurobrus','user');
 
 -- All 55 cards --
 INSERT INTO cards(id) VALUES

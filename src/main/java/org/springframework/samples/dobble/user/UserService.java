@@ -31,6 +31,7 @@ import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameUserService;
 
 import org.springframework.samples.dobble.tournament.Tournament;
+import org.springframework.samples.dobble.user.AuthoritiesService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,6 +42,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private UserRepository userRepository;
+	
+	@Autowired
+	private AuthoritiesService authoritiesService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -52,6 +56,7 @@ public class UserService {
 	public void saveUser(User user) throws DataAccessException {
 		user.setEnabled(true);
 		userRepository.save(user);
+		authoritiesService.saveAuthorities(user.getUsername(), "user");
 	}
 	
 
