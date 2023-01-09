@@ -66,6 +66,15 @@ public class MatchController {
         
         Game game = this.gameService.findGame(gameId);
         
+        System.out.println("WWWWW");
+        System.out.println(game.getState());
+        System.out.println(!game.hasStarted());
+        if (!game.hasStarted()) return new ModelAndView("redirect:/games?error=TheGameHasNotStartedYet");
+        if (game.isFinished()) return new ModelAndView("redirect:/games/{gameId}");
+
+        if (!GameUser.userListOf(game.getGameUsers()).contains(userService.getLoggedUser())) return new ModelAndView("redirect:/games?error=noAuth");
+        
+        
         response.setHeader("Last-Modified",game.getUpdatedAt().toString());
         response.setHeader("Expires", ZonedDateTime.now().plusDays(1).withZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME));
         try {
@@ -78,12 +87,6 @@ public class MatchController {
         } catch (NullPointerException e) {
   
         }
-        
-        
-        if (!game.hasStarted()) return new ModelAndView("redirect:/games?error=TheGameHasNotStartedYet");
-        if (game.isFinished()) return new ModelAndView("redirect:/games/{gameId}/results");
-
-        if (!GameUser.userListOf(game.getGameUsers()).contains(userService.getLoggedUser())) return new ModelAndView("redirect:/games?error=noAuth");
         
         ModelAndView mav = new ModelAndView(VIEW_PLAY_GAME);
         List<GameUser> players = game.getGameUsers();
