@@ -3,14 +3,11 @@ package org.springframework.samples.dobble.symbol;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.samples.dobble.model.BaseEntity;
 import org.springframework.samples.dobble.model.NamedEntity;
 
 import lombok.Getter;

@@ -18,30 +18,25 @@ public class LobbyController {
 
      // Views declaration
 
-     private static final String VIEW_PLAY_GAME = "games/playGame";
-     private String VIEW_SHOW_GAME = "games/gameDetails";
-     private String VIEWS_GAMES_CREATE_OR_UPDATE_FORM = "games/createOrUpdateGameForm";
-     private String VIEW_INDEX_GAMES = "games/gamesList";
+     private static final String VIEW_LOBBY_GAME = "games/LobbyGame";
+     
  
      // Constructor
      private GameService gameService;
      private GameUserService gameUserService;
-     private UserService userService;
      
  
      @Autowired
-     public LobbyController(GameService gameService, UserService userService,
-             GameUserService gameUserService) {
+     public LobbyController(GameService gameService, GameUserService gameUserService) {
          this.gameService = gameService;
          this.gameUserService = gameUserService;
-         this.userService = userService;
      }
  
     @GetMapping
     public ModelAndView lobbyGame(@PathVariable("gameId") Long gameId) {
         Game game = this.gameService.findGame(gameId);
         List<GameUser> gameUsers = game.getGameUsers();
-		ModelAndView result = new ModelAndView("games/LobbyGame");
+		ModelAndView result = new ModelAndView(VIEW_LOBBY_GAME);
 		result.addObject("gameUsers", gameUsers);
         result.addObject("game", game);
 		return result;	
