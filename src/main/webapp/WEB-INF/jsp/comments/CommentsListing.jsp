@@ -74,7 +74,7 @@
 						</tr>
 						<tr>
 							<td colspan="1"><input style="font-family: sans-serif; color:#fff; background-color:  rgb(35, 38, 219); border: none; border-radius: 5px;" type="submit" value="Send Message"/></td>
-							<td colspan="1"><button style="font-family: sans-serif; color:#fff; background-color: rgba(182, 26, 34, 0.877); border: none; border-radius: 5px;"" type="button" data-dismiss="modal">Cerrar</button></td>
+							<td colspan="1"><button style="font-family: sans-serif; color:#fff; background-color: rgba(182, 26, 34, 0.877); border: none; border-radius: 5px;"" type="button" data-dismiss="modal">Close</button></td>
 						</tr>
 					</table>
 				</mvc:form>
