@@ -109,10 +109,12 @@ public class TournamentController {
         game.setMaxPlayers(tournament.getMaxPlayers());
         game.setWinner(null);
         game.setState(GameState.LOBBY);
+        game.setUpdatedAt(null);
         for(User user: tournament.getUsers()){
                 user.setCurrentGame(game);
                 userService.setCurrentGame(user, game);
                 GameUser gameUser = new GameUser(user,game);
+                gameUserService.save(gameUser);
                 gameusers.add(gameUser);
         }
         game.setGameUsers(gameusers);
@@ -126,7 +128,7 @@ public class TournamentController {
             tournament.setGamemodes(mode);
         }
         TournamentService.saveTournament(tournament);
-		return "redirect:/games/"+game.getId()+"/start";	
+		return "redirect:/games/"+game.getId()+"/lobby";	
     }
 
     @GetMapping("/{tournamentId}/lobby")

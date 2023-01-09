@@ -34,7 +34,7 @@ public class JoinGameTests extends GameServiceTest{
         userService.saveUser(owner);
 
         GameService gameService = new GameService(gameRepository, null);
-        GameUserService gameUserService = new GameUserService(gameService, userService);
+        //GameUserService gameUserService = new GameUserService(gameService, userService);
         Game game= new Game();
         game.setOwner(owner);
         game.setMaxPlayers(6);
