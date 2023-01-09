@@ -37,8 +37,8 @@
 				</dobble:menuItem>
 				<dobble:menuItem active="${name eq 'chat'}" url="/" title="chat">
 					<span style="font-size: 140%;" type="button" data-toggle="modal" data-target="#modalWindow">
-						Conversation &nbsp &nbsp<span
-						class="glyphicon glyphicon-chevron-down"></span>
+						Chat &nbsp &nbsp<span
+						class="glyphicon glyphicon-comment"></span>
 					</span>
 				</dobble:menuItem>
 
@@ -46,14 +46,17 @@
 
 			<style>
 				.menuItemSpan {
-					position:absolute;
+					position:relative;
 					left:15%;
 					top: 0%;
 					font-size: 150%;
 				}
-				li.nav-item {
-					height: 50px;
-					}
+
+				ul.navbar-nav {
+					position: absolute;
+					top: 0;
+				}
+				
 				.menuItemSpan i {
 					position:relative;
   					top: 5%;
