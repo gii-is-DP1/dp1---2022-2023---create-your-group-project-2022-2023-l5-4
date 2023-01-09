@@ -54,7 +54,7 @@ public class TournamentController {
 
     @ModelAttribute("gamemodes")
     public List<GameMode> populateGameModes() {
-        return List.of(GameMode.THE_TOWER, GameMode.THE_WELL, GameMode.THE_POISONED_GIFT);
+        return List.of(GameMode.values());
     }
 
     @GetMapping
@@ -90,9 +90,7 @@ public class TournamentController {
 
     @PostMapping("/new")
     public String createTournament(Tournament tournament, BindingResult result) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
-        User owner = userService.findUser(userId);
+        User owner = userService.getLoggedUser();
         tournament.setOwner(owner);
         if (result.hasErrors())
             return VIEWS_TOURNAMENTS_CREATE_OR_UPDATE_FORM;
