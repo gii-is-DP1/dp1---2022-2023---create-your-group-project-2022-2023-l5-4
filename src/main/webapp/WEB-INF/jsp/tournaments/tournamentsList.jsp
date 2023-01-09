@@ -33,12 +33,12 @@
                     <thead>
                       <tr>
                         <th>ID<span onclick="sortTable(0)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="position: absolute; left: 10%;">Num. Games<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="position: absolute; left: 23%;">Owner</th>
-                        <th style="position: absolute; left: 45%;"><span class="glyphicon glyphicon-lock"></span>
+                        <th style="position: relative; left: -5%;">Num. Games<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: relative; left: -20%;">Owner</th>
+                        <th style="position: relative; left: -9%;"><span class="glyphicon glyphicon-lock"></span>
                           <span onclick="sortTable(3)" class="glyphicon glyphicon-sort"></span></th>
                         <th></th>
-                        <th style="position: absolute; left: 80%;">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: relative; left: 12%;">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></th>
                       </tr>
                     </thead>
                 </table>
