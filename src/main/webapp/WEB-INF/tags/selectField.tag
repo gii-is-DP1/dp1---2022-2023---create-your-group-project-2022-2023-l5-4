@@ -18,8 +18,8 @@
 
         <div class="col-sm-10">
             <form:select class="form-control" path="${name}" size="${size}">
-                <c:forEach var="name" items="${names}">
-                    <form:option value="${name}">${name.toString()}</form:option>
+                <c:forEach var="option" items="${names}">
+                    <form:option value="${option.getClass().isEnum() ? option.name() : option}">${option.toString()}</form:option>
                 </c:forEach>
             </form:select>
             <c:if test="${valid}">

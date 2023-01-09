@@ -72,9 +72,6 @@ public class Game extends HandedEntity {
     @Size(min = 1, max = 6)
     private List<GameUser> gameUsers;
 
-    @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.LAZY,mappedBy = "games",cascade = CascadeType.ALL)
-	private List<Tournament> Tournaments;	
-
     @Enumerated(EnumType.STRING)
     @ColumnDefault("'LOBBY'")
     private GameState state;
