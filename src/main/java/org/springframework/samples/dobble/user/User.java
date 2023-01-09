@@ -101,4 +101,8 @@ public class User {
 		return this.username.equals(other.getUsername());
 	}
 
+	public boolean isNew() {
+		return this.username == null;
+	}
+
 }
