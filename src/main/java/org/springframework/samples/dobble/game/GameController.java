@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.card.CardService;
 import org.springframework.samples.dobble.card.Deck;
+import org.springframework.samples.dobble.comment.Comment;
+import org.springframework.samples.dobble.forum.ForumService;
 import org.springframework.samples.dobble.symbol.Symbol;
 import org.springframework.samples.dobble.symbol.SymbolService;
 import org.springframework.samples.dobble.user.User;
@@ -47,16 +49,14 @@ public class GameController {
     private UserService userService;
     private CardService cardService;
     private GameUserService gameUserService;
-    private SymbolService symbolService;
 
     @Autowired
     public GameController(GameService gameService, UserService userService, CardService cardService,
-            GameUserService gameUserService, SymbolService symbolService) {
+            GameUserService gameUserService) {
         this.gameService = gameService;
         this.userService = userService;
         this.cardService = cardService;
         this.gameUserService = gameUserService;
-        this.symbolService = symbolService;
     }
 
     // Game entity related actions

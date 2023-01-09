@@ -1,6 +1,7 @@
 
 package org.springframework.samples.dobble.game;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -78,7 +79,11 @@ public class GameUser extends HandedEntity {
     }
 
     public static List<User> userListOf(List<GameUser> gameUsers) {
-        return gameUsers.stream().map(GameUser::getUser).toList();
+        List<User> users = new ArrayList<>();
+        for (GameUser gameUser : gameUsers) {
+            users.add(gameUser.getUser());
+        }
+        return users;
     }
 
 }

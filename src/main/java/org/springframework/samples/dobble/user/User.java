@@ -7,12 +7,18 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.samples.dobble.card.HandedEntity;
+import org.springframework.samples.dobble.comment.Comment;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.statistics.Achievement;
 import org.springframework.samples.dobble.tournament.Tournament;
@@ -36,6 +42,11 @@ public class User {
 	String username;
 	
 	String password;
+
+	@NotNull
+	@Size(min=6, max=255)
+	@Email
+	private String email;
 	
 	boolean enabled;
 	
@@ -43,6 +54,9 @@ public class User {
 	private Set<Authorities> authorities;
 
 	@ManyToMany
+	@JoinTable(name = "user_achievement",
+			   joinColumns = @JoinColumn(name = "username"),
+			   inverseJoinColumns = @JoinColumn(name = "achievement_id"))
 	private Set<Achievement> achievements;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
@@ -57,7 +71,9 @@ public class User {
 	@OneToMany(mappedBy = "winner")
 	private List<Game> wonGames;
 
-	
+	@OneToMany(cascade = CascadeType.REMOVE)
+	private List<Comment> comments;
+
     @ManyToMany(mappedBy = "users")
 	private List<Tournament> tournaments;
 	
@@ -79,10 +95,6 @@ public class User {
 
     public void removeFriend(User user) {
         friends.remove(user);
-    }
-
-    public ModelAndView getAchievements() {
-        return null;
     }
 
 	public Boolean equals(User other) {

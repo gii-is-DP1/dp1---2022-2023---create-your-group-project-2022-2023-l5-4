@@ -1,11 +1,11 @@
 
 -- Users--
-INSERT INTO users(username,password,enabled) VALUES 
-('admin1','4dm1n',TRUE),
-('owner1','0wn3r',TRUE),
-('antbarjim1','123abc',TRUE),
-('adrgarpor','0wn3r',TRUE),
-('edurobrus','0wn3r',TRUE);
+INSERT INTO users(username,password,email,enabled) VALUES 
+('admin1','4dm1n','admin1@alum.us.es',TRUE),
+('owner1','0wn3r','owner1@alum.us.es',TRUE),
+('antbarjim1','123abc','antbarjim1@alum.us.es',TRUE),
+('adrgarpor','0wn3r','adrgarpor@alum.us.es',TRUE),
+('edurobrus','0wn3r','edurobrus@alum.us.es',TRUE);
 -- Authorities --
 INSERT INTO authorities(id,username,authority) VALUES 
 (1,'admin1','admin'),
@@ -150,25 +150,25 @@ INSERT INTO cardsymbols(card_id, symbol_id) VALUES
 
 -- Initial users, not needed but useful for testing --
 
-INSERT INTO USERS(username, password, enabled) VALUES 
-('User0','p4ssw0rd',TRUE),
-('User1','p4ssw0rd',TRUE),
-('User2','p4ssw0rd',TRUE),
-('User3','p4ssw0rd',TRUE),
-('User4','p4ssw0rd',TRUE),
-('User5','p4ssw0rd',TRUE),
-('User6','p4ssw0rd',TRUE),
-('User7','p4ssw0rd',TRUE),
-('User8','p4ssw0rd',TRUE),
-('User9','p4ssw0rd',TRUE),
-('User10','p4ssw0rd',TRUE),
-('User11','p4ssw0rd',TRUE),
-('User12','p4ssw0rd',TRUE),
-('User13','p4ssw0rd',TRUE),
-('User14','p4ssw0rd',TRUE),
-('User15','p4ssw0rd',TRUE),
-('User16','p4ssw0rd',TRUE),
-('User17','p4ssw0rd',TRUE);
+INSERT INTO USERS(username, password, email, enabled) VALUES 
+('User0','p4ssw0rd','User0@alum.us.es',TRUE),
+('User1','p4ssw0rd','User1@alum.us.es',TRUE),
+('User2','p4ssw0rd','User2@alum.us.es',TRUE),
+('User3','p4ssw0rd','User3@alum.us.es',TRUE),
+('User4','p4ssw0rd','User4@alum.us.es',TRUE),
+('User5','p4ssw0rd','User5@alum.us.es',TRUE),
+('User6','p4ssw0rd','User6@alum.us.es',TRUE),
+('User7','p4ssw0rd','User7@alum.us.es',TRUE),
+('User8','p4ssw0rd','User8@alum.us.es',TRUE),
+('User9','p4ssw0rd','User9@alum.us.es',TRUE),
+('User10','p4ssw0rd','User10@alum.us.es',TRUE),
+('User11','p4ssw0rd','User11@alum.us.es',TRUE),
+('User12','p4ssw0rd','User12@alum.us.es',TRUE),
+('User13','p4ssw0rd','User13@alum.us.es',TRUE),
+('User14','p4ssw0rd','User14@alum.us.es',TRUE),
+('User15','p4ssw0rd','User15@alum.us.es',TRUE),
+('User16','p4ssw0rd','User16@alum.us.es',TRUE),
+('User17','p4ssw0rd','User17@alum.us.es',TRUE);
 
 -- Initial games, not needed but useful for testing --
 
@@ -207,16 +207,17 @@ INSERT INTO gameusers(game_id, user_id) VALUES
 (10,'User0');
 
 
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (1, null, 4, 'LOBBY', 'User17', null);
-INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (2, null, 6, 'LOBBY', 'User16', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (3, null, 2, 'LOBBY',  'User15', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (4, null, 6, 'LOBBY', 'User14', null);
-INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (5, null, 6, 'LOBBY', 'User13', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (6, null, 3, 'LOBBY', 'User12', null);
-INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (7, null, 4, 'LOBBY', 'User9', null);
-INSERT INTO tournaments(id, access_code, max_players, state, owner_Id, winner_Id) VALUES (8, null, 6, 'LOBBY', 'User11', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (9, null, 6, 'LOBBY', 'admin1', null);
-INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES (10, null, 2, 'LOBBY', 'User8', null);
+INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES 
+(1, null, 4, 'LOBBY', 'User17', null)
+,(2, null, 6, 'LOBBY', 'User16', null)
+,(3, null, 2, 'LOBBY',  'User15', null)
+,(4, null, 6, 'LOBBY', 'User14', null)
+,(5, null, 6, 'LOBBY', 'User13', null)
+,(6, null, 3, 'LOBBY', 'User12', null)
+,(7, null, 4, 'LOBBY', 'User9', null)
+,(8, null, 6, 'LOBBY', 'User11', null)
+,(9, null, 6, 'LOBBY', 'admin1', null)
+,(10, null, 2, 'LOBBY', 'User8', null);
 
 INSERT INTO TOURNAMENT_GAMEMODES(tournament_id, gamemode) VALUES 
 (1,'THE_TOWER'), 
@@ -240,23 +241,53 @@ INSERT INTO TOURNAMENT_GAMEMODES(tournament_id, gamemode) VALUES
 (10,'THE_WELL'),
 (10,'THE_POISONED_GIFT');
 
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User17',1);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User16',2);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User15',3);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User14',4);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User13',5);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User12',6);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User11',7);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User10',8);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User9',9);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User8',10);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User7',1);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User6',1);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User5',1);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User4',2);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User3',2);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User2',8);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User1',9);
-INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User0',10);
+INSERT INTO usertournaments(user_id,tournament_id) VALUES 
+('User17',1)
+,('User16',2)
+,('User15',3)
+,('User14',4)
+,('User13',5)
+,('User12',6)
+,('User11',7)
+,('User10',8)
+,('User9',9)
+,('User8',10)
+,('User7',1)
+,('User6',1)
+,('User5',1)
+,('User4',2)
+,('User3',2)
+,('User2',8)
+,('User1',9)
+,('User0',10);
 
+INSERT INTO achievement (id, name, description, badge_image, threshold, metric) VALUES 
+(1, 'Achievement 1', 'First time you play', '/resources/images/achievement/badge1.png', 1000, 'POINTS'),
+(2, 'Achievement 2', 'Catch the same symbol more than three times in a game', '/resources/images/achievement/badge2.png', 1000, 'POINTS'),
+(3, 'Achievement 3', 'Play more than 1000 cards', '/resources/images/achievement/badge3.png', 1000, 'POINTS'),
+(4, 'Achievement 4', 'You have won 10 games', '/resources/images/achievement/badge4.png', 10, 'GAMES_WON'),
+(5, 'Achievement 5', 'You have won 100 games', '/resources/images/achievement/badge5.png', 100, 'GAMES_WON'),
+(6, 'Achievement 6', 'You have won 1000 games', '/resources/images/achievement/badge6.png', 1000, 'GAMES_WON'),
+(7, 'Achievement 7', 'You have scored 100 points', '/resources/images/achievement/badge7.png', 1000, 'POINTS'),
+(8, 'Achievement 8', 'You have scored 1000 points', '/resources/images/achievement/badge8.png', 1000, 'POINTS'),
+(9, 'Achievement 9', 'You have scored 10000 points', '/resources/images/achievement/badge9.png', 1000, 'POINTS'),
+(10, 'Achievement 10', 'You have completed 10 games', '/resources/images/achievement/badge10.png', 10, 'GAMES_WON'),
+(11, 'Achievement 11', 'You have completed 100 games', '/resources/images/achievement/badge11.png', 100, 'GAMES_WON'),
+(12, 'Achievement 12', 'You have completed 1000 games', '/resources/images/achievement/badge12.png', 1000, 'GAMES_WON');
 
+INSERT INTO user_achievement (username, achievement_id) VALUES 
+('admin1', 3);
+
+INSERT INTO forum(id,name,creation_date) VALUES
+(1,'Symbols','2021-01-01 01:01:01')
+,(2,'Cards','2021-02-01 01:01:01')
+,(3,'GameModes','2021-03-01 01:01:01');
+
+INSERT INTO comment(id,text,date,forum_id,user_id) VALUES 
+(1,'El mio es el de la us','2021-01-01 01:01:02',1,'User17')
+,(2,'El mio es el de ajedrez','2021-01-01 01:01:03',1,'User17')
+,(3,'El mio es el perrete','2021-01-01 01:01:09',1,'User17')
+,(4,'A mi no me gusta ninguna','2021-01-01 01:01:11',1,'User17')
+,(5,'Las cartas no coincidian','2021-04-01 01:01:02',2,'User17')
+,(6,'dilo por ti','2021-04-01 01:01:02',2,'User17')
+,(7,'yo estoy en racha','2021-04-01 01:01:02',2,'User17');
