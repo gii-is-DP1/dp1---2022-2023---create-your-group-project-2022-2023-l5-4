@@ -6,6 +6,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
 
 <style>
     * {
@@ -219,6 +222,18 @@
 
 <script>
     
-
+    function checkForUpdate() {
+    $.ajax({
+        type:"get",
+        url: window.location.href+"/checkForUpdate?lastUpdatedAt=${game.updatedAt}",
+        asynch: false,
+        success: function(result) {
+            console.log(result)
+            if (result== "reload") window.location.reload()
+        } 
+    }
+    );
+}
+window.setInterval(checkForUpdate, 500)
 
 </script>

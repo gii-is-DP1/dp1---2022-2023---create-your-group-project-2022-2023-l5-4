@@ -1,7 +1,15 @@
 package org.springframework.samples.dobble.game;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.rtf.RTFEditorKit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +25,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -49,9 +60,25 @@ public class MatchController {
     }
 
     @GetMapping
-    public ModelAndView playGame(@PathVariable("gameId") Long gameId) {
+    public ModelAndView playGame(@PathVariable("gameId") Long gameId, HttpServletResponse response, HttpServletRequest request) {
+        
+        // response.addHeader("Refresh", "1");
         
         Game game = this.gameService.findGame(gameId);
+        
+        response.setHeader("Last-Modified",game.getUpdatedAt().toString());
+        response.setHeader("Expires", ZonedDateTime.now().plusDays(1).withZoneSameInstant(ZoneOffset.UTC).format(DateTimeFormatter.RFC_1123_DATE_TIME));
+        try {
+            LocalDateTime lastUpdated = LocalDateTime.parse(request.getHeader("If-Modified-Since"));
+          
+            if (!game.getUpdatedAt().isAfter(lastUpdated)) {
+                response.setStatus(304);
+                return null;       
+                } 
+        } catch (NullPointerException e) {
+  
+        }
+        
         
         if (!game.hasStarted()) return new ModelAndView("redirect:/games?error=TheGameHasNotStartedYet");
         if (game.isFinished()) return new ModelAndView("redirect:/games/{gameId}/results");
@@ -65,6 +92,7 @@ public class MatchController {
             .findFirst()
             .get();
         players.remove(mainPlayer);
+        mav.addObject("updatedAt", LocalDate.now());
         mav.addObject("mainPlayer", mainPlayer);
         mav.addObject("players", players);
         mav.addObject("game", game);
@@ -73,6 +101,19 @@ public class MatchController {
 
     }
 
+    @GetMapping("/checkForUpdate")
+    @ResponseBody
+    public String checkForUpdate(@PathVariable("gameId") Long gameId, @RequestParam("lastUpdatedAt") String lastUpdatedAtString){
+        
+        Game game = this.gameService.findGame(gameId);
+        try {
+            LocalDateTime lastUpdatedAt = LocalDateTime.parse(lastUpdatedAtString);
+            if (!game.getUpdatedAt().isAfter(lastUpdatedAt)) return "";       
+        } catch (NullPointerException e) {
+            return e.getMessage();
+        }
+        return "reload";
+    }
 
       
     @GetMapping(path = "/delete/{userId}")

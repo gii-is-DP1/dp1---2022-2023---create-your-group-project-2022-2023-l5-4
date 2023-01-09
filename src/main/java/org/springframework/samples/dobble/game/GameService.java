@@ -1,5 +1,9 @@
 package org.springframework.samples.dobble.game;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +51,7 @@ public class GameService {
 
 	@Transactional
 	public Game saveGame(Game game) {
+		game.setUpdatedAt(LocalDateTime.now());
 		return gameRepository.save(game);
 	}
 

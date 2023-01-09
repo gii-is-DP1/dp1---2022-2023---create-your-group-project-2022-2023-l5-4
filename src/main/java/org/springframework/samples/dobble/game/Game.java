@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,6 +32,10 @@ import org.springframework.samples.dobble.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -82,6 +87,8 @@ public class Game extends HandedEntity {
     @ColumnDefault("null")
     private String accessCode;
 
+    private LocalDateTime updatedAt;
+
     public Boolean isPrivate() {
         System.out.println(this.accessCode != null);
         return this.accessCode != null;
@@ -89,6 +96,11 @@ public class Game extends HandedEntity {
 
     public Boolean validAccessCode(String accessCode) {
         return this.accessCode == null || this.accessCode == accessCode;
+    }
+
+    public void setAccessCode(String accessCode) {
+        if (accessCode == "") this.accessCode = null;
+        else this.accessCode = accessCode;
     }
 
     public Integer getNumUsers() {
