@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.samples.dobble.card.HandedEntity;
+import org.springframework.samples.dobble.comment.Comment;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.statistics.Achievement;
 import org.springframework.samples.dobble.tournament.Tournament;
@@ -30,7 +31,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "users")
-public class User extends HandedEntity {
+public class User {
 
 	public User(){}
 	
@@ -70,7 +71,9 @@ public class User extends HandedEntity {
 	@OneToMany(mappedBy = "winner")
 	private List<Game> wonGames;
 
-	
+	@OneToMany(cascade = CascadeType.REMOVE)
+	private List<Comment> comments;
+
     @ManyToMany(mappedBy = "users")
 	private List<Tournament> tournaments;
 	
@@ -96,6 +99,10 @@ public class User extends HandedEntity {
 
 	public Boolean equals(User other) {
 		return this.username.equals(other.getUsername());
+	}
+
+	public boolean isNew() {
+		return this.username == null;
 	}
 
 }

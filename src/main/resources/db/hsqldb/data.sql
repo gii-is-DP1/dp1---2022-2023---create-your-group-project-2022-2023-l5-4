@@ -186,25 +186,25 @@ INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winne
 
 
 -- Initial users into games --
-INSERT INTO gameusers(user_id,game_id) VALUES 
-('User17',1),
-('User16',2),
-('User15',3),
-('User14',4),
-('User13',5),
-('User12',6),
-('User11',7),
-('User10',8),
-('User9',9),
-('User8',10),
-('User7',1),
-('User6',1),
-('User5',1),
-('User4',2),
-('User3',2),
-('User2',8),
-('User1',9),
-('User0',10);
+INSERT INTO gameusers(game_id, user_id) VALUES 
+(1,'User17'),
+(1,'User7'),
+(1,'User6'),
+(1,'User5'),
+(2,'User16'),
+(2,'User3'),
+(2,'User4'),
+(3,'User15'),
+(4,'User14'),
+(5,'User13'),
+(6,'User12'),
+(7,'User11'),
+(8,'User10'),
+(8,'User2'),
+(9,'User9'),
+(9,'User1'),
+(10,'User8'),
+(10,'User0');
 
 
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES 
@@ -277,3 +277,17 @@ INSERT INTO achievement (id, name, description, badge_image, threshold, metric) 
 
 INSERT INTO user_achievement (username, achievement_id) VALUES 
 ('admin1', 3);
+
+INSERT INTO forum(id,name,creation_date) VALUES
+(1,'Symbols','2021-01-01 01:01:01')
+,(2,'Cards','2021-02-01 01:01:01')
+,(3,'GameModes','2021-03-01 01:01:01');
+
+INSERT INTO comment(id,text,date,forum_id,user_id) VALUES 
+(1,'El mio es el de la us','2021-01-01 01:01:02',1,'User17')
+,(2,'El mio es el de ajedrez','2021-01-01 01:01:03',1,'User17')
+,(3,'El mio es el perrete','2021-01-01 01:01:09',1,'User17')
+,(4,'A mi no me gusta ninguna','2021-01-01 01:01:11',1,'User17')
+,(5,'Las cartas no coincidian','2021-04-01 01:01:02',2,'User17')
+,(6,'dilo por ti','2021-04-01 01:01:02',2,'User17')
+,(7,'yo estoy en racha','2021-04-01 01:01:02',2,'User17');

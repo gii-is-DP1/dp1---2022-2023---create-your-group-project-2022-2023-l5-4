@@ -6,6 +6,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
 
 <style>
     * {
@@ -145,6 +148,10 @@
     <span class="timer">15:32</span>
     <div class="scoreboard">
         <p>Scoreboard:</p>
+        <p class="player-name">
+            <c:out value="${mainPlayer.score}"/>
+        </p>
+
     </div>
     <div class="gameboard">
         <div id="player-wrapper-top" class="player-wrapper top">
@@ -152,7 +159,7 @@
                 <c:if test="${players[4]!=null}">
                     <dobble:card className="card" value="${players[4]}"/>
                     <p class="player-name">
-                        <c:out value="${players[4].username}"/>
+                        <c:out value="${players[4].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -162,7 +169,7 @@
                 <c:if test="${players[0]!=null}">
                     <dobble:card className="card" value="${players[0]}"/>
                     <p class="player-name">
-                        <c:out value="${players[0].username}"/>
+                        <c:out value="${players[0].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -170,7 +177,7 @@
                 <c:if test="${players[2]!=null}">
                     <dobble:card className="card" value="${players[2]}"/>
                     <p class="player-name">
-                        <c:out value="${players[2].username}"/>
+                        <c:out value="${players[2].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -180,7 +187,7 @@
                 <c:if test="${players[1]!=null}">
                     <dobble:card className="card" value="${players[1]}"/>
                     <p class="player-name">
-                        <c:out value="${players[1].username}"/>
+                        <c:out value="${players[1].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -188,7 +195,7 @@
                 <c:if test="${players[3]!=null}">
                     <dobble:card className="card" value="${players[3]}"/>
                     <p class="player-name">
-                        <c:out value="${players[3].username}"/>
+                        <c:out value="${players[3].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -203,7 +210,7 @@
                 <c:if test="${mainPlayer!=null}">
                     <dobble:card className="card" value="${mainPlayer}"/>
                     <p class="player-name">
-                        <c:out value="${mainPlayer.username}"/>
+                        <c:out value="${mainPlayer.user.username}"/>
                     </p>
                 </c:if> 
                 
@@ -215,6 +222,17 @@
 
 <script>
     
-
+    function checkForUpdate() {
+    $.ajax({
+        type:"get",
+        url: window.location.href+"/checkForUpdate?lastUpdatedAt=${game.updatedAt}",
+        asynch: false,
+        success: function(result) {
+            if (result== "reload") window.location.reload()
+        } 
+    }
+    );
+}
+window.setInterval(checkForUpdate, 500)
 
 </script>

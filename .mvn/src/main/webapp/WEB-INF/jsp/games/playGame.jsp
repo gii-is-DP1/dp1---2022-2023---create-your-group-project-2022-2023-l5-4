@@ -13,7 +13,7 @@
         
     }
 
-    .gameboard {
+    .gamecomment {
         margin: 5px auto 5px auto;
         display: grid;
         height: 100%;
@@ -100,7 +100,7 @@
 
     }
 
-    .scoreboard {
+    .scorecomment {
         position: fixed;
         display: flex;
         flex: 1;
@@ -141,10 +141,10 @@
 
 <div class="game">
     <span class="timer">15:32</span>
-    <div class="scoreboard">
-        <p>Scoreboard:</p>
+    <div class="scorecomment">
+        <p>Scorecomment:</p>
     </div>
-    <div class="gameboard">
+    <div class="gamecomment">
         <div id="player-wrapper-top" class="player-wrapper top">
             <div class="player player-top">
                 <c:if test="${players[4]!=null}">

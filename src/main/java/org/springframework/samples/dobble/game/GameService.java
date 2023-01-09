@@ -1,5 +1,9 @@
 package org.springframework.samples.dobble.game;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +40,8 @@ public class GameService {
 
 	@Transactional(readOnly = true)
 	public Game findGame(Long gameId) throws NoSuchElementException {
-		return gameRepository.findById(gameId).get();
+		return gameRepository.findById(gameId)
+			.orElseThrow(() -> new NoSuchElementException("Game with id '%s' was not found".formatted(gameId)));
 	}
 
 	@Transactional(readOnly = true)
@@ -46,6 +51,7 @@ public class GameService {
 
 	@Transactional
 	public Game saveGame(Game game) {
+		game.setUpdatedAt(LocalDateTime.now());
 		return gameRepository.save(game);
 	}
 
