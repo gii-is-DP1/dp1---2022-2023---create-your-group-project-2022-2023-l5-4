@@ -12,38 +12,44 @@
 <%@ attribute name="user" type="java.lang.Object" required="false" rtexprvalue="true"
               description="user" %>
 
-<%@ attribute name="listing" type="java.lang.Object" required="false" rtexprvalue="true"
-              description="" %>
+
+
 <%@ attribute name="cardsetName" required="false" rtexprvalue="true"
               description="" %>
 <style>
-.symbol {
+.hoverableSymbol {
         cursor: pointer;
         border: 2px solid transparent;
+        border-radius:100%;
+        height:100%;
+        width:100%;
         overflow:visible;
-       
+        
 }
-    .symbol:hover {
+    .hoverableSymbol:hover {
         border-color:red;
     }
-    .symbol input, .symbol img {
+    .symbol input {
         width:100%;
         height:100%;
         object-fit:contain;
+        margin:auto;
     }
 </style>
 
-<div id="${id}" name="${symbol.getVariant(1)}" class="symbol ${className}" onMouseEnter="console.log('${symbol.getVariant(1)}')">
+<div id="${id}" name="${symbol.getVariant(1)}" class="symbol ${className}">
 <form:form action="play/match" method="POST">
     <input type="hidden" name="symbol" value="${symbol}" />
     <input type="hidden" name="user" value="${user}" />
 
     <c:choose>
-        <c:when test="${listing==true}">
-             <img draggable=false src="/resources/images/symbols/original/${symbol.getVariant(1).getFileName()}"/>
+        <c:when test="${user==null}">
+             <input type="image" disabled=true draggable=false src="/resources/images/symbols/original/${symbol.getVariant(1).getFileName()}"/>
         </c:when>
         <c:otherwise>
+        <div class="hoverableSymbol">
             <input type="image" id="#symbolBtn" draggable=false src="/resources/images/symbols/original/${symbol.getVariant(1).getFileName()}"/>
+        </div>
         </c:otherwise>
     </c:choose>
 </form:form>

@@ -2,6 +2,7 @@ package org.springframework.samples.dobble.game;
 
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,14 +28,12 @@ public enum GameMode {
     THE_WELL("The Well"),
     THE_POISONED_GIFT("The Poisoned Gift");
 
-    private String gamemodeName; 
-    private GameMode(String gamemodeName){
-        this.gamemodeName = gamemodeName;
+    private String name; 
+    private GameMode(String name){
+        this.name = name;
     };
 
     public String toString() {
-        return gamemodeName;
+        return name;
     }
-
-
 }

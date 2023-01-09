@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,6 +32,10 @@ import org.springframework.samples.dobble.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -63,12 +68,9 @@ public class Game extends HandedEntity {
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @ManyToMany
+    @OneToMany(mappedBy = "game")
     @Size(min = 1, max = 6)
-    @JoinTable(name = "gameusers", 
-    joinColumns = @JoinColumn(name="gameId"), 
-    inverseJoinColumns = @JoinColumn(name="userId"))
-    private List<User> users;
+    private List<GameUser> gameUsers;
 
     @ManyToMany(targetEntity=Tournament.class,fetch=FetchType.LAZY,mappedBy = "games",cascade = CascadeType.ALL)
 	private List<Tournament> Tournaments;	
@@ -83,36 +85,30 @@ public class Game extends HandedEntity {
     private Integer maxPlayers;
 
     @ColumnDefault("null")
-    private Integer accessCode;
+    private String accessCode;
 
-    public Integer getAccessCode() {
-        return null;
-    }
+    private LocalDateTime updatedAt;
 
     public Boolean isPrivate() {
         System.out.println(this.accessCode != null);
         return this.accessCode != null;
     }
 
-    private Integer hashCode(String accessCode) {
-        return accessCode.toString().hashCode();
+    public Boolean validAccessCode(String accessCode) {
+        return this.accessCode == null || this.accessCode == accessCode;
     }
-
 
     public void setAccessCode(String accessCode) {
-
-        if (!(accessCode == null || accessCode == ""))
-            this.accessCode = hashCode(accessCode);
-    }
-
-    public Boolean validAccessCode(String accessCode) {
-        if (this.accessCode != null)
-            return this.accessCode.equals(hashCode(accessCode));
-        return true;
+        if (accessCode == "") this.accessCode = null;
+        else this.accessCode = accessCode;
     }
 
     public Integer getNumUsers() {
-        return this.users.size();
+        return this.getGameUsers().size();
+    }
+    public List<GameUser> getGameUsers() {
+        if (this.gameUsers == null) gameUsers = new ArrayList<>();
+        return this.gameUsers;
     }
 
     public boolean isFinished() {
@@ -127,7 +123,7 @@ public class Game extends HandedEntity {
         return this.state == GameState.ON_PLAY;
     }
     public boolean isFull() {
-        return this.getUsers().size()==this.maxPlayers;
+        return this.getGameUsers().size()==this.maxPlayers;
     }
 
     public boolean isNew() {

@@ -68,11 +68,8 @@ public class GameController {
     @GetMapping
     public ModelAndView indexUnstartedGames() {
         ModelAndView mav = new ModelAndView(VIEW_INDEX_GAMES);
-        System.out.println("MODEL IS OK");
         List<Game> games = this.gameService.findAllUnstartedGames();
-        System.out.println("GAMESERVICEISOK");
         mav.addObject("games", games);
-        System.out.println("MAV ADD OK");
         return mav;
 
     }
@@ -97,16 +94,15 @@ public class GameController {
     }
 
     @PostMapping("/new")
-    public String createGame(Game game, BindingResult result) {
+    public String createGame(Game game, BindingResult result) throws AuthException, NullPointerException, IllegalStateException {
         if (result.hasErrors())
             return VIEWS_GAMES_CREATE_OR_UPDATE_FORM;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
-        User owner = userService.findUser(userId);
+        User owner = userService.getLoggedUser();
         game.setOwner(owner);
         game.setState(GameState.LOBBY);
         this.gameService.saveGame(game);
-        return "redirect:/games/" + game.getId();
+        gameUserService.addGameUser(game.getId(), owner.getUsername(), game.getAccessCode());
+        return "redirect:/games/" + game.getId() + "/lobby";
     }
 
     // Before starting
@@ -128,15 +124,15 @@ public class GameController {
     @GetMapping("/{gameId}/start")
     public String startGame(@PathVariable("gameId") Long gameId) {
         Game game = gameService.findGame(gameId);
-        List<User> users = game.getUsers();
+        List<GameUser> gameUsers = game.getGameUsers();
         Deck cards = Deck.of(cardService.findAll());
         
-        Map<User, Deck> deal = cards.deal(users, game.getGamemode());
+        Map<GameUser, Deck> deal = cards.deal(gameUsers, game.getGamemode());
         Deck centralDeck = cards.getLeftForCenter();
         game.setCards(centralDeck);
-        users.forEach(user -> {
-            user.setCards(deal.get(user));
-            userService.saveUser(user);
+        gameUsers.forEach(gameUser -> {
+            gameUser.setCards(deal.get(gameUser));
+            gameUserService.save(gameUser);
         });
         game.setState(GameState.ON_PLAY);
         gameService.saveGame(game);

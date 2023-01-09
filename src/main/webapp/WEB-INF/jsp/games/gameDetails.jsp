@@ -6,7 +6,7 @@
 
 <dobble:layout pageName="games">
 
-    <h2>Game Information</h2>
+    <h2>Game Details</h2>
 
 
     <table class="table table-striped">
@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <th>users</th>
-            <td><c:out value="${game.users}"/></td>
+            <td><c:out value="${game.gameUsers}"/></td>
         </tr>
     </table>
 

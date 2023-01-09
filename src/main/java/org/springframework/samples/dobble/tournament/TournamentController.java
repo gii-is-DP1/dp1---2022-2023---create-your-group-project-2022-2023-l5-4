@@ -116,7 +116,7 @@ public class TournamentController {
                 userService.setCurrentGame(user, game);
                 gameusers.add(user);
         }
-        game.setUsers(gameusers);
+        game.setGameUsers(gameusers);
         gameService.saveGame(game);
         List<Game> games = tournament.getGames();
         games.add(game);

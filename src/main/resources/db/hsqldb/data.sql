@@ -172,39 +172,39 @@ INSERT INTO USERS(username, password, email, enabled) VALUES
 
 -- Initial games, not needed but useful for testing --
 
-INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winner_Id) VALUES 
-(1, null, 4, 'LOBBY', 'THE_TOWER', 'User17', null),
-(2, null, 6, 'LOBBY', 'THE_TOWER', 'User16', null),
-(3, 1234, 2, 'LOBBY', 'THE_WELL', 'User15', null),
-(4, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User14', null),
-(5, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User13', null),
-(6, null, 3, 'LOBBY', 'THE_TOWER', 'User12', null),
-(7, 1234, 4, 'LOBBY', 'THE_TOWER', 'User9', null),
-(8, null, 6, 'LOBBY', 'THE_WELL', 'User11', null),
-(9, 1234, 6, 'LOBBY', 'THE_WELL', 'User10', null),
-(10, 1234, 2, 'LOBBY', 'THE_TOWER', 'User8', 'adrgarpor');
+INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winner_Id, updated_at) VALUES 
+(1, null, 4, 'LOBBY', 'THE_TOWER', 'User17', null, null),
+(2, null, 6, 'LOBBY', 'THE_TOWER', 'User16', null, '2023-01-09 00:18:30.49297'),
+(3, 1234, 2, 'LOBBY', 'THE_WELL', 'User15', null, null),
+(4, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User14', null, null),
+(5, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User13', null, null),
+(6, null, 3, 'LOBBY', 'THE_TOWER', 'User12', null, null),
+(7, 1234, 4, 'LOBBY', 'THE_TOWER', 'User9', null, null),
+(8, null, 6, 'LOBBY', 'THE_WELL', 'User11', null, null),
+(9, 1234, 6, 'LOBBY', 'THE_WELL', 'User10', null, null),
+(10, 1234, 2, 'LOBBY', 'THE_TOWER', 'User8', 'adrgarpor', null);
 
 
 -- Initial users into games --
-INSERT INTO gameusers(user_id,game_id) VALUES 
-('User17',1),
-('User16',2),
-('User15',3),
-('User14',4),
-('User13',5),
-('User12',6),
-('User11',7),
-('User10',8),
-('User9',9),
-('User8',10),
-('User7',1),
-('User6',1),
-('User5',1),
-('User4',2),
-('User3',2),
-('User2',8),
-('User1',9),
-('User0',10);
+INSERT INTO gameusers(game_id, user_id) VALUES 
+(1,'User17'),
+(1,'User7'),
+(1,'User6'),
+(1,'User5'),
+(2,'User16'),
+(2,'User3'),
+(2,'User4'),
+(3,'User15'),
+(4,'User14'),
+(5,'User13'),
+(6,'User12'),
+(7,'User11'),
+(8,'User10'),
+(8,'User2'),
+(9,'User9'),
+(9,'User1'),
+(10,'User8'),
+(10,'User0');
 
 
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES 

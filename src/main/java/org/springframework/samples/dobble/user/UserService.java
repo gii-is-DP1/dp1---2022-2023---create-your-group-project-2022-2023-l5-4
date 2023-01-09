@@ -17,6 +17,7 @@ package org.springframework.samples.dobble.user;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.dom4j.util.UserDataDocumentFactory;
@@ -56,8 +57,9 @@ public class UserService {
 	
 
 	@Transactional(readOnly = true)
-	public User findUser(String username) {
-		return userRepository.findById(username).orElse(null);
+	public User findUser(String username) throws NoSuchElementException {
+		return userRepository.findById(username)
+			.orElseThrow(() -> new NoSuchElementException("User with id '%s' was not found".formatted(username)));
 
 	}
 
@@ -72,12 +74,6 @@ public class UserService {
 		userRepository.save(user);
 
     }
-
-	public User getSessionUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName();
-		return findUser(username);
-	}
 
 	@Transactional
     public void setCurrentTournament(User user, Tournament tournament) {
@@ -101,7 +97,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User getLoggedUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication()
+		.getPrincipal();
         UserDetails ud = null;
         if (principal instanceof UserDetails) {
             ud = ((UserDetails) principal);
