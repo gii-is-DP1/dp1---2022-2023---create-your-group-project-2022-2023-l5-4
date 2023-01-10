@@ -16,6 +16,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.samples.dobble.card.HandedEntity;
 import org.springframework.samples.dobble.user.User;
 
@@ -29,6 +32,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 @Table(name = "games")
 public class Game extends HandedEntity {
 
@@ -45,15 +49,18 @@ public class Game extends HandedEntity {
 
     @ManyToOne
     @JoinColumn(name = "ownerId")
+    @NotAudited
     @NotNull
     private User owner;
 
     @ManyToOne
+    @NotAudited
     @JoinColumn(name = "winnerId")
     private User winner;
 
     @OneToMany(mappedBy = "game")
     @Size(min = 1, max = 6)
+    @NotAudited
     private List<GameUser> gameUsers;
 
     @Enumerated(EnumType.STRING)
