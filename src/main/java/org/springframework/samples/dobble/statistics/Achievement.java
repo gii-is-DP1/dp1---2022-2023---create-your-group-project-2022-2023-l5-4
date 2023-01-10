@@ -2,6 +2,7 @@ package org.springframework.samples.dobble.statistics;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,7 +34,7 @@ public class Achievement extends NamedEntity {
     @NotNull
     Metric metric;
 
-    @ManyToMany(mappedBy = "achievements")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "achievements")
     private Set<User> users;
 
     public String getActualDescription(){

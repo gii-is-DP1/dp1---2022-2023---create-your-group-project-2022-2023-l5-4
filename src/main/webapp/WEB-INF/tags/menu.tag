@@ -36,6 +36,7 @@
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span class="menuItemSpan">Find tournaments</span>
 				</dobble:menuItem>
+				
 
 			</ul>
 

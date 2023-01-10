@@ -21,7 +21,7 @@ import org.springframework.samples.dobble.card.HandedEntity;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.statistics.Achievement;
 import org.springframework.samples.dobble.tournament.Tournament;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import lombok.Getter;
 import lombok.Setter;
