@@ -7,6 +7,7 @@ import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,12 +34,13 @@ public class LobbyController {
      }
  
     @GetMapping
-    public ModelAndView lobbyGame(@PathVariable("gameId") Long gameId) {
+    public ModelAndView lobbyGame(@PathVariable("gameId") Long gameId, @ModelAttribute("error") String error) {
         Game game = this.gameService.findGame(gameId);
         List<GameUser> gameUsers = game.getGameUsers();
 		ModelAndView result = new ModelAndView(VIEW_LOBBY_GAME);
 		result.addObject("gameUsers", gameUsers);
         result.addObject("game", game);
+        result.addObject("error",error);
 		return result;	
     }
 
