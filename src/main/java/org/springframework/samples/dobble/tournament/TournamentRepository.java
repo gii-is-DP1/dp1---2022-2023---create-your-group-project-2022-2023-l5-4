@@ -19,8 +19,5 @@ public interface TournamentRepository extends CrudRepository<Tournament,Long> {
     @Query("SELECT tournament FROM Tournament tournament WHERE tournament.state='LOBBY'")
     List<Tournament> findAllUnstarted();
 
-    @Query("SELECT gu FROM GameUser gu WHERE gu.game.tournament.id = :tournamentId ORDER BY gu.score DESC")
-    GameUser findHighestScoredPlayerInTournament(@Param("tournamentId") Long tournamentId);
-    
 
 }
