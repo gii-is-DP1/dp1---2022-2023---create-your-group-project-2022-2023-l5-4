@@ -174,7 +174,7 @@ INSERT INTO USERS(username, password, email, enabled) VALUES
 
 INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winner_Id) VALUES 
 (1, null, 4, 'LOBBY', 'THE_TOWER', 'User17', null),
-(2, null, 6, 'LOBBY', 'THE_TOWER', 'User16', null),
+(2, null, 6, 'LOBBY', 'THE_WELL', 'adrgarpor', null), -- the owner of the game must be changed
 (3, 1234, 2, 'LOBBY', 'THE_WELL', 'User15', null),
 (4, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User14', null),
 (5, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User13', null),
