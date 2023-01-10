@@ -2,21 +2,45 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="achievements">
+<dobble:layout pageName="achievements">
     <h2>Achievements</h2>
+    <h4 class="score">TOTAL SCORE: <c:out value="${score}"/></h4>
+    <progress class="ml-auto" value="${score}" max="10000"></progress>
 
-    <ul>
+    <ul class="list-group">
         <c:forEach items="${achievements}" var="achievement">
-            <li>               
-                    <c:out value="${achievement.name}"/>
-                    <c:if test="${achievement.badgeImage == ''}">none</c:if>
-                    <c:if test="${achievement.badgeImage != ''}">
-                        <img src="${achievement.badgeImage}" width="100px"  /> 
-                    </c:if>
+            <li class="list-group-item d-flex justify-content-between align-items-center">               
+                <c:out value="${achievement.name}"/>
+                <c:if test="${achievement.badgeImage != ''}">
+                    <img class="ml-auto" src="${achievement.badgeImage}" width="50px" alt="Achievement badge"/> 
+                </c:if>
             </li>                                
         </c:forEach>
     </ul>    
-    <a class="btn btn-default" href="/statistics/achievements">Available achievements</a>
-</petclinic:layout>
+    <a class="btn btn-primary" href="/statistics/achievements">Available achievements</a>
+        <style>
+            .score {
+                font-size: 30px;
+                font-weight: bold;
+            }
+
+            progress {
+                width: 50%;
+                height: 20px;
+                background-color: #ddd;
+                border-radius: 10px;
+            }
+            
+            progress::-webkit-progress-bar {
+                background-color: #ddd;
+                border-radius: 10px;
+            }
+            
+            progress::-webkit-progress-value {
+                background-color: #007bff;
+                border-radius: 10px;
+            }
+    </style>
+</dobble:layout>

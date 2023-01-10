@@ -2,6 +2,7 @@ package org.springframework.samples.dobble.statistics;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.dobble.game.GameUserService;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
 import org.springframework.security.core.Authentication;
@@ -36,11 +38,13 @@ public class AchievementController {
 
     private AchievementService service;
     private UserService userService;
+    private GameUserService gameUserService;
 
     @Autowired
-    public AchievementController(AchievementService service, UserService userService){
+    public AchievementController(AchievementService service, UserService userService, GameUserService gameUserService){
         this.service=service;
         this.userService=userService;
+        this.gameUserService=gameUserService;
     }
 
     @Transactional(readOnly = true)
@@ -113,7 +117,22 @@ public class AchievementController {
     @GetMapping("/byUser/{id}")
     public ModelAndView showPersonalAchievementsListing(@PathVariable String id){
         ModelAndView result=new ModelAndView(PERSONAL_LISTING_VIEW);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        Integer score = gameUserService.findTotalScoreByUsername(userId);
+        if(score ==null) score = 0;
+        Set<Achievement> achievements = new HashSet<Achievement>();
+        for(Achievement a : service.getAchievements()){
+            if(score>a.getThreshold()){
+                User user = userService.findUser(userId);
+                user.getAchievements();
+                achievements.add(a);
+                user.setAchievements(achievements);
+                userService.saveUser(user);
+            }
+        }
         result.addObject("achievements",service.getAchievementsByOwner(id));
+        result.addObject("score", score);
         return result;
     }
 

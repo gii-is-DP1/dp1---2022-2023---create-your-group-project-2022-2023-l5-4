@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.samples.dobble.card.HandedEntity;
+import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.samples.dobble.user.User;
 
 import lombok.Getter;
@@ -51,6 +52,10 @@ public class Game extends HandedEntity {
     @ManyToOne
     @JoinColumn(name = "winnerId")
     private User winner;
+
+    @ManyToOne
+    @JoinColumn(name = "tournament_id")
+    private Tournament tournament;
 
     @OneToMany(mappedBy = "game")
     @Size(min = 1, max = 6)
