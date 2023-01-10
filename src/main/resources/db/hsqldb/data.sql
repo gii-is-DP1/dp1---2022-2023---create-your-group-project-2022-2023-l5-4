@@ -172,17 +172,17 @@ INSERT INTO USERS(username, password, email, enabled) VALUES
 
 -- Initial games, not needed but useful for testing --
 
-INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winner_Id, updated_at) VALUES 
-(1, null, 4, 'LOBBY', 'THE_TOWER', 'User17', null, null),
-(2, null, 6, 'LOBBY', 'THE_TOWER', 'User16', null, '2023-01-09 00:18:30.49297'),
-(3, 1234, 2, 'LOBBY', 'THE_WELL', 'User15', null, null),
-(4, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User14', null, null),
-(5, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User13', null, null),
-(6, null, 3, 'LOBBY', 'THE_TOWER', 'User12', null, null),
-(7, 1234, 4, 'LOBBY', 'THE_TOWER', 'User9', null, null),
-(8, null, 6, 'LOBBY', 'THE_WELL', 'User11', null, null),
-(9, 1234, 6, 'LOBBY', 'THE_WELL', 'User10', null, null),
-(10, 1234, 2, 'LOBBY', 'THE_TOWER', 'User8', 'adrgarpor', null);
+INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winner_Id) VALUES 
+(1, null, 4, 'LOBBY', 'THE_TOWER', 'User17', null),
+(2, null, 6, 'LOBBY', 'THE_TOWER', 'User16', null),
+(3, 1234, 2, 'LOBBY', 'THE_WELL', 'User15', null),
+(4, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User14', null),
+(5, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User13', null),
+(6, null, 3, 'LOBBY', 'THE_TOWER', 'User12', null),
+(7, 1234, 4, 'LOBBY', 'THE_TOWER', 'User9', null),
+(8, null, 6, 'LOBBY', 'THE_WELL', 'User11', null),
+(9, 1234, 6, 'LOBBY', 'THE_WELL', 'User10', null),
+(10, 1234, 2, 'LOBBY', 'THE_TOWER', 'User8', 'adrgarpor');
 
 
 -- Initial users into games --

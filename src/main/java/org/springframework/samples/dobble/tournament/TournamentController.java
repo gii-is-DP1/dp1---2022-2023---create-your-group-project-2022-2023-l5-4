@@ -54,7 +54,7 @@ public class TournamentController {
 
     @ModelAttribute("gamemodes")
     public List<GameMode> populateGameModes() {
-        return List.of(GameMode.THE_TOWER, GameMode.THE_WELL, GameMode.THE_POISONED_GIFT);
+        return List.of(GameMode.values());
     }
 
     @GetMapping
@@ -90,15 +90,17 @@ public class TournamentController {
 
     @PostMapping("/new")
     public String createTournament(Tournament tournament, BindingResult result) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
-        User owner = userService.findUser(userId);
+        User owner = userService.getLoggedUser();
         tournament.setOwner(owner);
         if (result.hasErrors())
             return VIEWS_TOURNAMENTS_CREATE_OR_UPDATE_FORM;
         tournament.setState(TournamentState.LOBBY);
-        tournamentService.saveTournament(tournament);
-        return "redirect:/tournaments/" + tournament.getId();
+        if(tournament.getGamemodes().size()==0){
+            return "redirect:/tournaments?error="+ "Tournament Finished";
+        }else{
+            tournamentService.saveTournament(tournament);
+            return "redirect:/tournaments/" + tournament.getId() + "/lobby";
+        }
     }
 
     @GetMapping("/{tournamentId}/play")
@@ -111,10 +113,12 @@ public class TournamentController {
         game.setMaxPlayers(tournament.getMaxPlayers());
         game.setWinner(null);
         game.setState(GameState.LOBBY);
+        game.setUpdatedAt(null);
         for(User user: tournament.getUsers()){
                 user.setCurrentGame(game);
                 userService.setCurrentGame(user, game);
                 GameUser gameUser = new GameUser(user,game);
+                gameUserService.save(gameUser);
                 gameusers.add(gameUser);
         }
         game.setGameUsers(gameusers);
@@ -122,13 +126,13 @@ public class TournamentController {
         List<Game> games = tournament.getGames();
         games.add(game);
         tournament.setGames(games);
-        if(tournament.getGamemodes().size()>1){
+        if(tournament.getGamemodes().size()>0){
             List<GameMode> mode = tournament.getGamemodes();
             mode.remove(0);
             tournament.setGamemodes(mode);
         }
         TournamentService.saveTournament(tournament);
-		return "redirect:/games/"+game.getId()+"/start";	
+		return "redirect:/games/"+game.getId()+"/lobby";	
     }
 
     @GetMapping("/{tournamentId}/lobby")
@@ -174,6 +178,10 @@ public class TournamentController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
             tournamentService.addUserTournament(tournamentId, userId, accessCode);
+            Tournament tournament = tournamentService.findTournament(tournamentId);
+            if(tournament.getGamemodes().size()==0){
+                return "redirect:/tournaments?error="+ "Tournament Finished";
+            }
         } catch(Exception e) {
             return "redirect:/tournaments?error="+ e.getMessage();
         } 

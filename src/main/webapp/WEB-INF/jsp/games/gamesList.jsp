@@ -8,13 +8,13 @@
 
 <dobble:layout pageName="games">
    
-    <c:if test="${param.error!=null}">
+    <c:if test="${error!=null && error!=''}">
         <div class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-alert"></span>
             <label>
                 ERROR:  
             </label>
-            <c:out value="${param.error}"></c:out>
+            <c:out value="${error}"></c:out>
         </div>
     </c:if>
     
@@ -34,12 +34,12 @@
                 <thead>
                     <tr>
                         <th>ID<span onclick="sortTable(0)" class="glyphicon glyphicon-sort"></span></th>
-                        <th>Gamemode<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
-                        <th>Owner</th>
-                        <th><span class="glyphicon glyphicon-lock"></span>
+                        <th style="position: relative; left: -8%;">Gamemode<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: relative; left: -3%;">Owner</th>
+                        <th style="position: relative; left: -3%;"><span class="glyphicon glyphicon-lock"></span>
                             <span onclick="sortTable(3)" class="glyphicon glyphicon-sort"></span></th>
                         <th></th>
-                        <th style="width:150px">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: relative; left: -1%; width:150px">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></th>
                     </tr>
                 </thead>
                 </table>
