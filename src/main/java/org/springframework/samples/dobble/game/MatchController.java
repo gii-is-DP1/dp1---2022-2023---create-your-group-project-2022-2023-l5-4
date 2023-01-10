@@ -124,8 +124,8 @@ public class MatchController {
     
         if (symbolMatches && userMatches) gameUserService.makePlay(game, gameUser);
         
-        if (gameUser.getCards().size()==0) {
-            gameService.endGame(game, user);
+        if (game.getCards().size() == 0 || gameUser.getCards().size()==0) {
+            gameService.endGame(game);
             return "redirect:/games/{gameId}";
         }
 
