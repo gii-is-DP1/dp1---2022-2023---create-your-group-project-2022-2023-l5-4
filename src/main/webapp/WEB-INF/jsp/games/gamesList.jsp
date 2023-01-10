@@ -8,13 +8,13 @@
 
 <dobble:layout pageName="games">
    
-    <c:if test="${param.error!=null}">
+    <c:if test="${error!=null && error!=''}">
         <div class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-alert"></span>
             <label>
                 ERROR:  
             </label>
-            <c:out value="${param.error}"></c:out>
+            <c:out value="${error}"></c:out>
         </div>
     </c:if>
     
