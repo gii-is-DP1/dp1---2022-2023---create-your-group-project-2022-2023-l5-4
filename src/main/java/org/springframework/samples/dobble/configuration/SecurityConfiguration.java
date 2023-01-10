@@ -49,6 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/new").permitAll()
 				.antMatchers("/tournaments/new").permitAll()
 				.antMatchers("/users/edit").permitAll()
+				.antMatchers("/friends/").authenticated()
 				.antMatchers("/friends/**").authenticated()
 				.antMatchers("/cards/**").permitAll()
 				.antMatchers("/users/**").permitAll()

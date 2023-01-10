@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="mvc"%>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 	<!-- Botón para abrir la ventana modal -->
 	  
 	  <style>
