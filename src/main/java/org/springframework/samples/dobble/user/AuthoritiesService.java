@@ -55,7 +55,7 @@ public class AuthoritiesService {
 			authority.setUser(user);
 
 			authority.setAuthority(role);
-			//user.get().getAuthorities().add(authority);
+			user.getAuthorities().add(authority);
 			authoritiesRepository.save(authority);
 		}else
 			throw new DataAccessException("User '"+username+"' not found!") {};

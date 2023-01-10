@@ -21,7 +21,9 @@ public interface UserRepository extends  CrudRepository<User, String>{
 	 * @return 
 	 * @see BaseEntity#isNew
 	 */
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
+	//User save(User user) throws DataAccessException;
+	
 	User save(User user) throws DataAccessException;
 
 	@Query("SELECT user FROM User user")
