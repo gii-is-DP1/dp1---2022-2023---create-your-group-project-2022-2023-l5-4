@@ -1,6 +1,7 @@
 package org.springframework.samples.dobble.game;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -54,7 +55,14 @@ public class GameService {
 		gameRepository.deleteById(gameId);
 	}
 
-    public void endGame(Game game, User winner) {
+    public void endGame(Game game) {
+		User winner = game
+			.getGameUsers()
+			.stream()
+			.max(Comparator.comparing(GameUser::getScore))
+			.get()
+			.getUser();
+			
 		game.setWinner(winner);
 		game.setState(GameState.FINISHED);
 		saveGame(game);
