@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.springframework.samples.dobble.game.GameMode;
 import org.springframework.samples.dobble.game.GameUser;
-import org.springframework.samples.dobble.user.User;
 
 
 public class Deck extends ArrayList<Card> {

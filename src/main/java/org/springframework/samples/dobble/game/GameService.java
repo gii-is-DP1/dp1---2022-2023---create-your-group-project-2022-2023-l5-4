@@ -1,23 +1,13 @@
 package org.springframework.samples.dobble.game;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
-import javax.resource.spi.IllegalStateException;
-import javax.security.auth.message.AuthException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.user.User;
-import org.springframework.samples.dobble.user.UserRepository;
-import org.springframework.samples.dobble.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class GameService {
 
 	private GameRepository gameRepository;
-	private UserService userService;
 
 	@Autowired
-	public GameService(GameRepository gameRepository, UserService userService) {
+	public GameService(GameRepository gameRepository) {
 		this.gameRepository = gameRepository;
-		this.userService = userService;
 	}
 
 	@Transactional(readOnly = true)
