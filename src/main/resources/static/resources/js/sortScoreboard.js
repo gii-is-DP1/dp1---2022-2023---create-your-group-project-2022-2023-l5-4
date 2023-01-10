@@ -9,13 +9,9 @@
               b = scores.getElementsByTagName("p");
               for (i = 0; i < (b.length - 1); i++) {
                 shouldSwitch = false;
-                console.log(b[i].innerText)
-                console.log(b[i].innerHTML.substring(
-                  b[i].innerHTML.indexOf(":")+1))
-                if (b[i].innerHTML.substring(
-                  b[i].innerHTML.indexOf(":")+1) < 
-                  b[i+1].innerHTML.substring(
-                  b[i+1].innerHTML.indexOf(":")+1)) {
+                var v1 = parseInt(b[i].innerHTML.substring(b[i].innerHTML.indexOf(":")+1)),
+                    v2 = parseInt(b[i+1].innerHTML.substring(b[i+1].innerHTML.indexOf(":")+1))
+                if ( v1 < v2 ) {
                   shouldSwitch = true;
                   break;
                 }
