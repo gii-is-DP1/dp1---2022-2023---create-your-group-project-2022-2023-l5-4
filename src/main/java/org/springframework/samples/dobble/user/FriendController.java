@@ -41,10 +41,10 @@ public class FriendController {
             for(User user : users){
                 if(user.getUsername().toLowerCase().contains(term.toLowerCase()) && count<4){
                     usersTerm.add(user);
+                    count+=1;
                 }if(count>=4){
                     break;
                 }
-                count+=1;
             }
         return usersTerm.stream().map(User::getUsername).collect(Collectors.toList());
     }
