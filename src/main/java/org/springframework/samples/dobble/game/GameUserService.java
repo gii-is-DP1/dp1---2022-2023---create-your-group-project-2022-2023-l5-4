@@ -76,13 +76,22 @@ public class GameUserService {
 	public void deleteGameUser(Long gameId, String username)
 			throws NoSuchElementException {
 		Game game = gameService.findGame(gameId);
+
+		if (game.hasStarted()) return;
+
 		User user = userService.findUser(username);
 		GameUser gameUser = findById(GameUserPk.of(user, game));
 
-		if (!game.hasStarted()) {
-			remove(gameUser);
-			userService.setCurrentGame(user, null);
+		remove(gameUser);
+		game.getGameUsers().remove(gameUser);
+		userService.setCurrentGame(user, null);
+			
+		if (game.getNumUsers()==0) {
+			gameService.deleteGame(game);
+			return;
 		}
+		
+		if (game.getOwner().equals(user)) gameService.chooseNewOwner(game);
 	}
 
 

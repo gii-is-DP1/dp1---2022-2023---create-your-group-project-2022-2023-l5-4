@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.dobble.user.User;
+import org.springframework.samples.dobble.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,5 +59,12 @@ public class GameService {
 		game.setState(GameState.FINISHED);
 		saveGame(game);
     }
+
+	@Transactional
+    public void chooseNewOwner(Game game) {
+		if (game.getNumUsers() == 0) return; 
+		game.setOwner(game.getGameUsers().get(0).getUser());
+		saveGame(game);
+	}
 	
 }
