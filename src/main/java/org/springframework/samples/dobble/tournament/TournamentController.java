@@ -79,12 +79,16 @@ public class TournamentController {
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
         GameUser winnerUser = null;
         for (Game g:tournament.getGames()){
+            GameUser w = winnerUser;
             for(GameUser gameUser : g.getGameUsers()){
                 i = gameUser.getScore();
                 if(i > j){
                     j = i;
                     winnerUser = gameUser;
                 }
+            }
+            if(winnerUser!=null && winnerUser.equals(winnerUser)){
+                break;
             }
         }
         if(winnerUser!=null) {
@@ -122,7 +126,7 @@ public class TournamentController {
     @GetMapping("/{tournamentId}/play")
     public String playTournament(@PathVariable("tournamentId") Long tournamentId) {
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
-        Game game = new Game();
+        Game game = new Game(); 
         List<GameUser> gameusers = new ArrayList<>();
         game.setGamemode(tournament.getGamemodes().get(0));
         game.setOwner(tournament.getOwner());
@@ -137,6 +141,7 @@ public class TournamentController {
                 gameUserService.save(gameUser);
                 gameusers.add(gameUser);
         }
+        if(tournament.getAccessCode()!=null) game.setAccessCode(""+tournament.getAccessCode());
         game.setGameUsers(gameusers);
         gameService.saveGame(game);
         List<Game> games = tournament.getGames();
@@ -146,6 +151,7 @@ public class TournamentController {
         Integer i = 0; 
         Integer j = 0; 
         for (Game g:tournament.getGames()){
+            GameUser w = winnerUser;
             for(GameUser gameUser : g.getGameUsers()){
                 i = gameUser.getScore();
                 if(i > j){
@@ -153,7 +159,12 @@ public class TournamentController {
                     winnerUser = gameUser;
                 }
             }
+            if(winnerUser!=null && winnerUser.equals(winnerUser)){
+                break; 
+            }
         }
+
+
 
         if(winnerUser!=null) {
             tournament.setWinner(winnerUser.getUser());
@@ -164,7 +175,7 @@ public class TournamentController {
             tournament.setGamemodes(mode);
         }
         TournamentService.saveTournament(tournament);
-		return "redirect:/games/"+game.getId()+"/lobby";	
+		return "redirect:/games/";	
     }
 
     @GetMapping("/{tournamentId}/lobby")
@@ -178,11 +189,11 @@ public class TournamentController {
 		result.addObject("isowner", isOwner);
         result.addObject("users", mazos);
         result.addObject("tournament", tournament);
-		return result;	
+		return result;
     }
 
     @PostMapping(path="/{id}/lobby")
-	public String grabarParlamentario(@ModelAttribute("tournament")  Tournament tournamentForm, @PathVariable("id") long id) {
+	public String grabarTournament(@ModelAttribute("tournament")  Tournament tournamentForm, @PathVariable("id") long id) {
 		Tournament tournament = this.tournamentService.findTournament(id);
         tournament.setOwner(tournamentForm.getOwner());
         tournament.setGamemodes(tournamentForm.getGamemodes());
