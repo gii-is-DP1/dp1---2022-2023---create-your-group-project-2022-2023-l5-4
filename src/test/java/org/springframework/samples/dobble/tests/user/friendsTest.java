@@ -1,5 +1,9 @@
 package org.springframework.samples.dobble.tests.user;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import javax.faces.validator.Validator;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.samples.dobble.user.User;
