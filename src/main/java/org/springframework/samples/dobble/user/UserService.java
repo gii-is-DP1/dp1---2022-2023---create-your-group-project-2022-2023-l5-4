@@ -30,9 +30,6 @@ import org.springframework.samples.dobble.game.Game;
 
 
 import org.springframework.samples.dobble.tournament.Tournament;
-
-import org.springframework.samples.dobble.user.AuthoritiesService;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;

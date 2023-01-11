@@ -126,7 +126,7 @@ public class TournamentController {
     @GetMapping("/{tournamentId}/play")
     public String playTournament(@PathVariable("tournamentId") Long tournamentId) {
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
-        Game game = new Game();
+        Game game = new Game(); 
         List<GameUser> gameusers = new ArrayList<>();
         game.setGamemode(tournament.getGamemodes().get(0));
         game.setOwner(tournament.getOwner());
@@ -189,11 +189,13 @@ public class TournamentController {
 		result.addObject("isowner", isOwner);
         result.addObject("users", mazos);
         result.addObject("tournament", tournament);
+
 		return result; 	
+
     }
 
     @PostMapping(path="/{id}/lobby")
-	public String grabarParlamentario(@ModelAttribute("tournament")  Tournament tournamentForm, @PathVariable("id") long id) {
+	public String grabarTournament(@ModelAttribute("tournament")  Tournament tournamentForm, @PathVariable("id") long id) {
 		Tournament tournament = this.tournamentService.findTournament(id);
         tournament.setOwner(tournamentForm.getOwner());
         tournament.setGamemodes(tournamentForm.getGamemodes());

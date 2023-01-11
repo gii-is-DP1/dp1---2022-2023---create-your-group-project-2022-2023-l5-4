@@ -91,10 +91,21 @@ public class UserController {
 	   return mav;
    }
 
+   @PostMapping(value = "/users/edit/{username}")
+   public String UpdateUser(@Valid User user, BindingResult result) {
+		if (result.hasErrors()) {
+		   return "users/EditUser";
+	   }
+	   else {
+			userService.saveUser(user);
+		   	return "redirect:/";
+	   }
+   }
+
    @GetMapping(path="/users/edit/{username}")
-	public ModelAndView editarMazo(@PathVariable("username") String username){		
+	public ModelAndView editarUser(@PathVariable("username") String username){		
 		ModelAndView result=new ModelAndView("users/EditUser");
-		result.addObject("user", userService.findUsername(username));
+		result.addObject("user", userService.findUsername(username).get());
 		return result;
 	}
 
