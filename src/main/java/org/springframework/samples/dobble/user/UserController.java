@@ -103,7 +103,7 @@ public class UserController {
    }
 
    @GetMapping(path="/users/edit/{username}")
-	public ModelAndView editarMazo(@PathVariable("username") String username){		
+	public ModelAndView editarUser(@PathVariable("username") String username){		
 		ModelAndView result=new ModelAndView("users/EditUser");
 		result.addObject("user", userService.findUsername(username).get());
 		return result;

@@ -193,7 +193,7 @@ public class TournamentController {
     }
 
     @PostMapping(path="/{id}/lobby")
-	public String grabarParlamentario(@ModelAttribute("tournament")  Tournament tournamentForm, @PathVariable("id") long id) {
+	public String grabarTournament(@ModelAttribute("tournament")  Tournament tournamentForm, @PathVariable("id") long id) {
 		Tournament tournament = this.tournamentService.findTournament(id);
         tournament.setOwner(tournamentForm.getOwner());
         tournament.setGamemodes(tournamentForm.getGamemodes());
