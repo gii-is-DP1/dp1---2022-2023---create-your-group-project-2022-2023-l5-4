@@ -189,7 +189,7 @@ public class TournamentController {
 		result.addObject("isowner", isOwner);
         result.addObject("users", mazos);
         result.addObject("tournament", tournament);
-		return result; 	
+		return result;
     }
 
     @PostMapping(path="/{id}/lobby")

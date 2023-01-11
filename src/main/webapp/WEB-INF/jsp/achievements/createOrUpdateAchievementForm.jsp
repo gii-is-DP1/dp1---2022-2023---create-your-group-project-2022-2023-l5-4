@@ -2,9 +2,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="achievements">
+<dobble:layout pageName="achievements">
     <jsp:attribute name="customScript">
         <script>
             $(function () {
@@ -20,11 +20,11 @@
                    class="form-horizontal">
             <input type="hidden" name="id" value="${achievement.id}"/>
             <div class="form-group has-feedback">                
-                <petclinic:inputField label="Name" name="name"/>
-                <petclinic:inputField label="Description" name="description"/>
-                <petclinic:inputField label="Badge" name="badgeImage"/>
-                <petclinic:inputField label="Threshold" name="threshold"/>
-                <petclinic:selectField label="Metric"  name="metric" names="${metrics}" size="3"/>
+                <dobble:inputField label="Name" name="name"/>
+                <dobble:inputField label="Description" name="description"/>
+                <dobble:inputField label="Badge" name="badgeImage"/>
+                <dobble:inputField label="Threshold" name="threshold"/>
+                <dobble:selectField label="Metric"  name="metric" names="${metrics}" size="3"/>
                 <!-- Metrics:  We provide also  the solution with spring form:select and classical HTML selects     -->
                 <!-- form:select path="metric" items="${metrics}"/-->
                 <!-- select  name="metric"-->
@@ -48,4 +48,4 @@
             </div>
         </form:form>                
     </jsp:body>
-</petclinic:layout>
+</dobble:layout>
