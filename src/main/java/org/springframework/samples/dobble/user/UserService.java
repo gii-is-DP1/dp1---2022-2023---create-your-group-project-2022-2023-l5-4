@@ -56,7 +56,7 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public User findUser(String username) throws NoSuchElementException {
 		return userRepository.findById(username)
-			.orElseThrow(() -> new NoSuchElementException("User with id '%s' was not found".formatted(username)));
+			.orElseThrow(() -> new NoSuchElementException("User with id" + username + "was not found"));
 
 	}
 
