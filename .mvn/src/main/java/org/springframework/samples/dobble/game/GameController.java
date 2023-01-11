@@ -164,7 +164,6 @@ public class GameController {
     
     @PostMapping("/{gameId}/match")
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") String symbol ){
-        System.out.println("MATCH");
         return "redirect:play?"+ symbol;    
     }
 

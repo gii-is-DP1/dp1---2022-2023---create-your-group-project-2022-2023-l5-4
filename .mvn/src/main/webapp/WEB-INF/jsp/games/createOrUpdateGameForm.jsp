@@ -53,7 +53,7 @@
         const slider =  document.getElementById("isPrivateSlider")
         const isPrivateBody =  document.getElementById("isPrivateBody");
         slider.onchange = function (){
-            console.log("SLID")
+            ("SLID")
             isPrivate = (this.checked)? true : false;
             if (isPrivate) isPrivateBody.style.visibility="visible"
             else isPrivateBody.style.visibility="hidden"

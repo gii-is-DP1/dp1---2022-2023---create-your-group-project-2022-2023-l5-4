@@ -59,7 +59,7 @@ public class GameUserService {
 		Game game = gameService.findGame(gameId);
 		User user = userService.findUser(username);
 		GameUser gameUser = new GameUser(user, game);
-
+		
 		if (!game.validAccessCode(accessCode)) throw new AuthException("Wrong Access Code");
 		
 		if (game.isFull()) throw new IllegalStateException("The game is already full");
