@@ -1,6 +1,7 @@
 package org.springframework.samples.dobble.tournament;
 
-import javax.persistence.CollectionTable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -18,8 +19,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameMode;
@@ -29,11 +28,9 @@ import org.springframework.samples.dobble.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -49,22 +46,21 @@ public class Tournament extends BaseEntity {
     @Enumerated(EnumType.STRING)
 	private List<GameMode> gamemodes;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ownerId")
-    @NotNull
     private User owner;
 
     @ManyToOne
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "usertournaments", joinColumns = @JoinColumn(name = "tournamentId", nullable = false, table = "tournaments"), inverseJoinColumns = @JoinColumn(name = "userId", nullable = false, table = "users"))
     @Size(max = 6)
     private List<User> users;
 
     @Size(max=8)
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "gametournament", joinColumns = @JoinColumn(name = "tournamentId", nullable = false, table = "tournaments"), inverseJoinColumns = @JoinColumn(name = "gameId", nullable = false, table = "games"))
 	private List<Game> games;
 
@@ -125,7 +121,7 @@ public class Tournament extends BaseEntity {
     }
 
     public void removeUser(User user) {
-        this.getUsersInternal().remove(user);
+        this.users.remove(user);
     }
 
     public boolean isFinished() {

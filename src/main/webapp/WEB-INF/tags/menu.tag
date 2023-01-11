@@ -36,6 +36,11 @@
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span class="menuItemSpan">Find tournaments</span>
 				</dobble:menuItem>
+				<dobble:menuItem active="${name eq 'users'}" url="/users"
+					title="users">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span class="menuItemSpan">List users</span>
+				</dobble:menuItem>
 				
 
 			</ul>

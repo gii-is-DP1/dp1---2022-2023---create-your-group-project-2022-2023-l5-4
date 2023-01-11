@@ -1,5 +1,6 @@
 package org.springframework.samples.dobble.game;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,5 +65,14 @@ public class GameService {
 		game.setState(GameState.FINISHED);
 		saveGame(game);
     }
+
+	public void deleteUsers(Game game){
+			for(int i=0; i<game.getUsers().size();i++){
+				User user = game.getUsers().get(i);
+				game.deletePlayerOfGame(user);
+			}
+		}
+		
+		
+	}
 	
-}

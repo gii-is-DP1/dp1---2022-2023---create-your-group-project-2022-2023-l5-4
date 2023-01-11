@@ -1,6 +1,7 @@
 package org.springframework.samples.dobble.user;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -58,26 +59,26 @@ public class User extends HandedEntity {
 			   inverseJoinColumns = @JoinColumn(name = "achievement_id"))
 	private Set<Achievement> achievements;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Game currentGame;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Tournament currentTournament;
 	
-	@OneToMany(mappedBy = "owner")
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<Game> ownedGames;
 
-	@OneToMany(mappedBy = "winner")
+	@OneToMany(mappedBy = "winner", cascade = CascadeType.ALL)
 	private List<Game> wonGames;
 
 	
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
 	private List<Tournament> tournaments;
 	
-	@OneToMany(mappedBy = "owner")
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<Tournament> ownedTournament;
 
-	@OneToMany(mappedBy = "winner")
+	@OneToMany(mappedBy = "winner", cascade = CascadeType.ALL)
 	private List<Tournament> wonTournamnets;
 
 	public String toString(){
@@ -97,5 +98,17 @@ public class User extends HandedEntity {
 	public Boolean equals(User other) {
 		return this.username.equals(other.getUsername());
 	}
+
+	public void deleteGames(Collection<Game> g){
+		this.ownedGames.removeAll(g);
+	  }
+
+	public void deleteTournamentsOwned(Collection<Tournament> t){
+		this.ownedTournament.removeAll(t);
+	}
+
+	public void deleteTournaments(Collection<Tournament> t){
+		this.tournaments.removeAll(t);
+	} 
 
 }

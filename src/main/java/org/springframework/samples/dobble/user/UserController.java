@@ -15,10 +15,14 @@
 */
 package org.springframework.samples.dobble.user;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
@@ -31,6 +35,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.samples.dobble.game.Game;
+import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -56,6 +62,7 @@ public class UserController {
 
    private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
    private String VIEW_INDEX_USERS = "users/userListing";
+   private static final String MESSAGE = "message";
 
    UserService userService;
    
@@ -135,6 +142,32 @@ public class UserController {
 		result.addObject("user", userService.findUsername(username));
 		return result;
 	}
+
+	
+	@PreAuthorize("hasRole('admin')")
+	@GetMapping(path="/delete/{id}")
+	public String deletePlayer(@PathVariable("id") String id, ModelMap modelMap, HttpServletRequest request){
+		String view =  VIEW_INDEX_USERS;
+		Optional<User> user = userService.findUsers(id);
+		if(user.isPresent()){
+			User u = user.get();
+			Collection<Game> lg = u.getOwnedGames()==null? new ArrayList<>():u.getOwnedGames();
+			lg.stream().forEach(x->x.deletePlayerOfGame(u));
+			Collection<Tournament> lg2 = u.getTournaments()==null? new ArrayList<>():u.getTournaments();
+			lg2.stream().forEach(x->x.removeUser(u));
+
+			
+
+			userService.delete(u);
+			modelMap.addAttribute(MESSAGE, "User successfully deleted!");
+			return showUser(modelMap, null, 0);
+		}else{
+			modelMap.addAttribute(MESSAGE, "Player not found!");
+			view = showUser(modelMap, null, 0);
+		}
+		return view;
+	}
+
    
 
 

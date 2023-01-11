@@ -195,7 +195,6 @@ INSERT INTO gameusers(user_id,game_id) VALUES
 ('User12',6),
 ('User11',7),
 ('User10',8),
-('User9',9),
 ('User8',10),
 ('User7',1),
 ('User6',1),
@@ -203,7 +202,6 @@ INSERT INTO gameusers(user_id,game_id) VALUES
 ('User4',2),
 ('User3',2),
 ('User2',8),
-('User1',9),
 ('User0',10);
 
 

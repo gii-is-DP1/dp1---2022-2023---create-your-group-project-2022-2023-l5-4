@@ -54,16 +54,15 @@ public class Game extends HandedEntity {
     @NotNull
     private GameMode gamemode;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ownerId")
-    @NotNull
     private User owner;
 
     @ManyToOne
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @Size(min = 1, max = 6)
     @JoinTable(name = "gameusers", 
     joinColumns = @JoinColumn(name="gameId"), 
@@ -133,5 +132,11 @@ public class Game extends HandedEntity {
     public boolean isNew() {
 		return this.id == null;
 	}
+
+    public void deletePlayerOfGame(User user){
+        this.users.remove(user);
+    }
+
+    
 
 }
