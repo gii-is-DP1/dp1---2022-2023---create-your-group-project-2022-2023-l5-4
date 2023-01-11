@@ -13,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameMode;
 import org.springframework.samples.dobble.game.GameRepository;
+import org.springframework.samples.dobble.game.GameUser;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserRepository;
 import org.springframework.samples.dobble.user.UserService;

@@ -74,7 +74,23 @@ public class TournamentController {
     @GetMapping("/{tournamentId}")
     public ModelAndView showTournament(@PathVariable("tournamentId") Long tournamentId) {
         ModelAndView mav = new ModelAndView(VIEW_SHOW_TOURNAMENT);
+        Integer i=0;
+        Integer j=0;
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
+        GameUser winnerUser = null;
+        for (Game g:tournament.getGames()){
+            for(GameUser gameUser : g.getGameUsers()){
+                i = gameUser.getScore();
+                if(i > j){
+                    j = i;
+                    winnerUser = gameUser;
+                }
+            }
+        }
+        if(winnerUser!=null) {
+            tournament.setWinner(winnerUser.getUser());
+        }
+        tournamentService.saveTournament(tournament);
         mav.addObject(tournament);
         return mav;
 
@@ -126,6 +142,22 @@ public class TournamentController {
         List<Game> games = tournament.getGames();
         games.add(game);
         tournament.setGames(games);
+        GameUser winnerUser = null;
+        Integer i = 0; 
+        Integer j = 0; 
+        for (Game g:tournament.getGames()){
+            for(GameUser gameUser : g.getGameUsers()){
+                i = gameUser.getScore();
+                if(i > j){
+                    j = i;
+                    winnerUser = gameUser;
+                }
+            }
+        }
+
+        if(winnerUser!=null) {
+            tournament.setWinner(winnerUser.getUser());
+        }
         if(tournament.getGamemodes().size()>0){
             List<GameMode> mode = tournament.getGamemodes();
             mode.remove(0);

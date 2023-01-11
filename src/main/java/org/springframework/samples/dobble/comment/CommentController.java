@@ -34,7 +34,7 @@ public class CommentController {
 	
 	
 	@GetMapping(path="/{ForumId}")
-	public ModelAndView listadoOrganos(@PathVariable("ForumId") long ForumId){		
+	public ModelAndView listadoComments(@PathVariable("ForumId") long ForumId){		
 		ModelAndView result=new ModelAndView("comments/CommentsListing");		
 		List<Comment> comments = forumService.findById(ForumId).get().getComments();
 		result.addObject("formid", ForumId);
@@ -44,14 +44,14 @@ public class CommentController {
 	}
 	
 	@GetMapping(path="/create")
-	public ModelAndView crearOrgano(){		
+	public ModelAndView crearComment(){		
 		ModelAndView result=new ModelAndView("comments/EditComment");	
 		result.addObject("comment", new Comment());		
 		return result;
 	}
 	
 	@GetMapping(path="/edit/{id}")
-	public ModelAndView editarOrgano(@PathVariable("id") long id){		
+	public ModelAndView editarComment(@PathVariable("id") long id){		
 		ModelAndView result=new ModelAndView("comments/EditComment");	
 		result.addObject("comment", commentsService.findById(id));		
 		return result;
@@ -59,7 +59,7 @@ public class CommentController {
 	
 	
 	@PostMapping(path="/{ForumId}/save")
-	public String salvarOrgano(   @ModelAttribute("comment")  Comment comment, @PathVariable("ForumId") long ForumId){	
+	public String salvarComment(   @ModelAttribute("comment")  Comment comment, @PathVariable("ForumId") long ForumId){	
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			String userId = authentication.getName();
@@ -76,7 +76,7 @@ public class CommentController {
 				}
 			}
 			commentsService.save(comment);
-			ModelAndView result=listadoOrganos(ForumId);		
+			ModelAndView result=listadoComments(ForumId);		
 			result.addObject("mensaje", "Comment saved sucessfully!");		
 			result.addObject("tipomensaje", "success");
 		}catch(Exception e){
@@ -86,10 +86,10 @@ public class CommentController {
 	}
 	
 	@GetMapping(path="/{ForumId}/delete/{id}")
-	public ModelAndView delteOrgano(@PathVariable("id") long id, @PathVariable("ForumId") long ForumId){		
+	public ModelAndView delteComment(@PathVariable("id") long id, @PathVariable("ForumId") long ForumId){		
 		commentsService.delete(id);
-		ModelAndView result=listadoOrganos(ForumId);		
-		result.addObject("mensaje", "Organo borrado con éxito!");		
+		ModelAndView result=listadoComments(ForumId);		
+		result.addObject("mensaje", "Comment borrado con éxito!");		
 		result.addObject("tipomensaje", "success");
 		return result;
 	}

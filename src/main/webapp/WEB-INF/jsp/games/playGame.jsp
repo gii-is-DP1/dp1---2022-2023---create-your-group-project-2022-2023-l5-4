@@ -105,8 +105,9 @@
     }
 
     .scoreboard {
+        background: white;
         position: fixed;
-        display: flex;
+        display: block;
         flex: 1;
         margin: 20px;
         min-width: 250px;
@@ -114,6 +115,7 @@
         max-height: 400px;
         border: 5px solid lightgray;
         border-radius: 20px;
+        
     }
 
     .game {
@@ -121,6 +123,7 @@
         flex: 1;
         height: 100%;
         flex-direction: row;
+        
     }
 
     .card {
@@ -141,17 +144,53 @@
     .player-name:hover{
         color:gray;
     }
+
+    .scoreboard p {
+        font-size: 28px;
+        font-family: cartoon-toy;
+        border-bottom: 2px solid lightgray;
+        color: darkgray;
+        margin: 5px 10px 5px 10px;
+    }
+    .scoreboard > p {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        font-size: 32px;
+        color:gray;
+        border-bottom: 5px solid lightgray;
+    }
+    p.main-player-score {
+        color:gray;
+    }
+    #scores {
+        display: none;
+    }
+    
+
 </style>
 
 <dobble:htmlHeader/>
+
+<body>
+
 <div class="game">
     <span class="timer">15:32</span>
-    <div class="scoreboard">
-        <p>Scoreboard:</p>
-        <p class="player-name">
-            <c:out value="${mainPlayer.score}"/>
-        </p>
-
+    <div id="scoreboard" class="scoreboard" onload="sortScoreboard()">
+        <p>Scoreboard</p>
+        <br>
+        <div id="scores">
+            <c:forEach var="player" items="${players}">
+                <p>
+                    <c:out value="${player.user.username}: "/>
+                    <c:out value="${player.score}"/>
+                </p>
+            </c:forEach>
+            <p class="main-player-score">
+                <c:out value="${mainPlayer.user.username}: "/>
+                <c:out value="${mainPlayer.score}"/>
+            </p>
+         </div>
     </div>
     <div class="gameboard">
         <div id="player-wrapper-top" class="player-wrapper top">
@@ -219,20 +258,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    
-    function checkForUpdate() {
-    $.ajax({
-        type:"get",
-        url: window.location.href+"/checkForUpdate?lastUpdatedAt=${game.updatedAt}",
-        asynch: false,
-        success: function(result) {
-            if (result== "reload") window.location.reload()
-        } 
-    }
-    );
-}
-window.setInterval(checkForUpdate, 500)
-
-</script>
+<script src="/resources/js/sortScoreboard.js" defer></script>
+<script src="/resources/js/checkForUpdate.js" updatedAt="${game.updatedAt}" ></script>
+</body>

@@ -52,12 +52,9 @@
         color: white; /* Cambiar el color del texto al pasar el ratón por encima */
         text-decoration: none; /* Quitar el subrayado del enlace */
         cursor: pointer; /* Cambiar el cursor al*/
-      }
-        body {
-          background-image: url("/resources/images/background.png");
-        }
+      }   
     
-        .title {
+      .title {
           font-family: 'Press Start 2P', cursive;
           color: #080808;
           text-align: center;
@@ -86,30 +83,6 @@
         }
     
     </style>
-    <script>
-        // Obtén el elemento del body
-var body = document.getElementsByTagName("body")[0];
 
-// Establece la posición inicial de la imagen de fondo
-body.style.backgroundPosition = "0px 0px";
-
-// Crea una función que se ejecutará cada 10 milisegundos
-setInterval(function() {
-  // Obtén la posición actual de la imagen de fondo
-  var currentPos = body.style.backgroundPosition;
-  // Divide la posición en dos variables para poder modificarlas individualmente
-  var xPos = currentPos.split(" ")[0];
-  var yPos = currentPos.split(" ")[1];
-  // Incrementa la posición en 10 píxeles
-  xPos = parseInt(xPos) + 1 + "px";
-  yPos = parseInt(yPos) + 1 + "px";
-  // Establece la nueva posición de la imagen de fondo
-  body.style.backgroundPosition = xPos + " " + yPos;
-    }, 100);
-</script>
-    
-    
-    
-    
 </div>
 </dobble:layout>

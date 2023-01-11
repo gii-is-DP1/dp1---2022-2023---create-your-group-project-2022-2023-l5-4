@@ -37,6 +37,11 @@ public class GameUserService {
 	}
 
 	@Transactional(readOnly = true)
+	public Integer findTotalScoreByUsername(String username) {
+		return gameUserRepository.findTotalScoreByUsername(username);
+	}
+
+	@Transactional(readOnly = true)
 	public GameUser findById(GameUserPk gameUserId) throws NoSuchElementException {
 		return gameUserRepository.findById(gameUserId)
 			.orElseThrow(() -> new NoSuchElementException("GameUser with id" + gameUserId + "was not found"));
@@ -46,6 +51,7 @@ public class GameUserService {
 	private void remove(GameUser gameUser) {
 		gameUserRepository.delete(gameUser);
 	}
+
 
 
 	@Transactional
