@@ -10,7 +10,7 @@
     <h2>
         <c:if test="${user['new']}">New </c:if> User
     </h2>
-    <form:form modelAttribute="user" class="form-horizontal" id="add-user-form">
+    <form:form method="post" modelAttribute="user" class="form-horizontal" id="add-user-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Username" name="username"/>
             <petclinic:inputField label="Password" name="password"/>
@@ -21,10 +21,10 @@
                 <c:choose>
                     <c:when test="${user['new']}">
                     	
-                        <button class="btn btn-default" type="submit">Add User</button>
+                        <button class="btn btn-default" type="submit" value="save">Add User</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update User</button>
+                        <button class="btn btn-default" type="submit" value="users">Update User</button>
                     </c:otherwise>
                 </c:choose>
             </div>

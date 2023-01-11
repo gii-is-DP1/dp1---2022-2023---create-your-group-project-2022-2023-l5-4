@@ -61,7 +61,7 @@ public class UserController {
 	   return VIEWS_USER_CREATE_OR_UPDATE_FORM;
    }
 
-   @PostMapping(value = "/")
+   @PostMapping(value = "/users/new")
    public String processCreationForm(@Valid User user, BindingResult result) {
 	   if (result.hasErrors()) {
 		   return VIEWS_USER_CREATE_OR_UPDATE_FORM;
