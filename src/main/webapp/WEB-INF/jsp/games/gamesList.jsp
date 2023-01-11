@@ -57,7 +57,7 @@
                         </spring:url>
                         
                            
-                            <tr onclick="join('${game.id}','${game.isPrivate()}')">
+                            <tr onclick="join('${game.id}','${game.isPrivate() && !user.getCurrentGame().equals(game)}')">
                                 
                                 <td>
                                      <c:out value="${game.id}"/>
@@ -83,15 +83,17 @@
                                     <c:out value="${game.numUsers}/${game.maxPlayers}"/>
                                 </td>
                             </tr>
-                           <dobble:modal id="${game.id}-access-modal" className="access-modal">
-                               <h2 style="text-align: center;">Access Code</h2>
-                               <form:form  id="${game.id}-form" action="${gameUrl}/join" method="POST" modelAttribute="accessCode">
-                                   <div class="form">
-                                       <input id="${game.id}-access-modal-input" name="accessCode"  class="access-modal-input" placeholder="Enter access code...">
-                                       <input id="${game.id}-access-modal-submit" class="access-modal-submit" type="submit" value="Join">
-                                    </div>
-                                </form:form>
-                            </dobble:modal> 
+                            <form:form  id="${game.id}-form" action="${gameUrl}/join" method="POST" modelAttribute="accessCode">
+                            <c:if test="${game.isPrivate() && !user.getCurrentGame().equals(game)}">  
+                                <dobble:modal id="${game.id}-access-modal" className="access-modal">
+                                    <h2 style="text-align: center;">Access Code</h2>
+                                        <div class="form">
+                                            <input id="${game.id}-access-modal-input" name="accessCode"  class="access-modal-input" placeholder="Enter access code...">
+                                            <input id="${game.id}-access-modal-submit" class="access-modal-submit" type="submit" value="Join">
+                                        </div>
+                                    </dobble:modal> 
+                                </c:if>
+                            </form:form>
                             
                             
                         </c:forEach>
@@ -110,6 +112,6 @@
         
     </table>
 
-<script src="/resources/js/GameAndTournamentListActions.js"></script>
+<script src="/resources/js/gameAndTournamentListActions.js"></script>
 
 </dobble:layout>

@@ -72,10 +72,6 @@ function goto(url){
     window.location=url
 }
 
-function showAccessModal(bool){
-    document.getElementById("access-modal").style.visibility=bool
-}
-
 let enableJoin = true
 function join(id, isPrivate) {
 
