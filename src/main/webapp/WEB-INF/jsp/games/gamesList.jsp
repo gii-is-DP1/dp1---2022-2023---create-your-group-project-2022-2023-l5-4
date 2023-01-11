@@ -8,13 +8,13 @@
 
 <dobble:layout pageName="games">
    
-    <c:if test="${param.error!=null}">
+    <c:if test="${error!=null && error!=''}">
         <div class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-alert"></span>
             <label>
                 ERROR:  
             </label>
-            <c:out value="${param.error}"></c:out>
+            <c:out value="${error}"></c:out>
         </div>
     </c:if>
     
@@ -33,13 +33,13 @@
                 <table id="games-list-head" class="table">
                 <thead>
                     <tr>
-                        <th>ID<span onclick="sortTable(0)" class="glyphicon glyphicon-sort"></span></th>
-                        <th>Gamemode<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></th>
-                        <th>Owner</th>
-                        <th><span class="glyphicon glyphicon-lock"></span>
-                            <span onclick="sortTable(3)" class="glyphicon glyphicon-sort"></span></th>
+                        <th>ID<span onclick="sortTable('games-list-body',0)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: relative; left: -8%;">Gamemode<span onclick="sortTable('games-list-body',1)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: relative; left: -3%;">Owner</th>
+                        <th style="position: relative; left: -3%;"><span class="glyphicon glyphicon-lock"></span>
+                            <span onclick="sortTable('games-list-body',3)" class="glyphicon glyphicon-sort"></span></th>
                         <th></th>
-                        <th style="width:150px">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="position: relative; left: -1%; width:150px">Num. Players<span onclick="sortTable('games-list-body',5)" class="glyphicon glyphicon-sort"></span></th>
                     </tr>
                 </thead>
                 </table>
@@ -57,7 +57,7 @@
                         </spring:url>
                         
                            
-                            <tr onclick="joinGame('${game.id}','${game.isPrivate()}')">
+                            <tr onclick="join('${game.id}','${game.isPrivate()}')">
                                 
                                 <td>
                                      <c:out value="${game.id}"/>
@@ -76,7 +76,7 @@
                                 </td>
                                 
                                 <td>
-                                    <a onmouseenter="enableJoinGame=false" onmouseleave="enableJoinGame=true" href="${gameUrl}">Details</a>
+                                    <a onmouseenter="enableJoin=false" onmouseleave="enableJoin=true" href="${gameUrl}">Details</a>
                                 </td>
                                 
                                 <td class="num-players" style="text-align:center;">
@@ -110,149 +110,6 @@
         
     </table>
 
-    <script>
+<script src="/resources/js/GameAndTournamentListActions.js"></script>
 
-    var body = document.getElementsByTagName("body")[0];
-    // Establece la posición inicial de la imagen de fondo
-    body.style.backgroundPosition = "0px 0px";
-
-    // Crea una función que se ejecutará cada 10 milisegundos
-    setInterval(function() {
-        // Obtén la posición actual de la imagen de fondo
-        var currentPos = body.style.backgroundPosition;
-        // Divide la posición en dos variables para poder modificarlas individualmente
-        var xPos = currentPos.split(" ")[0];
-        var yPos = currentPos.split(" ")[1];
-        // Incrementa la posición en 10 píxeles
-        xPos = parseInt(xPos) + 1 + "px";
-        yPos = parseInt(yPos) + 1 + "px";
-        // Establece la nueva posición de la imagen de fondo
-        body.style.backgroundPosition = xPos + " " + yPos;
-    }, 100);
-
-        function goto(url){
-            window.location=url
-    }
-    
-    function showAccessModal(bool){
-            document.getElementById("access-modal").style.visibility=bool
-    }
-
-    let enableJoinGame = true
-    function joinGame(gameId, isPrivate) {
-        
-        if (!enableJoinGame) return
-        if(eval(isPrivate)) {
-            const modal = document.getElementById(gameId+"-access-modal")
-            modal.style.display="block"
-        } else {
-            const form = document.getElementById(gameId+"-form").submit()
-        }      
-       
-    }
-    document.addEventListener('keydown',function(e) { 
-    if (e.keyCode === 27) { 
-    const modals = document.getElementsByClassName("modal")
-    for (let modal of modals){
-    modal.style.display = "none"
-
-    }
-    } 
-})
-
-    const numPlayersIter = document.getElementsByClassName("num-players")
-    for (numPlayers of numPlayersIter){
-        const playersText = numPlayers.innerText.split("/")
-        const currentPlayers = playersText[0], maxPlayers = playersText[1]
-        if (currentPlayers >= maxPlayers) numPlayers.style.color="#ff3c38"
-        else if (currentPlayers == maxPlayers-1) numPlayers.style.color="#ffc921"
-        else numPlayers.style.color="#29cb3d"
-        numPlayers.style.fontWeight="bold"
-    }
-
-    function sortTable(n) {
-  var table, rows, switching, i, x,x0,x1, y,y0,y1, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("games-list-body");
-  switching = true;
-  //Set the sorting direction to ascending:
-  dir = "asc"; 
-  /*Make a loop that will continue until
-  no switching has been done:*/
-  while (switching) {
-    //start by saying: no switching is done:
-    switching = false;
-    rows = table.rows;
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
-    for (i = 0; i < (rows.length - 1); i++) {
-      //start by saying there should be no switching:
-      shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      /*check if the two rows should switch place,
-      based on the direction, asc or desc:*/
-      if (dir == "asc") {
-        if ((n==1 || n==3) && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch= true;
-          break;
-        }
-
-       
-        if ((n==0) && parseInt(x.innerHTML) > parseInt(y.innerHTML)){
-            shouldSwitch= true;
-            break;
-        }
-
-        x0=parseInt(x.innerHTML.split("/")[0])
-        x1=parseInt(x.innerHTML.split("/")[1])
-        y0=parseInt(y.innerHTML.split("/")[0])
-        y1=parseInt(y.innerHTML.split("/")[1])
-        if (n==5 && (x1-x0 > y1-y0)){
-            shouldSwitch= true;
-            break;
-        }
-      } else if (dir == "desc") {
-        if ((n==1 || n==3) && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch= true;
-          break;
-        }
-
-       
-        if ((n==0) && parseInt(x.innerHTML) < parseInt(y.innerHTML)){
-            shouldSwitch= true;
-            break;
-        }
-        x0=parseInt(x.innerHTML.split("/")[0])
-        x1=parseInt(x.innerHTML.split("/")[1])
-        y0=parseInt(y.innerHTML.split("/")[0])
-        y1=parseInt(y.innerHTML.split("/")[1])
-        if (n==5 && (x1-x0 < y1-y0)){
-            shouldSwitch= true;
-            break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      //Each time a switch is done, increase this count by 1:
-      switchcount ++;      
-    } else {
-      /*If no switching has been done AND the direction is "asc",
-      set the direction to "desc" and run the while loop again.*/
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
-}
-    
-    </script>
 </dobble:layout>

@@ -74,7 +74,27 @@ public class TournamentController {
     @GetMapping("/{tournamentId}")
     public ModelAndView showTournament(@PathVariable("tournamentId") Long tournamentId) {
         ModelAndView mav = new ModelAndView(VIEW_SHOW_TOURNAMENT);
+        Integer i=0;
+        Integer j=0;
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
+        GameUser winnerUser = null;
+        for (Game g:tournament.getGames()){
+            GameUser w = winnerUser;
+            for(GameUser gameUser : g.getGameUsers()){
+                i = gameUser.getScore();
+                if(i > j){
+                    j = i;
+                    winnerUser = gameUser;
+                }
+            }
+            if(winnerUser!=null && winnerUser.equals(winnerUser)){
+                break;
+            }
+        }
+        if(winnerUser!=null) {
+            tournament.setWinner(winnerUser.getUser());
+        }
+        tournamentService.saveTournament(tournament);
         mav.addObject(tournament);
         return mav;
 
@@ -95,8 +115,12 @@ public class TournamentController {
         if (result.hasErrors())
             return VIEWS_TOURNAMENTS_CREATE_OR_UPDATE_FORM;
         tournament.setState(TournamentState.LOBBY);
-        tournamentService.saveTournament(tournament);
-        return "redirect:/tournaments/" + tournament.getId();
+        if(tournament.getGamemodes().size()==0){
+            return "redirect:/tournaments?error="+ "Tournament Finished";
+        }else{
+            tournamentService.saveTournament(tournament);
+            return "redirect:/tournaments/" + tournament.getId() + "/lobby";
+        }
     }
 
     @GetMapping("/{tournamentId}/play")
@@ -109,24 +133,49 @@ public class TournamentController {
         game.setMaxPlayers(tournament.getMaxPlayers());
         game.setWinner(null);
         game.setState(GameState.LOBBY);
+        game.setUpdatedAt(null);
         for(User user: tournament.getUsers()){
                 user.setCurrentGame(game);
                 userService.setCurrentGame(user, game);
                 GameUser gameUser = new GameUser(user,game);
+                gameUserService.save(gameUser);
                 gameusers.add(gameUser);
         }
+        if(tournament.getAccessCode()!=null) game.setAccessCode(""+tournament.getAccessCode());
         game.setGameUsers(gameusers);
         gameService.saveGame(game);
         List<Game> games = tournament.getGames();
         games.add(game);
         tournament.setGames(games);
-        if(tournament.getGamemodes().size()>1){
+        GameUser winnerUser = null;
+        Integer i = 0; 
+        Integer j = 0; 
+        for (Game g:tournament.getGames()){
+            GameUser w = winnerUser;
+            for(GameUser gameUser : g.getGameUsers()){
+                i = gameUser.getScore();
+                if(i > j){
+                    j = i;
+                    winnerUser = gameUser;
+                }
+            }
+            if(winnerUser!=null && winnerUser.equals(winnerUser)){
+                break; 
+            }
+        }
+
+
+
+        if(winnerUser!=null) {
+            tournament.setWinner(winnerUser.getUser());
+        }
+        if(tournament.getGamemodes().size()>0){
             List<GameMode> mode = tournament.getGamemodes();
             mode.remove(0);
             tournament.setGamemodes(mode);
         }
         TournamentService.saveTournament(tournament);
-		return "redirect:/games/"+game.getId()+"/start";	
+		return "redirect:/games/";	
     }
 
     @GetMapping("/{tournamentId}/lobby")
@@ -140,7 +189,7 @@ public class TournamentController {
 		result.addObject("isowner", isOwner);
         result.addObject("users", mazos);
         result.addObject("tournament", tournament);
-		return result;	
+		return result; 	
     }
 
     @PostMapping(path="/{id}/lobby")
@@ -172,6 +221,10 @@ public class TournamentController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String userId = authentication.getName();
             tournamentService.addUserTournament(tournamentId, userId, accessCode);
+            Tournament tournament = tournamentService.findTournament(tournamentId);
+            if(tournament.getGamemodes().size()==0){
+                return "redirect:/tournaments?error="+ "Tournament Finished";
+            }
         } catch(Exception e) {
             return "redirect:/tournaments?error="+ e.getMessage();
         } 

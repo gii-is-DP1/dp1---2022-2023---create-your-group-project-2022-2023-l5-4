@@ -91,7 +91,7 @@
 		<tr>
 			<th>	
 				<a href="/tournaments/${tournament.id}/play">
-					<button class="w3-button w3-purple">Start Game</button>
+					<button class="w3-button w3-purple">Start Game in Tournament</button>
 				</a>
 			</th>
 		</tr>		

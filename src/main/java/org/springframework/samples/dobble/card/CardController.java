@@ -6,13 +6,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.game.Game;
-import org.springframework.samples.dobble.game.GameService;
 import org.springframework.samples.dobble.symbol.SymbolService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,7 +25,6 @@ public class CardController{
 	
 	private static final String CARD_LIST_VIEW = "cards/cardsListing";
 
-	private static final String PATHCARD = null;
 	@GetMapping
 	public ModelAndView indexCards(){
 		List<Card> cards=cardService.findAll();

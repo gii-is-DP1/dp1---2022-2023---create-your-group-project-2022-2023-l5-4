@@ -37,6 +37,11 @@ public class GameUserService {
 	}
 
 	@Transactional(readOnly = true)
+	public Integer findTotalScoreByUsername(String username) {
+		return gameUserRepository.findTotalScoreByUsername(username);
+	}
+
+	@Transactional(readOnly = true)
 	public GameUser findById(GameUserPk gameUserId) throws NoSuchElementException {
 		return gameUserRepository.findById(gameUserId)
 			.orElseThrow(() -> new NoSuchElementException("GameUser with id '%s' was not found".formatted(gameUserId)));
@@ -46,6 +51,7 @@ public class GameUserService {
 	private void remove(GameUser gameUser) {
 		gameUserRepository.delete(gameUser);
 	}
+
 
 
 	@Transactional
@@ -76,13 +82,22 @@ public class GameUserService {
 	public void deleteGameUser(Long gameId, String username)
 			throws NoSuchElementException {
 		Game game = gameService.findGame(gameId);
+
+		if (game.hasStarted()) return;
+
 		User user = userService.findUser(username);
 		GameUser gameUser = findById(GameUserPk.of(user, game));
 
-		if (!game.hasStarted()) {
-			remove(gameUser);
-			userService.setCurrentGame(user, null);
+		remove(gameUser);
+		game.getGameUsers().remove(gameUser);
+		userService.setCurrentGame(user, null);
+			
+		if (game.getNumUsers()==0) {
+			gameService.deleteGame(game);
+			return;
 		}
+		
+		if (game.getOwner().equals(user)) gameService.chooseNewOwner(game);
 	}
 
 

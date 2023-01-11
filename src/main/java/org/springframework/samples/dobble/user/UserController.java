@@ -16,7 +16,6 @@
 package org.springframework.samples.dobble.user;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.validation.Valid;
 

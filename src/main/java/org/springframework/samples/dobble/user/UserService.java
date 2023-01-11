@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.dom4j.util.UserDataDocumentFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -29,9 +28,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.samples.dobble.game.Game;
 
 
-import org.springframework.samples.dobble.game.GameUserService;
 
 import org.springframework.samples.dobble.tournament.Tournament;
+
 import org.springframework.samples.dobble.user.AuthoritiesService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

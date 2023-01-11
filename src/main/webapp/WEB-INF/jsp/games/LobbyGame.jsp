@@ -11,11 +11,14 @@
 	<h2>Game players:</h2>
 	<div class="container">
 		<br />
-		<c:if test="${message != null}">
-		<div class="alert alert-${messageType}">
-			<c:out value="${message}"></c:out>
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
-		</div>
+		<c:if test="${error!=null && error!=''}">
+			<div class="alert alert-danger" role="alert">
+				<span class="glyphicon glyphicon-alert"></span>
+				<label>
+					ERROR:  
+				</label>
+				<c:out value="${error}"></c:out>
+			</div>
 		</c:if>
 	</div>
 	<table class="table table-striped">
