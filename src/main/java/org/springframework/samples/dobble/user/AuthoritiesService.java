@@ -55,6 +55,7 @@ public class AuthoritiesService {
 		Authorities authority = new Authorities();
 
 		User user = userService.findUser(username);
+		
 		if(user != null) {
 			authority.setUser(user);
 
