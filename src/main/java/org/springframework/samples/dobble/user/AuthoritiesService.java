@@ -60,6 +60,4 @@ public class AuthoritiesService {
 		}else
 			throw new DataAccessException("User '"+username+"' not found!") {};
 	}
-
-
 }
