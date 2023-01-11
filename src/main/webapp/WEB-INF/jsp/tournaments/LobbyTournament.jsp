@@ -110,16 +110,4 @@
     }
 	
 </style>
-<script>
-    let isPrivate = false;
-
-        const slider =  document.getElementById("isPrivateSlider")
-        const isPrivateBody =  document.getElementById("isPrivateBody");
-		document.getElementById('isPrivateBody').className = 'block';
-        slider.onchange = function (){
-            console.log("SLID")
-            isPrivate = (this.checked)? true : false;
-            if (isPrivate) isPrivateBody.style.display = 'block';
-            else isPrivateBody.style.display = 'none';
-		}
-</script>
+<script src="/resources/js/handleIsPrivateSlider.js"></script>

@@ -47,17 +47,4 @@
         </div>
     </form:form>
 </dobble:layout>
-<script>
-    let isPrivate = false;
-
-        const slider =  document.getElementById("isPrivateSlider")
-        const isPrivateBody =  document.getElementById("isPrivateBody");
-        slider.onchange = function (){
-            console.log("SLID")
-            isPrivate = (this.checked)? true : false;
-            if (isPrivate) isPrivateBody.style.visibility="visible"
-            else isPrivateBody.style.visibility="hidden"
-        }
-    
-
-</script>
+<script src="/resources/js/handleIsPrivateSlider.js"></script>

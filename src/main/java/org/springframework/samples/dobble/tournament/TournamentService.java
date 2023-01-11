@@ -51,7 +51,7 @@ public class TournamentService {
 	}
 
 	@Transactional
-	public static Tournament saveTournament(Tournament tournament) {
+	public Tournament saveTournament(Tournament tournament) {
 		return tournamentRepository.save(tournament);
 	}
 

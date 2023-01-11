@@ -101,7 +101,8 @@
         right: 50px;
         top: 10px;
         font-size: 50px;
-
+        width: 100px;
+        text-align: left;
     }
 
     .scoreboard {
@@ -175,7 +176,9 @@
 <body>
 
 <div class="game">
-    <span class="timer">15:32</span>
+    <span id="timer" class="timer">
+        <c:out value="${'%d:%02d'.formatted(timer[0],timer[1])}"/>
+    </span>
     <div id="scoreboard" class="scoreboard" onload="sortScoreboard()">
         <p>Scoreboard</p>
         <br>
@@ -260,4 +263,5 @@
 </div>
 <script src="/resources/js/sortScoreboard.js" defer></script>
 <script src="/resources/js/checkForUpdate.js" updatedAt="${game.updatedAt}" ></script>
+<script src="/resources/js/timerUpdater.js"></script>
 </body>

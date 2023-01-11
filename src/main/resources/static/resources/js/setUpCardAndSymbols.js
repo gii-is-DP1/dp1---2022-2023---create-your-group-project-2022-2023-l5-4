@@ -14,10 +14,7 @@ let hashCode = (s) => {
 let cardId = document.currentScript.getAttribute("cardId")
 let username = document.currentScript.getAttribute("username")
 let symbols = document.querySelectorAll(".symbol-"+cardId)
-console.log(cardId)
-console.log(username)
 symbols.forEach(symbol => {
-console.log(symbol)
  let htmlId = symbol.attributes.id.value.replace("symbol","")
  let s = symbol.attributes.name.value
 
@@ -47,7 +44,6 @@ let cardRotate = () =>{
  let hashB = hashCode(""+(1/parseInt(cardId)))
  let k = Math.abs(hashA*hashB)%100
  const angle = 360*(k/100)
- console.log(angle)
  card.style.transform = "rotate("+angle+"deg)"
 }
 

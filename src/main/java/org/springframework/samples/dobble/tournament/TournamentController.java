@@ -163,7 +163,7 @@ public class TournamentController {
             mode.remove(0);
             tournament.setGamemodes(mode);
         }
-        TournamentService.saveTournament(tournament);
+        tournamentService.saveTournament(tournament);
 		return "redirect:/games/"+game.getId()+"/lobby";	
     }
 
@@ -186,7 +186,7 @@ public class TournamentController {
 		Tournament tournament = this.tournamentService.findTournament(id);
         tournament.setOwner(tournamentForm.getOwner());
         tournament.setGamemodes(tournamentForm.getGamemodes());
-        TournamentService.saveTournament(tournament);
+        tournamentService.saveTournament(tournament);
 		return "redirect:/tournaments/"+id+"/lobby";
     }
 

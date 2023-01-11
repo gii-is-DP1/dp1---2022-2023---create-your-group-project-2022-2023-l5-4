@@ -53,10 +53,6 @@ public class Game extends HandedEntity {
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @ManyToOne
-    @JoinColumn(name = "tournament_id")
-    private Tournament tournament;
-
     @OneToMany(mappedBy = "game")
     @Size(min = 1, max = 6)
     private List<GameUser> gameUsers;
@@ -75,13 +71,14 @@ public class Game extends HandedEntity {
 
     private LocalDateTime updatedAt;
 
+    private LocalDateTime startedAt;
+
     public Boolean isPrivate() {
-        System.out.println(this.accessCode != null);
-        return this.accessCode != null;
+        return this.accessCode != null && this.accessCode != "";
     }
 
     public Boolean validAccessCode(String accessCode) {
-        return this.accessCode == null || this.accessCode == accessCode;
+        return this.accessCode == null || this.accessCode.equals(accessCode);
     }
 
     public void setAccessCode(String accessCode) {
