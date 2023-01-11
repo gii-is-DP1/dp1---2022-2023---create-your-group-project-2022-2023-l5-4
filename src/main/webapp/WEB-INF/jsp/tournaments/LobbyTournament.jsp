@@ -98,13 +98,14 @@
 	</table>
 	</c:if>
 	</p>
-	
+	<nav></nav>	
 </dobble:layout>
 <style>
     .hidden {
         display: none;
 		visibility:hidden;
     }
+
 	#isPrivateBody {
         display: none;
     }

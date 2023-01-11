@@ -126,7 +126,7 @@ public class TournamentController {
     @GetMapping("/{tournamentId}/play")
     public String playTournament(@PathVariable("tournamentId") Long tournamentId) {
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
-        Game game = new Game();
+        Game game = new Game(); 
         List<GameUser> gameusers = new ArrayList<>();
         game.setGamemode(tournament.getGamemodes().get(0));
         game.setOwner(tournament.getOwner());
