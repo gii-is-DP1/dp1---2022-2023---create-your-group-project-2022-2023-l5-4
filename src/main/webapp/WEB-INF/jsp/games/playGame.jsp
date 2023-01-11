@@ -105,6 +105,7 @@
     }
 
     .scoreboard {
+        background: white;
         position: fixed;
         display: block;
         flex: 1;
@@ -258,18 +259,5 @@
     </div>
 </div>
 <script src="/resources/js/sortScoreboard.js" defer></script>
-<script>
-    function checkForUpdate() {
-    $.ajax({
-        type:"get",
-        url: window.location.href+"/checkForUpdate?lastUpdatedAt=${game.updatedAt}",
-        asynch: false,
-        success: function(result) {
-            if (result== "reload") window.location.reload()
-        } 
-    }
-    );
-}
-window.setInterval(checkForUpdate, 500)
-</script>
+<script src="/resources/js/checkForUpdate.js" updatedAt="${game.updatedAt}" ></script>
 </body>

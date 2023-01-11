@@ -76,6 +76,16 @@ body{
   overflow: hidden;
 }
 
+body {
+  background-image: url("/resources/images/background.png");
+  animation: backgroundTransition 30s linear infinite;
+}
+
+@keyframes backgroundTransition {
+  from { background-position: 0% 0%; }
+  to { background-position: 513px 360px; }
+}
+
 .table {
   border-collapse: unset;
 }
