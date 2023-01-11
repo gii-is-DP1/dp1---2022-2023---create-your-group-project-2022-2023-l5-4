@@ -31,7 +31,7 @@ public class GameService {
 	@Transactional(readOnly = true)
 	public Game findGame(Long gameId) throws NoSuchElementException {
 		return gameRepository.findById(gameId)
-			.orElseThrow(() -> new NoSuchElementException("Game with id '%s' was not found".formatted(gameId)));
+			.orElseThrow(() -> new NoSuchElementException("Game with id" + gameId + "was not found"));
 	}
 
 	@Transactional(readOnly = true)

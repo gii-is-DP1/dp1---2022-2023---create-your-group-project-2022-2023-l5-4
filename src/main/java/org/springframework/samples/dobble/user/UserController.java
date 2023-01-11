@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController {
 
-   private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
+   private static final String VIEWS_USER_CREATE_OR_UPDATE_FORM = "users/createOrUpdateUserForm";
 
    UserService userService;
    
@@ -57,25 +58,25 @@ public class UserController {
    public String initCreationForm(Map<String, Object> model) {
 	   User user = new User();
 	   model.put("user", user);
-	   return VIEWS_OWNER_CREATE_FORM;
+	   return VIEWS_USER_CREATE_OR_UPDATE_FORM;
    }
 
    @PostMapping(value = "/users/new")
    public String processCreationForm(@Valid User user, BindingResult result) {
 	   if (result.hasErrors()) {
-		   return VIEWS_OWNER_CREATE_FORM;
+		   return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	   }
 	   else {
-		   //creating owner, user, and authority
+		   //creating user and authority
 		   this.userService.saveUser(user);
-		   return "redirect:/";
+		   return "redirect:/users/" + user.getUsername();
 	   }
    }
 
    @PreAuthorize("hasRole('admin')")
    @GetMapping()
    public ModelAndView showAllUsers(){
-	   ModelAndView result = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
+	   ModelAndView result = new ModelAndView(VIEWS_USER_CREATE_OR_UPDATE_FORM);
 	   result.addObject("users", userService.getUsers());
 	   return result;
    }
@@ -84,16 +85,27 @@ public class UserController {
    @PreAuthorize("hasRole('admin')")
    @GetMapping("/users/{username}")
    public ModelAndView showUser(@PathVariable("username") String username){
-	   ModelAndView mav = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
+	   ModelAndView mav = new ModelAndView(VIEWS_USER_CREATE_OR_UPDATE_FORM);
 		User user = userService.findUser(username);
 		mav.addObject(user);
 	   return mav;
    }
 
+   @PostMapping(value = "/users/edit/{username}")
+   public String UpdateUser(@Valid User user, BindingResult result) {
+		if (result.hasErrors()) {
+		   return "users/EditUser";
+	   }
+	   else {
+			userService.saveUser(user);
+		   	return "redirect:/";
+	   }
+   }
+
    @GetMapping(path="/users/edit/{username}")
-	public ModelAndView editarMazo(@PathVariable("username") String username){		
+	public ModelAndView editarUser(@PathVariable("username") String username){		
 		ModelAndView result=new ModelAndView("users/EditUser");
-		result.addObject("user", userService.findUsername(username));
+		result.addObject("user", userService.findUsername(username).get());
 		return result;
 	}
 
@@ -102,6 +114,26 @@ public class UserController {
 		ModelAndView result=new ModelAndView("users/ProfileUser");
 		result.addObject("user", userService.findUsername(username));
 		return result;
+	}
+	
+	@GetMapping(value = "/users/{userId}/edit")
+	public String initUpdateUserForm(@PathVariable("username") String userId, Model model) {
+		User user = this.userService.findUser(userId);
+		model.addAttribute(user);
+		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
+	}
+
+	@PostMapping(value = "/users/{userId}/edit")
+	public String processUpdateUserForm(@Valid User user, BindingResult result,
+			@PathVariable("userId") String userId) {
+		if (result.hasErrors()) {
+			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			user.setUsername(userId);
+			this.userService.saveUser(user);
+			return "redirect:/users/{userId}";
+		}
 	}
    
 

@@ -62,7 +62,7 @@ public class ForumController<ParalamentarioSevice> {
 	}
 	
 	@GetMapping(path="/edit/{id}")
-	public ModelAndView editarParlamentario(@PathVariable("id") long id){		
+	public ModelAndView editarForum(@PathVariable("id") long id){		
 		ModelAndView result=new ModelAndView("forums/EditForum");	
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
@@ -78,20 +78,20 @@ public class ForumController<ParalamentarioSevice> {
 	}
 	
 	@PostMapping(path="/edit/{id}")
-	public ModelAndView grabarParlamentario(@ModelAttribute("forum")  Forum forum, @ModelAttribute("comment") Comment comment, @PathVariable("id") long id) {
+	public ModelAndView grabarForum(@ModelAttribute("forum")  Forum forum, @ModelAttribute("comment") Comment comment, @PathVariable("id") long id) {
 		forumService.save(forum);
 		commentService.save(comment);
 		ModelAndView result=showForums();	
-		result.addObject("mesasge", "Forum sucessfully updated");
+		result.addObject("message", "Forum sucessfully updated");
 		result.addObject("messageType", "sucess");
 		return result;
 	}
 	
 	@GetMapping(path="/delete/{id}")
-	public ModelAndView borrarParlamentario(@PathVariable("id") long id){
+	public ModelAndView borrarForum(@PathVariable("id") long id){
 		forumService.deleteById(id);
 		ModelAndView result=showForums();	
-		result.addObject("message", "Parlamentario borrado con éxito");
+		result.addObject("message", "Forum borrado con éxito");
 		result.addObject("messageType", "sucess");
 		return result;
 	}
