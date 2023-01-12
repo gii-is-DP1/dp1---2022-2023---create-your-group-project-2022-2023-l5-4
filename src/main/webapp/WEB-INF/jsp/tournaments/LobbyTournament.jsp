@@ -8,15 +8,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="mvc"%>
 
 <dobble:layout pageName="tournaments">
-	<c:if test="${param.error!=null}">
-        <div class="alert alert-danger" role="alert">
-            <span class="glyphicon glyphicon-alert"></span>
-            <label>
-                ERROR:  
-            </label>
-            <c:out value="${param.error}"></c:out>
-        </div>
-    </c:if>
+	<dobble:errorMessage/>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<div class="container">
 		<br />

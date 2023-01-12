@@ -139,9 +139,8 @@ public class TournamentController {
             try {
                 gameUserService.addGameUser(game.getId(), username, game.getAccessCode());
             } catch (Exception e) {
-                System.out.println("BBBB");
                 e.printStackTrace();
-                reddirAttributes.addAttribute("error", e.getMessage());
+                reddirAttributes.addFlashAttribute("error", e.getMessage());
                 return "redirect:/tournaments/"+tournamentId+"/lobby";
             }
         } 
@@ -179,7 +178,7 @@ public class TournamentController {
     }
 
     @GetMapping("/{tournamentId}/lobby")
-    public ModelAndView lobbyTournament(@PathVariable("tournamentId") Long tournamentId) {
+    public ModelAndView lobbyTournament(@PathVariable("tournamentId") Long tournamentId, @ModelAttribute("error") String error) {
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
         Iterable<User> mazos=tournament.getUsers();
 		ModelAndView result=new ModelAndView("tournaments/LobbyTournament");
@@ -189,7 +188,7 @@ public class TournamentController {
 		result.addObject("isowner", isOwner);
         result.addObject("users", mazos);
         result.addObject("tournament", tournament);
-
+        result.addObject("error", error);
 		return result; 	
 
     }
