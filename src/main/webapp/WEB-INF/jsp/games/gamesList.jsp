@@ -26,20 +26,21 @@
             New Game
         </a>
     </div>
-    <table id="games-list"  >
+    <div style="height: 100%;">
+    <table id="game-list" class="game-list" >
         <tr>
-            <td>
+            <td style="border-radius: 20px;">
                 
-                <table id="games-list-head" class="table">
+                <table id="game-list-head" class="game-list-head">
                 <thead>
                     <tr>
-                        <th>ID<span onclick="sortTable('games-list-body',0)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="position: relative; left: -8%;">Gamemode<span onclick="sortTable('games-list-body',1)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="position: relative; left: -3%;">Owner</th>
-                        <th style="position: relative; left: -3%;"><span class="glyphicon glyphicon-lock"></span>
+                        <th style="width: 10%; transform: translateX(15px);">ID<span onclick="sortTable('games-list-body',0)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="width: 20%;">Gamemode<span onclick="sortTable('games-list-body',1)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="width: 15%; text-align: center;">Owner</th>
+                        <th style="width: 15%; text-align: center;"><span class="glyphicon glyphicon-lock"></span>
                             <span onclick="sortTable('games-list-body',3)" class="glyphicon glyphicon-sort"></span></th>
-                        <th></th>
-                        <th style="position: relative; left: -1%; width:150px">Num. Players<span onclick="sortTable('games-list-body',5)" class="glyphicon glyphicon-sort"></span></th>
+                        <th style="width: 10%;"></th>
+                        <th style="width:20%; right: 1%; text-align: right; transform: translateX(-5px);">Num. Players<span onclick="sortTable('games-list-body',5)" class="glyphicon glyphicon-sort"></span></th>
                     </tr>
                 </thead>
                 </table>
@@ -48,7 +49,7 @@
         <tr>
             <td>
                 <div id="games-list-body-div">
-                <table id="games-list-body" class="table">
+                <table id="games-list-body" class="table game-list-body">
                 <tbody>
             
                     <c:forEach items="${games}" var="game">
@@ -57,49 +58,57 @@
                         </spring:url>
                         
                            
-                            <tr onclick="join('${game.id}','${game.isPrivate() && !user.getCurrentGame().equals(game)}')">
+                            <tr onclick="join('${game.id}','${game.isPrivate() && !user.getCurrentGame().equals(game)}','${user.getCurrentGame()!=null}')">
                                 
-                                <td>
-                                     <c:out value="${game.id}"/>
-                                    
+                                <td style="width: 10%; text-indent:15px;">
+                                        <c:out value="${game.id}"/>
                                 </td>
-                                <td>
+                                <td style="width: 20%;">
                                     <c:out value="${game.gamemode}"/>
                                 </td>
-                                <td>
+                                <td style="width: 15%; text-align: center;">
                                     <c:out value="${game.owner}"/>
                                 </td>
-                                <td>
+                                <td style="width: 15%; text-align: center;">
                                     <c:if test="${game.isPrivate()}">  
                                         <span class="glyphicon glyphicon-lock private-game-lock"></span>
                                     </c:if>
                                 </td>
                                 
-                                <td>
+                                <td style="width: 10%;">
                                     <a onmouseenter="enableJoin=false" onmouseleave="enableJoin=true" href="${gameUrl}">Details</a>
                                 </td>
                                 
-                                <td class="num-players" style="text-align:center;">
+                                <td style="width:20%; text-indent: 80%;" class="num-players">
                                     <c:out value="${game.numUsers}/${game.maxPlayers}"/>
                                 </td>
                             </tr>
                             <form:form  id="${game.id}-form" action="${gameUrl}/join" method="POST" modelAttribute="accessCode">
                             <c:if test="${game.isPrivate() && !user.getCurrentGame().equals(game)}">  
                                 <dobble:modal id="${game.id}-access-modal" className="access-modal">
-                                    <h2 style="text-align: center;">Access Code</h2>
-                                        <div class="form">
-                                            <input id="${game.id}-access-modal-input" name="accessCode"  class="access-modal-input" placeholder="Enter access code...">
-                                            <input id="${game.id}-access-modal-submit" class="access-modal-submit" type="submit" value="Join">
-                                        </div>
+                                    <h1 class="access-modal-title">Access Code</h1>
+                                    <div class="form">
+                                        <input id="${game.id}-access-modal-input" name="accessCode"  class="access-modal-input" placeholder="Enter access code...">
+                                        <div id="${game.id}-access-modal-submit" class="access-modal-submit" onclick="checkIsOnAnotherGame('${game.id}','${user.getCurrentGame()!=null}')">Join</div>
+                                    </div>
+                                        
                                     </dobble:modal> 
                                 </c:if>
                             </form:form>
+                            <dobble:modal id="${game.id}-on-another-game-modal" className="access-modal">
+                                    <h2 style="text-align: center;">You are already in another game</h2>
+                                        <div class="form">
+                                            <div id="${game.id}-access-modal-submit" class="access-modal-submit" onclick="join('${user.getCurrentGame().getId()}')">current</div>
+                                            <div id="${game.id}-access-modal-submit" class="access-modal-submit" onclick="join('${game.id}')">Join</div>
+                                        </div>
+                            </dobble:modal> 
                             
                             
                         </c:forEach>
                         
                     </tbody>
-                </table>    
+                </table> 
+            
             </div>
             </td>
         </tr>
@@ -111,7 +120,6 @@
         
         
     </table>
-
+</div>   
 <script src="/resources/js/gameAndTournamentListActions.js"></script>
-
 </dobble:layout>

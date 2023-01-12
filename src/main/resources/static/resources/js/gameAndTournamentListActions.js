@@ -72,18 +72,27 @@ function goto(url){
     window.location=url
 }
 
+
 let enableJoin = true
-function join(id, isPrivate) {
+let joinSubmit = (id) => {document.getElementById(id+"-form").submit()}
 
-if (!enableJoin) return
-if(eval(isPrivate)) {
-    const modal = document.getElementById(id+"-access-modal")
-    modal.style.display="block"
-} else {
-    const form = document.getElementById(id+"-form").submit()
-}      
-
+function join(id, isPrivate, isOnAnotherGame) {
+  if (!enableJoin) return
+  if(eval(isPrivate)) {
+      const modal = document.getElementById(id+"-access-modal")
+      modal.style.display="block"
+  } else checkIsOnAnotherGame(id, isOnAnotherGame)
 }
+
+function checkIsOnAnotherGame(id, isOnAnotherGame) {
+  console.log(isOnAnotherGame)
+  if(eval(isOnAnotherGame)) {
+      const modal = document.getElementById(id+"-on-another-game-modal")
+      modal.style.display="block"
+  } else joinSubmit(id)
+}
+
+
 document.addEventListener('keydown',function(e) { 
 if (e.key === "Escape") { 
 const modals = document.getElementsByClassName("modal")

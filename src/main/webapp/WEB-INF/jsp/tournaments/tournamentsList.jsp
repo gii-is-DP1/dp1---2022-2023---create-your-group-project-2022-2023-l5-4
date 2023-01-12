@@ -26,10 +26,10 @@
             New Tournament
         </a>
     </div>
-    <table  id="tournaments-table">
+    <table  id="tournaments-table" class="game-list">
         <tr>
             <td>
-                <table id="tournaments-table-head" class="table">
+                <table id="tournaments-table-head" class="table game-list-head">
                     <thead>
                       <tr>
                         <th>ID<span onclick="sortTable('tournaments-table-body',0)" class="glyphicon glyphicon-sort"></span></th>
@@ -47,7 +47,7 @@
         <tr>
             <td>
                 <div id="tournaments-table-body-div">
-                <table id="tournaments-table-body" class="table">
+                <table id="tournaments-table-body" class="table game-list-body">
                 <tbody>
                     <c:forEach items="${tournaments}" var="tournament" varStatus="status">
                         <spring:url value="/tournaments/{tournamentId}" var="tournamentUrl">
@@ -65,7 +65,7 @@
                                 </td>
                                 <td>
                                     <c:if test="${tournament.isPrivate()}">  
-                                        <span class="glyphicon glyphicon-lock private-tournament-lock"></span>
+                                        <span class="glyphicon glyphicon-lock private-game-lock"></span>
                                     </c:if>
                                 </td>
                                 <td>
