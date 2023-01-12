@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameService;
 import org.springframework.samples.dobble.game.GameUserService;
+import org.springframework.samples.dobble.tournament.Tournament;
+import org.springframework.samples.dobble.tournament.TournamentService;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
 import org.springframework.security.core.Authentication;
@@ -42,13 +44,15 @@ public class AchievementController {
     private UserService userService;
     private GameUserService gameUserService;
     private GameService gameService;
+    private TournamentService tournamentService;
 
     @Autowired
-    public AchievementController(AchievementService service, UserService userService, GameUserService gameUserService, GameService gameService){
+    public AchievementController(AchievementService service, UserService userService, GameUserService gameUserService, GameService gameService, TournamentService tournamentService){
         this.service=service;
         this.userService=userService;
         this.gameUserService=gameUserService;
         this.gameService=gameService;
+        this.tournamentService=tournamentService;
     }
 
     @Transactional(readOnly = true)
@@ -135,15 +139,22 @@ public class AchievementController {
                 userService.saveUser(user);
             }
         }
-        Integer victories = 0;
+        Integer victoriesG = 0;
         for(Game g:gameService.findAllGames()){
             if(g.getWinner()!=null && g.getWinner().getUsername().compareTo(userId)==0){
-                victories = victories + 1;
+                victoriesG = victoriesG + 1;
+            }
+        }
+        Integer victoriesT = 0;
+        for(Tournament t:tournamentService.findAllTournaments()){
+            if(t.getWinner()!=null && t.getWinner().getUsername().compareTo(userId)==0){
+                victoriesT = victoriesT + 1;
             }
         }
         result.addObject("achievements",service.getAchievementsByOwner(id));
         result.addObject("score", score);
-        result.addObject("victories", victories);
+        result.addObject("victoriesG", victoriesG);
+        result.addObject("victoriesT", victoriesT);
 
         return result;
     }
