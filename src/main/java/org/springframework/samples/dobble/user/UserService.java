@@ -16,20 +16,33 @@
 package org.springframework.samples.dobble.user;
 
 
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import javax.resource.spi.IllegalStateException;
+import javax.security.auth.message.AuthException;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.dobble.game.Game;
-
-
-
+import org.springframework.samples.dobble.game.GameRepository;
 import org.springframework.samples.dobble.tournament.Tournament;
+import org.springframework.samples.dobble.tournament.TournamentRepository;
+import org.springframework.samples.dobble.tournament.TournamentService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -48,7 +61,7 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-
+	
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
 		user.setEnabled(true);
@@ -64,9 +77,23 @@ public class UserService {
 
 	}
 
+    @Transactional(readOnly = true)
+    public Optional<User> findUsers(String username){
+        return userRepository.findById(username);
+    }
+
+    @Transactional List<User> getUserss(){
+        return userRepository.findAll();
+    }
+
 	@Transactional
-	public List<User> getUsers(){
-		return userRepository.findAll();
+	public Iterable<User> getUsers(Pageable pageable) throws NoSuchElementException {
+		return userRepository.findAll(pageable);
+	}
+
+	@Transactional(readOnly = true)
+	public int userCount(){
+		return (int) userRepository.count();
 	}
 
 	@Transactional
@@ -144,6 +171,67 @@ public class UserService {
         limit = limit > getFriends().size() ? getFriends().size() : limit;
         return new PageImpl<>(getLoggedUser().getFriends().subList((int) page.getOffset(), limit), page, getLoggedUser().getFriends().size());
 	}
+
+
+
+
+	@Transactional
+    public List<Integer> calculatePages(Integer pageNumber) { 
+        
+        if(pageNumber == null){
+            pageNumber = 0;
+        }
+
+        Integer userCount = userCount();
+        Integer totalPages;
+
+        if(userCount %5 == 0) {
+            totalPages = userCount/5;
+        } else {
+            totalPages = userCount/5 + 1;
+        }
+
+        List<Integer> pages = new ArrayList<>();
+        pages.add(0);
+        pages.add(0);
+
+        
+        if(pageNumber==0){  //first page
+
+            pages.set(0, pageNumber);
+            pages.set(1, pageNumber+1);
+        
+        }else if(pageNumber==totalPages-1){  //last page
+            pages.set(0, pageNumber-1);
+            pages.set(1, pageNumber);
+
+        } else { //intermediate pages
+            pages.set(0, pageNumber-1);
+            pages.set(1, pageNumber+1);
+
+        }
+
+        return pages;
+    }
+
+	@Transactional
+	public List<User> getPaginatedUsers(String filterUsername, Integer pageNumber){
+		if(pageNumber==null){
+			pageNumber=0;
+		}
+		Pageable page = PageRequest.of(pageNumber, 5);
+		Iterable<User> usersPaginated = getUsers(page);
+		return StreamSupport.stream(usersPaginated.spliterator(), false).collect(Collectors.toList());
+	}
+
+    @Transactional
+    public void delete(User user){
+        userRepository.delete(user);
+    }
+
+
+
+
 
 
 	

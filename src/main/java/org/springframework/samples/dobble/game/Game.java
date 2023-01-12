@@ -1,5 +1,6 @@
 package org.springframework.samples.dobble.game;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -48,7 +49,7 @@ public class Game extends HandedEntity {
     @NotNull
     private GameMode gamemode;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ownerId")
     @NotAudited
     @NotNull
@@ -59,7 +60,7 @@ public class Game extends HandedEntity {
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @Size(min = 1, max = 6)
     @NotAudited
     private List<GameUser> gameUsers;
@@ -119,5 +120,11 @@ public class Game extends HandedEntity {
     public boolean isNew() {
 		return this.id == null;
 	}
+
+    public void deletePlayerOfGame(User user){
+        this.gameUsers.remove(user);
+    }
+
+    
 
 }
