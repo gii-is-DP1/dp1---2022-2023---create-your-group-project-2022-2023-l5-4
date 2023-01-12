@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
 * @author Juergen Hoeller
@@ -43,10 +45,11 @@ public class UserController {
    private static final String VIEWS_USER_CREATE_OR_UPDATE_FORM = "users/createOrUpdateUserForm";
 
    UserService userService;
-   
+   AuthoritiesService authoritiesService;
    @Autowired
-   public UserController(UserService userService){
+   public UserController(UserService userService, AuthoritiesService authoritiesService){
 	 this.userService = userService;
+	 this.authoritiesService = authoritiesService;
    }
 
    @InitBinder
@@ -86,8 +89,8 @@ public class UserController {
    @GetMapping("/users/{username}")
    public ModelAndView showUser(@PathVariable("username") String username){
 	   ModelAndView mav = new ModelAndView(VIEWS_USER_CREATE_OR_UPDATE_FORM);
-		User user = userService.findUser(username);
-		mav.addObject(user);
+	   User user = userService.findUser(username);
+	   mav.addObject(user);
 	   return mav;
    }
 
@@ -103,9 +106,18 @@ public class UserController {
    }
 
    @GetMapping(path="/users/edit/{username}")
-	public ModelAndView editarUser(@PathVariable("username") String username){		
+	public ModelAndView editarUser(@PathVariable("username") String username, RedirectAttributes redirectAttributes){	
+		User user = userService.findUser(username);
+		User loggedUser = userService.getLoggedUser();
+		
+	if (authoritiesService.findAuthorities(loggedUser, "admin")==null && !user.equals(loggedUser)) {
+		redirectAttributes.addFlashAttribute("error","You are not authorized to edit other users");
+		return new ModelAndView("redirect:/games");
+		
+	   }
+	   	
 		ModelAndView result=new ModelAndView("users/EditUser");
-		result.addObject("user", userService.findUsername(username).get());
+		result.addObject("user", user);
 		return result;
 	}
 
