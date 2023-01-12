@@ -1,6 +1,7 @@
 package org.springframework.samples.dobble.user;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -64,19 +65,19 @@ public class User {
 			   inverseJoinColumns = @JoinColumn(name = "achievement_id"))
 	private Set<Achievement> achievements;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@NotAudited
 	private Game currentGame;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@NotAudited
 	private Tournament currentTournament;
 	
-	@OneToMany(mappedBy = "owner")
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	@NotAudited
 	private List<Game> ownedGames;
 
-	@OneToMany(mappedBy = "winner")
+	@OneToMany(mappedBy = "winner", cascade = CascadeType.ALL)
 	@NotAudited
 	private List<Game> wonGames;
 
@@ -84,15 +85,15 @@ public class User {
 	@NotAudited
 	private List<Comment> comments;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
 	@NotAudited
 	private List<Tournament> tournaments;
 	
-	@OneToMany(mappedBy = "owner")
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	@NotAudited
 	private List<Tournament> ownedTournament;
 
-	@OneToMany(mappedBy = "winner")
+	@OneToMany(mappedBy = "winner",cascade = CascadeType.ALL)
 	@NotAudited
 	private List<Tournament> wonTournamnets;
 
@@ -117,5 +118,17 @@ public class User {
 	public boolean isNew() {
 		return this.username == null;
 	}
+
+	public void deleteGames(Collection<Game> g){
+		this.ownedGames.removeAll(g);
+	  }
+
+	public void deleteTournamentsOwned(Collection<Tournament> t){
+		this.ownedTournament.removeAll(t);
+	}
+
+	public void deleteTournaments(Collection<Tournament> t){
+		this.tournaments.removeAll(t);
+	} 
 
 }

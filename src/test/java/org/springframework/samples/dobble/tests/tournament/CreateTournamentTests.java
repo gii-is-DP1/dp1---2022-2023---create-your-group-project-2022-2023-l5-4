@@ -25,7 +25,7 @@ public class CreateTournamentTests extends TournamentServiceTests{
     
     @Test
     public void CreateCorrectTournament(){
-        TournamentService tournament = new TournamentService(tournamentRepository, null, null);
+        TournamentService tournament = new TournamentService(tournamentRepository, null);
 
         Tournament tour = new Tournament();
         User owner = new User();
