@@ -45,10 +45,10 @@
             </td>
 
             <td>
-                <spring:url value="/users/edit/{username}" var="playerUrl">
-                    <spring:param name="playerId" value="${player.id}"/>
+                <spring:url value="/users/edit/{username}" var="userUrl">
+                    <spring:param name="username" value="${user.username}"/>
                 </spring:url>
-                <a href="${fn:escapeXml(playerUrl)}" class="btn btn-warning">Edit</a>
+                <a href="${fn:escapeXml(userUrl)}" class="btn btn-warning">Edit</a>
             </td>
         </tr>
         </tbody>

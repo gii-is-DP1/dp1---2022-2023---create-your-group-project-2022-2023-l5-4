@@ -76,6 +76,16 @@ body{
   overflow: hidden;
 }
 
+body {
+  background-image: url("/resources/images/background.png");
+  animation: backgroundTransition 30s linear infinite;
+}
+
+@keyframes backgroundTransition {
+  from { background-position: 0% 0%; }
+  to { background-position: 513px 360px; }
+}
+
 .table {
   border-collapse: unset;
 }
@@ -219,8 +229,6 @@ table td.action-column {
 .deployment-status-deploying {
   .label-info
 }
-.deployment-status-na {
-}
 
 .container-details-table th {
   background-color: lighten(@spring-brown, 3%);
@@ -265,7 +273,6 @@ hr {
 @import "header.less";
 @import "responsive.less";
 @import "gameList.less";
-@import "tournamentList.less";
 @import "newGame.less";
 
 

@@ -141,7 +141,6 @@ img {object-fit: contain}
       const size = 60+40*Math.random()
       const x = 50-size/2 + (50-size/2) *Math.random()*(Math.round(Math.random()) * 2 - 1)
       const y = 50-size/2 + Math.random()*Math.sqrt(Math.abs((100-size)^2-(x-50+size/2)^2))*(Math.round(Math.random()) * 2 - 1)
-      console.log(y)
       const angle = 360*Math.random()
      
       symbol.style.height = size+"%"

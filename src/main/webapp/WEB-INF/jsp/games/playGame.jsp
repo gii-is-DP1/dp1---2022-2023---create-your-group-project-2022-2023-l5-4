@@ -6,6 +6,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
 
 <style>
     * {
@@ -98,12 +101,14 @@
         right: 50px;
         top: 10px;
         font-size: 50px;
-
+        width: 100px;
+        text-align: left;
     }
 
     .scoreboard {
+        background: white;
         position: fixed;
-        display: flex;
+        display: block;
         flex: 1;
         margin: 20px;
         min-width: 250px;
@@ -111,6 +116,7 @@
         max-height: 400px;
         border: 5px solid lightgray;
         border-radius: 20px;
+        
     }
 
     .game {
@@ -118,6 +124,7 @@
         flex: 1;
         height: 100%;
         flex-direction: row;
+        
     }
 
     .card {
@@ -138,13 +145,55 @@
     .player-name:hover{
         color:gray;
     }
+
+    .scoreboard p {
+        font-size: 28px;
+        font-family: cartoon-toy;
+        border-bottom: 2px solid lightgray;
+        color: darkgray;
+        margin: 5px 10px 5px 10px;
+    }
+    .scoreboard > p {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        font-size: 32px;
+        color:gray;
+        border-bottom: 5px solid lightgray;
+    }
+    p.main-player-score {
+        color:gray;
+    }
+    #scores {
+        display: none;
+    }
+    
+
 </style>
 
 <dobble:htmlHeader/>
+
+<body>
+
 <div class="game">
-    <span class="timer">15:32</span>
-    <div class="scoreboard">
-        <p>Scoreboard:</p>
+    <span id="timer" class="timer">
+        <c:out value="${'%d:%02d'.formatted(timer[0],timer[1])}"/>
+    </span>
+    <div id="scoreboard" class="scoreboard" onload="sortScoreboard()">
+        <p>Scoreboard</p>
+        <br>
+        <div id="scores">
+            <c:forEach var="player" items="${players}">
+                <p>
+                    <c:out value="${player.user.username}: "/>
+                    <c:out value="${player.score}"/>
+                </p>
+            </c:forEach>
+            <p class="main-player-score">
+                <c:out value="${mainPlayer.user.username}: "/>
+                <c:out value="${mainPlayer.score}"/>
+            </p>
+         </div>
     </div>
     <div class="gameboard">
         <div id="player-wrapper-top" class="player-wrapper top">
@@ -152,7 +201,7 @@
                 <c:if test="${players[4]!=null}">
                     <dobble:card className="card" value="${players[4]}"/>
                     <p class="player-name">
-                        <c:out value="${players[4].username}"/>
+                        <c:out value="${players[4].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -162,7 +211,7 @@
                 <c:if test="${players[0]!=null}">
                     <dobble:card className="card" value="${players[0]}"/>
                     <p class="player-name">
-                        <c:out value="${players[0].username}"/>
+                        <c:out value="${players[0].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -170,7 +219,7 @@
                 <c:if test="${players[2]!=null}">
                     <dobble:card className="card" value="${players[2]}"/>
                     <p class="player-name">
-                        <c:out value="${players[2].username}"/>
+                        <c:out value="${players[2].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -180,7 +229,7 @@
                 <c:if test="${players[1]!=null}">
                     <dobble:card className="card" value="${players[1]}"/>
                     <p class="player-name">
-                        <c:out value="${players[1].username}"/>
+                        <c:out value="${players[1].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -188,7 +237,7 @@
                 <c:if test="${players[3]!=null}">
                     <dobble:card className="card" value="${players[3]}"/>
                     <p class="player-name">
-                        <c:out value="${players[3].username}"/>
+                        <c:out value="${players[3].user.username}"/>
                     </p>
                 </c:if>
             </div>
@@ -203,7 +252,7 @@
                 <c:if test="${mainPlayer!=null}">
                     <dobble:card className="card" value="${mainPlayer}"/>
                     <p class="player-name">
-                        <c:out value="${mainPlayer.username}"/>
+                        <c:out value="${mainPlayer.user.username}"/>
                     </p>
                 </c:if> 
                 
@@ -212,9 +261,7 @@
         </div>
     </div>
 </div>
-
-<script>
-    
-
-
-</script>
+<script src="/resources/js/sortScoreboard.js" defer></script>
+<script src="/resources/js/checkForUpdate.js" updatedAt="${game.updatedAt}" ></script>
+<script src="/resources/js/timerUpdater.js"></script>
+</body>

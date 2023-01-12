@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.samples.dobble.game.GameMode;
-import org.springframework.samples.dobble.user.User;
+import org.springframework.samples.dobble.game.GameUser;
 
 
 public class Deck extends ArrayList<Card> {
@@ -30,44 +30,44 @@ public class Deck extends ArrayList<Card> {
        Collections.shuffle(this);
     }
 
-    public Map<User,Deck> deal(List<User> users, GameMode gameMode) {
-        Map<User,Deck> deal = new HashMap<>();
+    public Map<GameUser,Deck> deal(List<GameUser> gameUsers, GameMode gameMode) {
+        Map<GameUser,Deck> deal = new HashMap<>();
         this.shuffle();
         switch (gameMode) {
             case THE_WELL: 
-                dealForTheWell(deal, users);
+                dealForTheWell(deal, gameUsers);
                 break;
             case THE_TOWER: 
-                dealForTheTower(deal, users);
+                dealForTheTower(deal, gameUsers);
                 break;
             case THE_POISONED_GIFT:
-                dealForThePoisonedGift(deal, users);
+                dealForThePoisonedGift(deal, gameUsers);
                 break;
-            default: dealForTheWell(deal, users);
+            default: dealForTheWell(deal, gameUsers);
         }
        
         return deal;
     }
 
-    private void dealForThePoisonedGift(Map<User, Deck> deal, List<User> users) {
+    private void dealForThePoisonedGift(Map<GameUser, Deck> deal, List<GameUser> users) {
         //Same as the Tower
         dealForTheTower(deal, users);
     }
     
-    private void dealForTheTower(Map<User, Deck> deal, List<User> users) {
-        for(User user : users){ 
-            int i = users.indexOf(user);
-            deal.put(user, Deck.of(this.get(i)));
+    private void dealForTheTower(Map<GameUser, Deck> deal, List<GameUser> gameUsers) {
+        for(GameUser gameUser : gameUsers){ 
+            int i = gameUsers.indexOf(gameUser);
+            deal.put(gameUser, Deck.of(this.get(i)));
         }
-        setLeftForCenter(Deck.of(this.subList(users.size(), this.size())));
+        setLeftForCenter(Deck.of(this.subList(gameUsers.size(), this.size())));
     }
     
  
-    private void dealForTheWell(Map<User,Deck> deal, List<User> users) {
-        Integer cardsPerUser = (this.size()-1)/users.size();
+    private void dealForTheWell(Map<GameUser,Deck> deal, List<GameUser> gameUsers) {
+        Integer cardsPerUser = (this.size()-1)/gameUsers.size();
         int i = 0;
-        for(User user : users){ 
-            deal.put(user, Deck.of(this.subList(i, i+cardsPerUser)));
+        for(GameUser gameUser : gameUsers){ 
+            deal.put(gameUser, Deck.of(this.subList(i, i+cardsPerUser)));
             i += cardsPerUser;
         }
         setLeftForCenter(Deck.of(this.subList(i, this.size())));

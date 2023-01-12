@@ -33,8 +33,8 @@ public class JoinGameTests extends GameServiceTest{
         when(userRepository.save(any(User.class))).thenReturn(owner);
         userService.saveUser(owner);
 
-        GameService gameService = new GameService(gameRepository, null);
-        GameUserService gameUserService = new GameUserService(gameService, userService);
+        //GameService gameService = new GameService(gameRepository, null);
+        //GameUserService gameUserService = new GameUserService(gameService, userService);
         Game game= new Game();
         game.setOwner(owner);
         game.setMaxPlayers(6);
@@ -46,7 +46,7 @@ public class JoinGameTests extends GameServiceTest{
         game.setId(23L);
 
         when(gameRepository.save(any(Game.class))).thenReturn(game);
-        Game savedGame = gameService.saveGame(game); 
+        //Game savedGame = gameService.saveGame(game); 
 
         
         

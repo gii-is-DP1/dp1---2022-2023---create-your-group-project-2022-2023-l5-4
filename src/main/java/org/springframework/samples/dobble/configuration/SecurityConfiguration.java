@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -33,28 +32,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/games/**").permitAll()
+				.antMatchers("/games/**").authenticated()
 				.antMatchers("/cards/**").permitAll()
 				.antMatchers("/symbols/**").permitAll()
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
-				.antMatchers("/tournaments/**").permitAll()
+				.antMatchers("/tournaments/**").authenticated()
+				.antMatchers("/api/forum/**").permitAll()
+				.antMatchers("/comments/**").permitAll()
 				.antMatchers("/statistics/achievements/me").authenticated()
-				.antMatchers("/statistics/achievements/").hasAnyAuthority("owner","admin")
+				.antMatchers("/statistics/achievements/").hasAnyAuthority("owner","user","admin")
 				.antMatchers("/statistics/achievements/byOwner/*").hasAnyAuthority("owner")
 				.antMatchers("/statistics/**").hasAnyAuthority("admin")
 				.antMatchers("/users/new").permitAll()
-				.antMatchers("/tournaments/new").permitAll()
 				.antMatchers("/users/edit").permitAll()
 				.antMatchers("/friends/**").authenticated()
 				.antMatchers("/cards/**").permitAll()
-				.antMatchers("/users/**").permitAll()
-				.antMatchers("/tournaments/**").permitAll()
+				.antMatchers("/users/**").authenticated()
 				.antMatchers("/session/**").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
-				.antMatchers("/users/**").hasAnyAuthority("admin")
-				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")				
-				.antMatchers("/vets/**").authenticated()
 				.anyRequest().denyAll()
 				.and()
 				 	.formLogin()

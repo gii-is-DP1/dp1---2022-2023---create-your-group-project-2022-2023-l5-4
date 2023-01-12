@@ -81,7 +81,6 @@ public class Game extends BaseEntity {
     }
 
     public Boolean isPrivate() {
-        System.out.println(this.accessCode != null);
         return this.accessCode != null;
     }
 

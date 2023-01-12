@@ -22,24 +22,18 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.jms.Message;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +43,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
 * @author Juergen Hoeller
@@ -57,18 +53,18 @@ import org.springframework.web.servlet.ModelAndView;
 * @author Michael Isvy
 */
 @Controller
-@RequestMapping("/users")
 public class UserController {
 
-   private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
+   private static final String VIEWS_USER_CREATE_OR_UPDATE_FORM = "users/createOrUpdateUserForm";
    private String VIEW_INDEX_USERS = "users/userListing";
    private static final String MESSAGE = "message";
 
    UserService userService;
-   
+   AuthoritiesService authoritiesService;
    @Autowired
-   public UserController(UserService userService){
+   public UserController(UserService userService, AuthoritiesService authoritiesService){
 	 this.userService = userService;
+	 this.authoritiesService = authoritiesService;
    }
 
    @InitBinder
@@ -82,57 +78,82 @@ public class UserController {
    public String initCreationForm(Map<String, Object> model) {
 	   User user = new User();
 	   model.put("user", user);
-	   return VIEWS_OWNER_CREATE_FORM;
+	   return VIEWS_USER_CREATE_OR_UPDATE_FORM;
    }
 
    @PostMapping(value = "/users/new")
    public String processCreationForm(@Valid User user, BindingResult result) {
 	   if (result.hasErrors()) {
-		   return VIEWS_OWNER_CREATE_FORM;
+		   return VIEWS_USER_CREATE_OR_UPDATE_FORM;
 	   }
 	   else {
-		   //creating owner, user, and authority
+		   //creating user and authority
 		   this.userService.saveUser(user);
-		   return "redirect:/";
-	   }
+		   return "redirect:/games/";
+		}
    }
 
+   @RequestMapping("/users")
    @PreAuthorize("hasRole('admin')")
    @GetMapping()
-   public String showUser(ModelMap modelMap,@PathParam("username") String username, @PathParam("pageNumber") Integer pageNumber){
+   public String showUser(ModelMap modelMap, @PathParam("username") String username, @PathParam("pageNumber") Integer pageNumber, RedirectAttributes redirectAttributes){
 		String view = VIEW_INDEX_USERS;
 		
 		List<Integer> pages = userService.calculatePages(pageNumber);
 		Integer previousPageNumber = pages.get(0);
 		Integer nextPageNumber = pages.get(1);
-
 		List<User> usuarios = userService.getPaginatedUsers(username, pageNumber);
-		modelMap.addAttribute("users", usuarios);
-		modelMap.addAttribute("username", username==null?"":username);
-		modelMap.addAttribute("pageNumber", pageNumber==null?0:pageNumber);
-		modelMap.addAttribute("nextPageNumber", nextPageNumber);
-		modelMap.addAttribute("previousPageNumber", previousPageNumber);
+		User loggedUser = userService.getLoggedUser();
+
+		if (authoritiesService.findAuthorities(loggedUser, "admin")==null) {
+			redirectAttributes.addFlashAttribute("error","You are not authorized to edit other users");
+			modelMap.addAttribute(MESSAGE,"You haven't got permission");
+			
+		}else{
+			modelMap.addAttribute("users", usuarios);
+			modelMap.addAttribute("username", username==null?"":username);
+			modelMap.addAttribute("pageNumber", pageNumber==null?0:pageNumber);
+			modelMap.addAttribute("nextPageNumber", nextPageNumber);
+			modelMap.addAttribute("previousPageNumber", previousPageNumber);
+		}
 
 		return view;
-
-
-		
-   }
+	}
 
 
    @PreAuthorize("hasRole('admin')")
    @GetMapping("/users/{username}")
    public ModelAndView showUser(@PathVariable("username") String username){
-	   ModelAndView mav = new ModelAndView(VIEWS_OWNER_CREATE_FORM);
-		User user = userService.findUser(username);
-		mav.addObject(user);
+	   ModelAndView mav = new ModelAndView(VIEWS_USER_CREATE_OR_UPDATE_FORM);
+	   User user = userService.findUser(username);
+	   mav.addObject(user);
 	   return mav;
    }
 
+   @PostMapping(value = "/users/edit/{username}")
+   public String UpdateUser(@Valid User user, BindingResult result) {
+		if (result.hasErrors()) {
+		   return "users/EditUser";
+	   }
+	   else {
+			userService.saveUser(user);
+		   	return "redirect:/";
+	   }
+   }
+
    @GetMapping(path="/users/edit/{username}")
-	public ModelAndView editarMazo(@PathVariable("username") String username){		
+	public ModelAndView editarUser(@PathVariable("username") String username, RedirectAttributes redirectAttributes){	
+		User user = userService.findUser(username);
+		User loggedUser = userService.getLoggedUser();
+		
+	if (authoritiesService.findAuthorities(loggedUser, "admin")==null && !user.equals(loggedUser)) {
+		redirectAttributes.addFlashAttribute("error","You are not authorized to edit other users");
+		return new ModelAndView("redirect:/games");
+		
+	   }
+	   	
 		ModelAndView result=new ModelAndView("users/EditUser");
-		result.addObject("user", userService.findUsername(username));
+		result.addObject("user", user);
 		return result;
 	}
 
@@ -142,8 +163,30 @@ public class UserController {
 		result.addObject("user", userService.findUsername(username));
 		return result;
 	}
-
 	
+	@GetMapping(value = "/users/{userId}/edit")
+	public String initUpdateUserForm(@PathVariable("username") String userId, Model model) {
+		User user = this.userService.findUser(userId);
+		model.addAttribute(user);
+		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
+	}
+
+	@PostMapping(value = "/users/{userId}/edit")
+	public String processUpdateUserForm(@Valid User user, BindingResult result,
+			@PathVariable("userId") String userId) {
+		if (result.hasErrors()) {
+			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
+		}
+		else {
+			user.setUsername(userId);
+			this.userService.saveUser(user);
+			return "redirect:/users/{userId}";
+		}
+	}
+   
+
+
+
 	@PreAuthorize("hasRole('admin')")
 	@GetMapping(path="/delete/{id}")
 	public String deletePlayer(@PathVariable("id") String id, ModelMap modelMap, HttpServletRequest request){
@@ -155,15 +198,14 @@ public class UserController {
 			lg.stream().forEach(x->x.deletePlayerOfGame(u));
 			Collection<Tournament> lg2 = u.getTournaments()==null? new ArrayList<>():u.getTournaments();
 			lg2.stream().forEach(x->x.removeUser(u));
-
 			
 
 			userService.delete(u);
 			modelMap.addAttribute(MESSAGE, "User successfully deleted!");
-			return showUser(modelMap, null, 0);
+			return showUser(modelMap, null, 0, null);
 		}else{
 			modelMap.addAttribute(MESSAGE, "Player not found!");
-			view = showUser(modelMap, null, 0);
+			view = showUser(modelMap, null, 0, null);
 		}
 		return view;
 	}

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -51,7 +52,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private UserRepository userRepository;
-    
+	
+	@Autowired
+	private AuthoritiesService authoritiesService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -63,17 +66,24 @@ public class UserService {
 	public void saveUser(User user) throws DataAccessException {
 		user.setEnabled(true);
 		userRepository.save(user);
+		authoritiesService.saveAuthorities(user.getUsername(), "user");
 	}
 	
 
 	@Transactional(readOnly = true)
-	public User findUser(String username) {
-		return userRepository.findById(username).orElse(null);
+	public User findUser(String username) throws NoSuchElementException {
+		return userRepository.findById(username)
+			.orElseThrow(() -> new NoSuchElementException("User with id" + username + "was not found"));
+
 	}
 
     @Transactional(readOnly = true)
     public Optional<User> findUsers(String username){
         return userRepository.findById(username);
+    }
+
+    @Transactional List<User> getUserss(){
+        return userRepository.findAll();
     }
 
 	@Transactional
@@ -93,12 +103,6 @@ public class UserService {
 
     }
 
-	public User getSessionUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String username = authentication.getName();
-		return findUser(username);
-	}
-
 	@Transactional
     public void setCurrentTournament(User user, Tournament tournament) {
 		Tournament currentTournament= user.getCurrentTournament();
@@ -111,7 +115,7 @@ public class UserService {
     }
 
 	public Optional<User> findUsername(String username) {
-		return userRepository.findUserByUsername(username);
+		return userRepository.findById(username);
 	}
 
 	@Transactional(readOnly = true)
@@ -121,7 +125,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User getLoggedUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication()
+		.getPrincipal();
         UserDetails ud = null;
         if (principal instanceof UserDetails) {
             ud = ((UserDetails) principal);

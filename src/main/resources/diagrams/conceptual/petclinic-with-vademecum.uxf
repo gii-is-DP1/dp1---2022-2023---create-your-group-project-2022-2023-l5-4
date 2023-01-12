@@ -16,7 +16,7 @@
 // Use +/- or Ctrl+mouse wheel to zoom
 // Drag a whole relation at its central square icon
 //
-// Press Ctrl+C to copy the whole diagram to the system clipboard (then just paste it to, eg, Word)
+// Press Ctrl+C to copy the whole diagram to the system clipcomment (then just paste it to, eg, Word)
 // Edit the files in the "palettes" directory to create your own element palettes
 //
 // Select "Custom Elements &gt; New..." to create new element types

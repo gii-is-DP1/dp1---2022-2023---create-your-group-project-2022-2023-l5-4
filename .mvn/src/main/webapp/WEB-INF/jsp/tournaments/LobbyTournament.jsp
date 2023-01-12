@@ -3,9 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="tournaments">
+<dobble:layout pageName="tournaments">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<h2>Tournament players:</h2>
 	<div class="container">
@@ -38,4 +38,4 @@
 	</p>
 	
     
-</petclinic:layout>
+</dobble:layout>

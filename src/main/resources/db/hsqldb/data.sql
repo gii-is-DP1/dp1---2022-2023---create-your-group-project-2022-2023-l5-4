@@ -9,10 +9,10 @@ INSERT INTO users(username,password,email,enabled) VALUES
 -- Authorities --
 INSERT INTO authorities(id,username,authority) VALUES 
 (1,'admin1','admin'),
-(2,'owner1','owner'),
-(4,'antbarjim1','owner'),
+(2,'owner1','user'),
+(4,'antbarjim1','user'),
 (5,'adrgarpor','admin'),
-(6,'edurobrus','owner');
+(6,'edurobrus','user');
 
 -- All 55 cards --
 INSERT INTO cards(id) VALUES
@@ -174,7 +174,7 @@ INSERT INTO USERS(username, password, email, enabled) VALUES
 
 INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winner_Id) VALUES 
 (1, null, 4, 'LOBBY', 'THE_TOWER', 'User17', null),
-(2, null, 6, 'LOBBY', 'THE_TOWER', 'User16', null),
+(2, null, 6, 'LOBBY', 'THE_WELL', 'adrgarpor', null), -- the owner of the game must be changed
 (3, 1234, 2, 'LOBBY', 'THE_WELL', 'User15', null),
 (4, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User14', null),
 (5, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User13', null),
@@ -186,28 +186,30 @@ INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winne
 
 
 -- Initial users into games --
-INSERT INTO gameusers(user_id,game_id) VALUES 
-('User17',1),
-('User16',2),
-('User15',3),
-('User14',4),
-('User13',5),
-('User12',6),
-('User11',7),
-('User10',8),
-('User8',10),
-('User7',1),
-('User6',1),
-('User5',1),
-('User4',2),
-('User3',2),
-('User2',8),
-('User0',10);
+INSERT INTO gameusers(game_id, user_id) VALUES 
+(1,'User17'),
+(1,'User7'),
+(1,'User6'),
+(1,'User5'),
+(2,'User16'),
+(2,'User3'),
+(2,'User4'),
+(3,'User15'),
+(4,'User14'),
+(5,'User13'),
+(6,'User12'),
+(7,'User11'),
+(8,'User10'),
+(8,'User2'),
+(9,'User9'),
+(9,'User1'),
+(10,'User8'),
+(10,'User0');
 
 
 INSERT INTO tournaments(id, access_code, max_players, state,  owner_Id, winner_Id) VALUES 
 (1, null, 4, 'LOBBY', 'User17', null)
-,(2, null, 6, 'LOBBY', 'User16', null)
+,(2, null, 6, 'LOBBY', 'edurobrus', null)
 ,(3, null, 2, 'LOBBY',  'User15', null)
 ,(4, null, 6, 'LOBBY', 'User14', null)
 ,(5, null, 6, 'LOBBY', 'User13', null)
@@ -260,18 +262,28 @@ INSERT INTO usertournaments(user_id,tournament_id) VALUES
 ,('User0',10);
 
 INSERT INTO achievement (id, name, description, badge_image, threshold, metric) VALUES 
-(1, 'Achievement 1', 'First time you play', '/resources/images/achievement/badge1.png', 1000, 'POINTS'),
-(2, 'Achievement 2', 'Catch the same symbol more than three times in a game', '/resources/images/achievement/badge2.png', 1000, 'POINTS'),
-(3, 'Achievement 3', 'Play more than 1000 cards', '/resources/images/achievement/badge3.png', 1000, 'POINTS'),
-(4, 'Achievement 4', 'You have won 10 games', '/resources/images/achievement/badge4.png', 10, 'GAMES_WON'),
-(5, 'Achievement 5', 'You have won 100 games', '/resources/images/achievement/badge5.png', 100, 'GAMES_WON'),
-(6, 'Achievement 6', 'You have won 1000 games', '/resources/images/achievement/badge6.png', 1000, 'GAMES_WON'),
-(7, 'Achievement 7', 'You have scored 100 points', '/resources/images/achievement/badge7.png', 1000, 'POINTS'),
-(8, 'Achievement 8', 'You have scored 1000 points', '/resources/images/achievement/badge8.png', 1000, 'POINTS'),
-(9, 'Achievement 9', 'You have scored 10000 points', '/resources/images/achievement/badge9.png', 1000, 'POINTS'),
-(10, 'Achievement 10', 'You have completed 10 games', '/resources/images/achievement/badge10.png', 10, 'GAMES_WON'),
-(11, 'Achievement 11', 'You have completed 100 games', '/resources/images/achievement/badge11.png', 100, 'GAMES_WON'),
-(12, 'Achievement 12', 'You have completed 1000 games', '/resources/images/achievement/badge12.png', 1000, 'GAMES_WON');
+(1, 'First time', 'First time you play Dobble', '/resources/images/achievement/badge1.png', 50, 'POINTS'),
+(2, 'Catch the same symbol', 'Catch the same symbol more than three times in a game', '/resources/images/achievement/badge2.png', 1000, 'POINTS'),
+(3, 'Play more', 'Play more than 1000 cards', '/resources/images/achievement/badge3.png', 1000, 'POINTS'),
+(4, 'You have won 10', 'You have won 10 games', '/resources/images/achievement/badge4.png', 10, 'GAMES_WON'),
+(5, 'You have won 100', 'You have won 100 games', '/resources/images/achievement/badge5.png', 100, 'GAMES_WON'),
+(6, 'You have won 1000', 'You have won 1000 games', '/resources/images/achievement/badge6.png', 1000, 'GAMES_WON'),
+(7, 'You have scored 100', 'You have scored 100 points', '/resources/images/achievement/badge7.png', 100, 'POINTS'),
+(8, 'You have scored 1000', 'You have scored 1000 points', '/resources/images/achievement/badge8.png', 1000, 'POINTS'),
+(9, 'You have scored 10000', 'You have scored 10000 points', '/resources/images/achievement/badge9.png', 10000, 'POINTS');
 
 INSERT INTO user_achievement (username, achievement_id) VALUES 
-('admin1', 3);
+('admin1', 1);
+
+INSERT INTO forum(id,name,creation_date) VALUES
+(1,'GENERAL','2023-01-01 01:01:01')
+,(2,'FRIENDS','2023-02-01 01:01:01');
+
+INSERT INTO comment(id,text,date,forum_id,user_id) VALUES 
+(1,'Hola que tal?','2023-01-01 01:01:02',1,'edurobrus')
+,(2,'Muy bien aqui jugando dobble','2023-01-01 01:01:03',1,'User17')
+,(3,'Me encanta el juego es divertido','2023-01-01 01:01:09',1,'edurobrus')
+,(4,'Hay que jugar mas veces','2023-01-01 01:01:11',1,'User16')
+,(5,'Funciona muy bien','2023-04-01 01:01:02',2,'User16')
+,(6,'Vamos a echar una partida','2023-04-01 01:01:02',2,'User15')
+,(7,'Venga vamos que tengo ganas','2023-04-01 01:01:02',2,'User15');

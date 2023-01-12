@@ -3,18 +3,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="games">
+<dobble:layout pageName="games">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<h2>Game players:</h2>
 	<div class="container">
 		<br />
-		<c:if test="${message != null}">
-		<div class="alert alert-${messageType}">
-			<c:out value="${message}"></c:out>
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
-		</div>
+		<c:if test="${error!=null && error!=''}">
+			<div class="alert alert-danger" role="alert">
+				<span class="glyphicon glyphicon-alert"></span>
+				<label>
+					ERROR:  
+				</label>
+				<c:out value="${error}"></c:out>
+			</div>
 		</c:if>
 	</div>
 	<table class="table table-striped">
@@ -22,18 +26,18 @@
 			<th>Users</th>
 			<th>Actions</th>			
 		</tr>
-		 <c:forEach items="${users}" var="user">
+		 <c:forEach items="${gameUsers}" var="gameUser">
 			<tr>
-				<td><c:out value="${user.username}"/></td>				
+				<td><c:out value="${gameUser.user.username}"/></td>				
 				<td>
-					<a href="/users/profile/${user.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;
-					<a href="/games/${game.id}/lobby/delete/${user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
+					<a href="/users/profile/${gameUser.user.username}"><span class="glyphicon glyphicon-book warning" aria-hden="true"></span></a>&nbsp;
+					<a href="/games/${game.id}/lobby/delete/${gameUser.user.username}"><span class="glyphicon glyphicon-trash alert" aria-hden="true"></a>&nbsp;
 					<c:choose>
 						<c:when test = "${loggedUser.getFriends().contains(user)}"> 
-							<a href="/friends/remove/${user.username}"><span class="glyphicon glyphicon-minus-sign" aria-hden="true"></span></a> 		
+							<a href="/friends/remove/${gameUser.user.username}"><span class="glyphicon glyphicon-minus-sign" aria-hden="true"></span></a> 		
 						</c:when>
 						<c:otherwise>
-							<a href="/friends/add/${user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a>
+							<a href="/friends/add/${gameUser.user.username}"><span class="glyphicon glyphicon-plus-sign" aria-hden="true"></span></a>
 						</c:otherwise>
 					</c:choose>
 					</td>
@@ -41,9 +45,9 @@
 		</c:forEach>		
 	</table>
 	<p>
-		<a href="/games/${game.id}/start">
-			<button class="w3-button w3-purple">Start Game</button>
-		</a>
+		<form:form action="/games/${game.id}/start" method="POST">
+			<input type="submit" class="w3-button w3-purple" value="Start Game"/>
+		</form:form>
 	</p>
     
-</petclinic:layout>
+</dobble:layout>

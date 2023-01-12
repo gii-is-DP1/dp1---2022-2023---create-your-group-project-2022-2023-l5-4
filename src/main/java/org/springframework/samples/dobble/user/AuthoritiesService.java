@@ -17,6 +17,10 @@ package org.springframework.samples.dobble.user;
 
 
 
+import java.util.HashSet;
+import java.util.Objects;
+
+import javax.faces.view.ActionSource2AttachedObjectTarget;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -24,7 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Mostly used as a facade for all Petclinic controllers Also a placeholder
+ * Mostly used as a facade for all Dobble controllers Also a placeholder
  * for @Transactional and @Cacheable annotations
  *
  * @author Michael Isvy
@@ -51,15 +55,22 @@ public class AuthoritiesService {
 		Authorities authority = new Authorities();
 
 		User user = userService.findUser(username);
+		
 		if(user != null) {
 			authority.setUser(user);
 
 			authority.setAuthority(role);
-			//user.get().getAuthorities().add(authority);
+			if(Objects.isNull(user.getAuthorities())) {
+				user.setAuthorities(new HashSet<Authorities>());
+			}
+			user.getAuthorities().add(authority);
 			authoritiesRepository.save(authority);
 		}else
 			throw new DataAccessException("User '"+username+"' not found!") {};
 	}
 
-
+	@Transactional
+	public Authorities findAuthorities(User user, String role) {
+		return authoritiesRepository.findByUserAndRole(user, role);
+	}
 }
