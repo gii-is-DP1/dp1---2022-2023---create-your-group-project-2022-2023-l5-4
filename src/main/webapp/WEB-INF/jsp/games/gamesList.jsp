@@ -7,15 +7,7 @@
 <%@ taglib prefix="dobble" tagdir="/WEB-INF/tags" %>
 
 <dobble:layout pageName="games">
-    <c:if test="${error!=null && error!=''}">
-        <div class="alert alert-danger" role="alert">
-            <span class="glyphicon glyphicon-alert"></span>
-            <label>
-                ERROR:  
-            </label>
-            <c:out value="${error}"></c:out>
-        </div>
-    </c:if>
+    <dobble:errorMessage/>
     
     <div class="game-list-header">
         <h2>Games</h2>

@@ -18,6 +18,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.springframework.samples.dobble.comment.Comment;
@@ -51,10 +52,6 @@ public class User {
 	@Email
 	private String email;
 	
-	@NotAudited
-	boolean enabled;
-	
-	@NotAudited
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;
 
@@ -81,7 +78,7 @@ public class User {
 	@NotAudited
 	private List<Game> wonGames;
 
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany(cascade = CascadeType.ALL)
 	@NotAudited
 	private List<Comment> comments;
 
@@ -96,6 +93,9 @@ public class User {
 	@OneToMany(mappedBy = "winner",cascade = CascadeType.ALL)
 	@NotAudited
 	private List<Tournament> wonTournamnets;
+
+	@ColumnDefault("true")
+	private Boolean enabled;
 
 	public String toString(){
 		return this.username;
@@ -118,17 +118,4 @@ public class User {
 	public boolean isNew() {
 		return this.username == null;
 	}
-
-	public void deleteGames(Collection<Game> g){
-		this.ownedGames.removeAll(g);
-	  }
-
-	public void deleteTournamentsOwned(Collection<Tournament> t){
-		this.ownedTournament.removeAll(t);
-	}
-
-	public void deleteTournaments(Collection<Tournament> t){
-		this.tournaments.removeAll(t);
-	} 
-
 }
