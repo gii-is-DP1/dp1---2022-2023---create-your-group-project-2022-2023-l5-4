@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TournamentService {
 
-	private TournamentRepository tournamentRepository;
+	private static TournamentRepository tournamentRepository;
 	private UserService userService;
 
 	@Autowired
@@ -43,7 +43,7 @@ public class TournamentService {
 	}
 
 	@Transactional
-	public Tournament saveTournament(Tournament tournament) {
+	public static Tournament saveTournament(Tournament tournament) {
 		return tournamentRepository.save(tournament);
 	}
 
