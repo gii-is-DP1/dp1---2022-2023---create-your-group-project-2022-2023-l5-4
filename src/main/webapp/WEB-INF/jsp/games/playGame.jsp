@@ -133,6 +133,10 @@
         height: 100%;
         width: 100%;
     }
+
+    .dobble-card-layout {
+        display: none;
+    }
     .player-name{
         color: rgba(128, 128, 128, 0.5);
         position: absolute;

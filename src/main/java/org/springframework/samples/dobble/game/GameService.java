@@ -64,7 +64,6 @@ public class GameService {
 			.max(Comparator.comparing(GameUser::getScore))
 			.get()
 			.getUser();
-			
 		game.setWinner(winner);
 		game.setState(GameState.FINISHED);
 		saveGame(game);

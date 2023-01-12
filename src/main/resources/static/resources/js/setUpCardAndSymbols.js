@@ -49,4 +49,6 @@ let cardRotate = () =>{
 
 cardRotate(card)
 
+card.style.display="block"
+console.log("a")
 }
