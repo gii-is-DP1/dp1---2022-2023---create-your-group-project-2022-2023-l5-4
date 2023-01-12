@@ -21,6 +21,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.samples.dobble.card.Card;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameMode;
@@ -39,6 +42,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 @Table(name = "tournaments")
 public class Tournament extends BaseEntity {
 
@@ -52,24 +56,29 @@ public class Tournament extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "ownerId")
+    @NotAudited
     @NotNull
     private User owner;
 
     @ManyToOne
     @JoinColumn(name = "winnerId")
+    @NotAudited
     private User winner;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "usertournaments", joinColumns = @JoinColumn(name = "tournamentId", nullable = false, table = "tournaments"), inverseJoinColumns = @JoinColumn(name = "userId", nullable = false, table = "users"))
     @Size(max = 6)
+    @NotAudited
     private List<User> users;
 
     @Size(max=8)
     @OneToMany(fetch = FetchType.LAZY)
+    @NotAudited
     @JoinTable(name = "gametournament", joinColumns = @JoinColumn(name = "tournamentId", nullable = false, table = "tournaments"), inverseJoinColumns = @JoinColumn(name = "gameId", nullable = false, table = "games"))
 	private List<Game> games;
 
     @ManyToMany
+    @NotAudited
     @JoinTable(name = "tournamentcards")
     private List<Card> centralDeck;
 
@@ -91,7 +100,6 @@ public class Tournament extends BaseEntity {
     }
 
     public Boolean isPrivate() {
-        System.out.println(this.accessCode != null);
         return this.accessCode != null;
     }
 

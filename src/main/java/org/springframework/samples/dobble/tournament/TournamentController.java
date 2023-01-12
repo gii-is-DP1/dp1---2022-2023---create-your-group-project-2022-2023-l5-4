@@ -194,7 +194,9 @@ public class TournamentController {
 		result.addObject("isowner", isOwner);
         result.addObject("users", mazos);
         result.addObject("tournament", tournament);
-		return result;
+
+		return result; 	
+
     }
 
     @PostMapping(path="/{id}/lobby")
@@ -202,7 +204,7 @@ public class TournamentController {
 		Tournament tournament = this.tournamentService.findTournament(id);
         tournament.setOwner(tournamentForm.getOwner());
         tournament.setGamemodes(tournamentForm.getGamemodes());
-        TournamentService.saveTournament(tournament);
+        tournamentService.saveTournament(tournament);
 		return "redirect:/tournaments/"+id+"/lobby";
     }
 

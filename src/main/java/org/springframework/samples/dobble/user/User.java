@@ -17,6 +17,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.samples.dobble.comment.Comment;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.statistics.Achievement;
@@ -28,12 +30,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Audited
 @Table(name = "users")
 public class User {
 
 	public User(){}
 	
 	@ManyToMany(cascade = CascadeType.ALL)
+	@NotAudited
     private List<User> friends;
 	
 	@Id
@@ -46,39 +50,50 @@ public class User {
 	@Email
 	private String email;
 	
+	@NotAudited
 	boolean enabled;
 	
+	@NotAudited
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;
 
 	@ManyToMany
+	@NotAudited
 	@JoinTable(name = "user_achievement",
 			   joinColumns = @JoinColumn(name = "username"),
 			   inverseJoinColumns = @JoinColumn(name = "achievement_id"))
 	private Set<Achievement> achievements;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
+	@NotAudited
 	private Game currentGame;
 
 	@ManyToOne
+	@NotAudited
 	private Tournament currentTournament;
 	
 	@OneToMany(mappedBy = "owner")
+	@NotAudited
 	private List<Game> ownedGames;
 
 	@OneToMany(mappedBy = "winner")
+	@NotAudited
 	private List<Game> wonGames;
 
 	@OneToMany(cascade = CascadeType.REMOVE)
+	@NotAudited
 	private List<Comment> comments;
 
     @ManyToMany(mappedBy = "users")
+	@NotAudited
 	private List<Tournament> tournaments;
 	
 	@OneToMany(mappedBy = "owner")
+	@NotAudited
 	private List<Tournament> ownedTournament;
 
 	@OneToMany(mappedBy = "winner")
+	@NotAudited
 	private List<Tournament> wonTournamnets;
 
 	public String toString(){

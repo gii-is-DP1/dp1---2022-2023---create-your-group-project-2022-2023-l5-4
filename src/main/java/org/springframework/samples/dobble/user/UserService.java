@@ -39,6 +39,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
 	private UserRepository userRepository;
+	
+	@Autowired
+	private AuthoritiesService authoritiesService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -50,13 +53,14 @@ public class UserService {
 	public void saveUser(User user) throws DataAccessException {
 		user.setEnabled(true);
 		userRepository.save(user);
+		authoritiesService.saveAuthorities(user.getUsername(), "user");
 	}
 	
 
 	@Transactional(readOnly = true)
 	public User findUser(String username) throws NoSuchElementException {
 		return userRepository.findById(username)
-			.orElseThrow(() -> new NoSuchElementException("User with id '%s' was not found".formatted(username)));
+			.orElseThrow(() -> new NoSuchElementException("User with id" + username + "was not found"));
 
 	}
 

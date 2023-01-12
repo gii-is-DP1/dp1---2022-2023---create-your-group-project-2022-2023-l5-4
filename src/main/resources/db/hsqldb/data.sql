@@ -9,10 +9,10 @@ INSERT INTO users(username,password,email,enabled) VALUES
 -- Authorities --
 INSERT INTO authorities(id,username,authority) VALUES 
 (1,'admin1','admin'),
-(2,'owner1','owner'),
-(4,'antbarjim1','owner'),
+(2,'owner1','user'),
+(4,'antbarjim1','user'),
 (5,'adrgarpor','admin'),
-(6,'edurobrus','owner');
+(6,'edurobrus','user');
 
 -- All 55 cards --
 INSERT INTO cards(id) VALUES
@@ -271,6 +271,7 @@ INSERT INTO achievement (id, name, description, badge_image, threshold, metric) 
 (7, 'You have scored 100', 'You have scored 100 points', '/resources/images/achievement/badge7.png', 100, 'POINTS'),
 (8, 'You have scored 1000', 'You have scored 1000 points', '/resources/images/achievement/badge8.png', 1000, 'POINTS'),
 (9, 'You have scored 10000', 'You have scored 10000 points', '/resources/images/achievement/badge9.png', 10000, 'POINTS');
+
 INSERT INTO user_achievement (username, achievement_id) VALUES 
 ('admin1', 1);
 

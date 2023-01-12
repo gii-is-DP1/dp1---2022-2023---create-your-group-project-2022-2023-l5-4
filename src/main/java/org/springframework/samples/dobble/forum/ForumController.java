@@ -82,7 +82,7 @@ public class ForumController<ParalamentarioSevice> {
 		forumService.save(forum);
 		commentService.save(comment);
 		ModelAndView result=showForums();	
-		result.addObject("mesasge", "Forum sucessfully updated");
+		result.addObject("message", "Forum sucessfully updated");
 		result.addObject("messageType", "sucess");
 		return result;
 	}
