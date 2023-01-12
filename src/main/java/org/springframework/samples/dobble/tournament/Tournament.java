@@ -1,6 +1,7 @@
 package org.springframework.samples.dobble.tournament;
 
-import javax.persistence.CollectionTable;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -33,11 +34,9 @@ import org.springframework.samples.dobble.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -54,7 +53,7 @@ public class Tournament extends BaseEntity {
     @Enumerated(EnumType.STRING)
 	private List<GameMode> gamemodes;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ownerId")
     @NotAudited
     @NotNull
@@ -65,14 +64,14 @@ public class Tournament extends BaseEntity {
     @NotAudited
     private User winner;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "usertournaments", joinColumns = @JoinColumn(name = "tournamentId", nullable = false, table = "tournaments"), inverseJoinColumns = @JoinColumn(name = "userId", nullable = false, table = "users"))
     @Size(max = 6)
     @NotAudited
     private List<User> users;
 
     @Size(max=8)
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @NotAudited
     @JoinTable(name = "gametournament", joinColumns = @JoinColumn(name = "tournamentId", nullable = false, table = "tournaments"), inverseJoinColumns = @JoinColumn(name = "gameId", nullable = false, table = "games"))
 	private List<Game> games;
@@ -100,7 +99,6 @@ public class Tournament extends BaseEntity {
     }
 
     public Boolean isPrivate() {
-        System.out.println(this.accessCode != null);
         return this.accessCode != null;
     }
 
@@ -135,7 +133,7 @@ public class Tournament extends BaseEntity {
     }
 
     public void removeUser(User user) {
-        this.getUsersInternal().remove(user);
+        this.users.remove(user);
     }
 
     public boolean isFinished() {

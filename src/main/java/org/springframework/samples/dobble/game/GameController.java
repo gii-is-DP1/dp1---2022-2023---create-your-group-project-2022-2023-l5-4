@@ -1,5 +1,8 @@
 package org.springframework.samples.dobble.game;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +61,9 @@ public class GameController {
     public ModelAndView indexUnstartedGames(@ModelAttribute("error") String error) {
         ModelAndView mav = new ModelAndView(VIEW_INDEX_GAMES);
         List<Game> games = this.gameService.findAllUnstartedGames();
-        mav.addObject("games", games); System.out.println("errorrr");
+        User user = userService.getLoggedUser();
+        mav.addObject("games", games);
+        mav.addObject("user", user);
         mav.addObject("error",error);
         return mav;
 
@@ -126,6 +131,7 @@ public class GameController {
             attributes.addFlashAttribute("error","There is no enough users to start the game (min. 2 players are required)");
             return new RedirectView("lobby");
         }
+
         Deck cards = Deck.of(cardService.findAll());
         
         Map<GameUser, Deck> deal = cards.deal(gameUsers, game.getGamemode());
@@ -136,6 +142,8 @@ public class GameController {
             gameUserService.save(gameUser);
         });
         game.setState(GameState.ON_PLAY);
+        game.setStartedAt(LocalDateTime.now());
+        
         gameService.saveGame(game);
         return new RedirectView("play");
     }

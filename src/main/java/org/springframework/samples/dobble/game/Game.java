@@ -1,5 +1,6 @@
 package org.springframework.samples.dobble.game;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -48,7 +49,7 @@ public class Game extends HandedEntity {
     @NotNull
     private GameMode gamemode;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ownerId")
     @NotAudited
     @NotNull
@@ -59,11 +60,7 @@ public class Game extends HandedEntity {
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @ManyToOne
-    @JoinColumn(name = "tournament_id")
-    private Tournament tournament;
-
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @Size(min = 1, max = 6)
     @NotAudited
     private List<GameUser> gameUsers;
@@ -82,13 +79,14 @@ public class Game extends HandedEntity {
 
     private LocalDateTime updatedAt;
 
+    private LocalDateTime startedAt;
+
     public Boolean isPrivate() {
-        System.out.println(this.accessCode != null);
-        return this.accessCode != null;
+        return this.accessCode != null && this.accessCode != "";
     }
 
     public Boolean validAccessCode(String accessCode) {
-        return this.accessCode == null || this.accessCode == accessCode;
+        return this.accessCode == null || this.accessCode.equals(accessCode);
     }
 
     public void setAccessCode(String accessCode) {
@@ -122,5 +120,11 @@ public class Game extends HandedEntity {
     public boolean isNew() {
 		return this.id == null;
 	}
+
+    public void deletePlayerOfGame(User user){
+        this.gameUsers.remove(user);
+    }
+
+    
 
 }

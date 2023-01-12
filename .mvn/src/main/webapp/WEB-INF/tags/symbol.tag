@@ -26,7 +26,7 @@
     }
 </style>
 
-<div class="symbol ${className}" onclick="console.log('${name}')">
+<div class="symbol ${className}">
 <form:form action="/games/2/match" method="POST" modelAttribute="symbol">
     <input type="hidden" name="symbol" value="${name}" />
     <input type="image" draggable=false src="/resources/images/symbols/${cardsetName!=null ? cardsetName : 'original'}/${name}.png"/>

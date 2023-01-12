@@ -211,6 +211,6 @@
 </div>
 <c:forEach items="${players}" var="player">
     <script>
-        console.log("${player}".cards)
+        c
     </script>
 </c:forEach>
