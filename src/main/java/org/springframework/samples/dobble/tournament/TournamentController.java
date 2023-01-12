@@ -142,7 +142,6 @@ public class TournamentController {
             try {
                 gameUserService.addGameUser(game.getId(), username, game.getAccessCode());
             } catch (Exception e) {
-                System.out.println("BBBB");
                 e.printStackTrace();
                 reddirAttributes.addAttribute("error", e.getMessage());
                 return "redirect:/tournaments/"+tournamentId+"/lobby";
