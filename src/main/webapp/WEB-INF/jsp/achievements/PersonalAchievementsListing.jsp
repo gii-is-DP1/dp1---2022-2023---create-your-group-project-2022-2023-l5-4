@@ -8,6 +8,7 @@
     <h2>Achievements</h2>
     <h4 class="score">TOTAL SCORE: <c:out value="${score}"/></h4>
     <progress class="ml-auto" value="${score}" max="10000"></progress>
+    <h4 class="victories">VICTORIES: <c:out value="${victories}"/></h4>
 
     <ul class="list-group">
         <c:forEach items="${achievements}" var="achievement">

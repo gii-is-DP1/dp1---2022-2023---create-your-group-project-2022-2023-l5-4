@@ -11,6 +11,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.dobble.game.Game;
+import org.springframework.samples.dobble.game.GameService;
 import org.springframework.samples.dobble.game.GameUserService;
 import org.springframework.samples.dobble.user.User;
 import org.springframework.samples.dobble.user.UserService;
@@ -39,12 +41,14 @@ public class AchievementController {
     private AchievementService service;
     private UserService userService;
     private GameUserService gameUserService;
+    private GameService gameService;
 
     @Autowired
-    public AchievementController(AchievementService service, UserService userService, GameUserService gameUserService){
+    public AchievementController(AchievementService service, UserService userService, GameUserService gameUserService, GameService gameService){
         this.service=service;
         this.userService=userService;
         this.gameUserService=gameUserService;
+        this.gameService=gameService;
     }
 
     @Transactional(readOnly = true)
@@ -131,8 +135,16 @@ public class AchievementController {
                 userService.saveUser(user);
             }
         }
+        Integer victories = 0;
+        for(Game g:gameService.findAllGames()){
+            if(g.getWinner()!=null && g.getWinner().getUsername().compareTo(userId)==0){
+                victories = victories + 1;
+            }
+        }
         result.addObject("achievements",service.getAchievementsByOwner(id));
         result.addObject("score", score);
+        result.addObject("victories", victories);
+
         return result;
     }
 
