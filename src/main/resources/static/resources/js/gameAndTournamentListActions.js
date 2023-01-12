@@ -1,16 +1,21 @@
-
-function sortTable(name, n) {
+resizeTable = () => {
+  table = document.getElementsByClassName("game-list")[0];
+  table.style.height = window.innerHeight*0.65+"px"
+}
+resizeTable()
+window.addEventListener("resize",resizeTable)
+function sortTable(n) {
   var table, rows, switching, i, x,x0,x1, y,y0,y1, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById(name);
+  table = document.getElementsByClassName("game-list")[0];
   switching = true;
   dir = "asc"; 
   while (switching) {
     switching = false;
-    rows = table.rows;
+    rows = table.getElementsByClassName("body-line");
     for (i = 0; i < (rows.length - 1); i++) {
       shouldSwitch = false;
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
+      x = rows[i].getElementsByClassName("body-field")[n];
+      y = rows[i + 1].getElementsByClassName("body-field")[n];
       if (dir == "asc") {
         if ((n==1 || n==3) && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
           shouldSwitch= true;

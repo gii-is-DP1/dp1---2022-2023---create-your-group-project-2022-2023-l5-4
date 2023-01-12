@@ -3,42 +3,54 @@
   }
 
 .game-list {
-    border-collapse: unset;
-    border-radius: 20px;
+    display: block;
+    margin:auto;
     border: 4px solid @primary-color;
+    border-radius: 20px;
+    overflow:hidden;
+    background-color:@primary-color;
     font-family: cartoon-toy;
     font-size: 24px;
-    overflow: hidden;
-    padding: 0;
-    width: 100%;
-    background-color: @primary-color;
+}
+.game-list-head, .game-list-body{
+  display:block;
+  width:100%;
 }
 
-.game-list table {
-    margin:0;
+.game-list-head {
+  height:50px;
+  color:gold;
+  text-shadow: -2px -1px 0px #00000094;
 }
-.game-list tbody {
-    background-color: @dobble-white;
-  }
-  
-.game-list-body tbody > tr:hover > td {
+
+.game-list-body{
+  background-color:white;
+  height: 100%;
+  padding-bottom: 30px;
+  overflow: scroll;
+}
+.game-list-head, .body-line {
+  display: -webkit-inline-box;
+  height:50px;
+  width:100%;
+  border-top: 1px solid @primary-color;
+}
+
+.body-line:hover {
     background-color: ~"@{primary-color}91";
     text-shadow: -2px -1px 0 white;
   }
 
-.game-list thead {
-  height: 50px;
-  }
-.game-list thead * {    
-    color:@secondary-color;
-    border: 0px solid;
-    text-shadow: -2px -1px 0px #00000094;   
+  .header-field, .body-field {
+    display:block;
+    float:left;
   }
 
 
 .game-list .glyphicon-lock {
     font-size: 15px;
 } 
+
 .game-list .glyphicon-sort {
     text-shadow: none;
     color:#8a58d0;
@@ -50,30 +62,25 @@
    
 }
 
-.game-list-head {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    background-color: @primary-color;
+
+.game-list .modal-content {
+  border-radius: 25px;
+  width: 25%;
+  aspect-ratio: 1.5;            
+  margin: 10% auto;
+ 
 }
-.game-list-body-div {
-    overflow: scroll;
-    max-height: 400px;
-    
-}
-.access-modal-title {font-family: cartoon-toy;
+.modal-title {
+  font-family: cartoon-toy;
   font-size: 32px;
   text-align: center;
 }
 
-.access-modal-submit{
+.modal-submit{
   position: absolute;
   background-color: @primary-color;
   color: @dobble-white;
   display: block;
-  left: 50%;
-  transform: translate(-75px,0);
   bottom:25px;
   height:50px;
   width: 150px;
@@ -85,13 +92,25 @@
   text-align: center;
   line-height: 45px;
 }
+
+.access-modal-submit {
+  left: 50%;
+  transform: translate(-75px,0);
+}
+.on-another-game-modal-submit-current {
+  left: 8%;
+}
+.on-another-game-modal-submit-join {
+  left: 92%;
+  transform: translate(-150px, 0);
+}
   
-  .access-modal-submit:hover {
+  .modal-submit:hover {
     background-color: @primary-color-alt;
     color: @secondary-color;
   }
   
-  .access-modal-input{
+  .modal-input{
     border-color: @primary-color-alt;
     top:40%;
     border-radius: 5px;
@@ -109,13 +128,7 @@
   
 
   
-.access-modal > .modal-content {
-    border-radius: 25px;
-    width: 25%;
-    aspect-ratio: 1.5;            
-    margin: 10% auto;
-   
-}
+
 
 
 .game-list-header {

@@ -18,7 +18,7 @@
         </div>
     </c:if>
     
-    <div class="tournament-list-header">
+    <div class="game-list-header">
         <h2>Tournaments</h2>
         <a href="/tournaments/new">
             <span class="glyphicon glyphicon-plus" aria-hidden="true">
@@ -26,80 +26,66 @@
             New Tournament
         </a>
     </div>
-    <table  id="tournaments-table" class="game-list">
-        <tr>
-            <td>
-                <table id="tournaments-table-head" class="table game-list-head">
-                    <thead>
-                      <tr>
-                        <th>ID<span onclick="sortTable('tournaments-table-body',0)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="position: relative; left: -5%;">Num. Games<span onclick="sortTable('tournaments-table-body',1)" class="glyphicon glyphicon-sort"></span></th>
-                        <th style="position: relative; left: -20%;">Owner</th>
-                        <th style="position: relative; left: -9%;"><span class="glyphicon glyphicon-lock"></span>
-                          <span onclick="sortTable('tournaments-table-body',3)" class="glyphicon glyphicon-sort"></span></th>
-                        <th></th>
-                        <th style="position: relative; left: 12%;">Num. Players<span onclick="sortTable('tournaments-table-body',5)" class="glyphicon glyphicon-sort"></span></th>
-                      </tr>
-                    </thead>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div id="tournaments-table-body-div">
-                <table id="tournaments-table-body" class="table game-list-body">
-                <tbody>
-                    <c:forEach items="${tournaments}" var="tournament" varStatus="status">
-                        <spring:url value="/tournaments/{tournamentId}" var="tournamentUrl">
-                            <spring:param name="tournamentId" value="${tournament.id}"/>
-                        </spring:url>
-                            <tr onclick="join('${tournament.id}','${tournament.isPrivate()}')">
-                                <td>
-                                    <c:out value="${tournament.id}"/> 
-                                </td>
-                                <td>
-                                    <c:out value="${numpartidas[status.index]}"/> 
-                                </td>
-                                <td>
-                                    <c:out value="${tournament.owner}"></c:out>
-                                </td>
-                                <td>
-                                    <c:if test="${tournament.isPrivate()}">  
-                                        <span class="glyphicon glyphicon-lock private-game-lock"></span>
-                                    </c:if>
-                                </td>
-                                <td>
-                                    <a onmouseenter="enableJoin=false" onmouseleave="enableJoin=true" href="${tournamentUrl}">Details</a>
-                                </td>
-                                
-                                <td class="num-players" style="text-align:center;">
-                                    <c:out value="${tournament.numUsers}/${tournament.maxPlayers}"/>
-                                </td>
-                            </tr>
-                           <dobble:modal id="${tournament.id}-access-modal" className="access-modal">
-                               <h2 style="text-align: center;">Access Code</h2>
-                               <form:form  id="${tournament.id}-form" action="${tournamentUrl}/join" method="POST" modelAttribute="accessCode">
-                                   <div class="form">
-                                       <input id="${tournament.id}-access-modal-input" name="accessCode"  class="access-modal-input" placeholder="Enter access code...">
-                                       <input id="${tournament.id}-access-modal-submit" class="access-modal-submit" type="submit" value="Join">
-                                    </div>
-                                </form:form>
-                            </dobble:modal> 
-                            
-                            
-                        </c:forEach>
-                        
-                    </tbody>
-                </table>    
-            </div>
-            </td>
-        </tr>
-        <style>
-            body {
-                background-image: url("/resources/images/background.png");
-            }
-        </style>
-    </table>
+    <div class="game-list">
+        <div class="game-list-head">
+            <div style="width:10%; text-indent: 15px" class="header-field">ID<span onclick="sortTable(0)" class="glyphicon glyphicon-sort"></span></div>
+            <div style="width:20%" class="header-field">Num. Games<span onclick="sortTable(1)" class="glyphicon glyphicon-sort"></span></div>
+            <div style="width:15%; text-align:center" class="header-field">Owner</div>
+            <div style="width:15%; text-align:center" class="header-field"><span class="glyphicon glyphicon-lock"></span><span onclick="sortTable(3)" class="glyphicon glyphicon-sort"></span></div>
+            <div style="width:20%; text-align:center" class="header-field"></div>
+            <div style="width:20%; text-align: right; transform: translateX(-15px);" class="header-field">Num. Players<span onclick="sortTable(5)" class="glyphicon glyphicon-sort"></span></div>
+        </div>
+        <div class="game-list-body">
+            <c:forEach items="${tournaments}" var="tournament" varStatus="status">
+                <spring:url value="/tournaments/{tournamentId}" var="tournamentUrl">
+                    <spring:param name="tournamentId" value="${tournament.id}"/>
+                </spring:url>
+                
+                   
+                <div class="body-line" onclick="join('${tournament.id}','${tournament.isPrivate()}', '${user.getCurrentTournament()==null}')">
+                    <div style="width:10%; text-indent: 15px" class="body-field">
+                        <c:out value="${tournament.id}"/> 
+                    </div>
+                    <div style="width:20%" class="body-field">
+                        <c:out value="${numpartidas[status.index]}"/> 
+                    </div>
+                    <div style="width:20%; text-align:center" class="body-field">
+                        <c:out value="${tournament.owner}"/>
+                    </div>
+                    <div style="width:15%; text-align:center" class="body-field">
+                        <c:if test="${tournament.isPrivate()}">  
+                            <span class="glyphicon glyphicon-lock private-game-lock"></span>
+                        </c:if>
+                    </div>
+                    <div style="width:15%; text-align:center" class="body-field">
+                        <a onmouseenter="enableJoin=false" onmouseleave="enableJoin=true" href="${tournamentUrl}">Details</a>
+                    </div>
+                    <div style="width:20%; text-align: right; transform: translateX(-15px);" class="body-field num-players">
+                        <c:out value="${tournament.numUsers}/${tournament.maxPlayers}"/>
+                    </div>
+                </div>
+                <form:form  id="${tournament.id}-form" action="${tournamentUrl}/join" method="POST" modelAttribute="accessCode">
+                    <c:if test="${game.isPrivate() && !user.getCurrentGame().equals(game)}">  
+                        <dobble:modal id="${tournament.id}-access-modal" className="access-modal">
+                            <h1 class="access-modal-title">Access Code</h1>
+                            <div class="form">
+                                <input id="${tournament.id}-access-modal-input" name="accessCode"  class="modal-input" placeholder="Enter access code..."/>
+                                <div id="${tournament.id}-access-modal-submit" class="modal-submit" onclick="checkIsOnAnotherGame('${game.id}','${user.getCurrentGame()!=null}')">Join</div>
+                            </div>
+                        </dobble:modal>
+                    </c:if>
+                </form:form>
+                <dobble:modal id="${tournament.id}-on-another-game-modal" className="on-another-game-modal">
+                    <h1 style="text-align: center;" class="modal-title">You are already in another game</h1>
+                    <div class="form">
+                        <div id="${tournament.id}-on-another-game-modal" class="modal-submit on-another-game-modal-submit-current" onclick="join('${user.getCurrentTournament().getId()}')">current</div>
+                        <div id="${tournament.id}-on-another-game-modal" class="modal-submit on-another-game-modal-submit-join" onclick="join('${tournament.id}')">Join</div>
+                    </div>
+                </dobble:modal> 
+            </c:forEach>
+        </div>
+      </div>
+
 <script src="/resources/js/gameAndTournamentListActions.js" tableName="tournaments-table-body"></script>
 
 
