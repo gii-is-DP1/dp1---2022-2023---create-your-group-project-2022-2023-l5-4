@@ -35,7 +35,7 @@
 
 /* The Close Button */
 .close {
-  color: #aaa;
+  color: dark-gray;
   float: right;
   font-size: 28px;
   font-weight: bold;

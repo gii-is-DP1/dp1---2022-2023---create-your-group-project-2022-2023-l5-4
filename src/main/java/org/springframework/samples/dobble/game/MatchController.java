@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,11 +77,14 @@ public class MatchController {
             .findFirst()
             .get();
         players.remove(mainPlayer);
+
+        Long seconds = ChronoUnit.SECONDS.between(game.getStartedAt(),LocalDateTime.now());
+        List<Long> timer = List.of(seconds/60, seconds%60);
         mav.addObject("updatedAt", LocalDate.now());
         mav.addObject("mainPlayer", mainPlayer);
         mav.addObject("players", players);
         mav.addObject("game", game);
-        mav.addObject(game);
+        mav.addObject("timer", timer);
         return mav;
 
     }
