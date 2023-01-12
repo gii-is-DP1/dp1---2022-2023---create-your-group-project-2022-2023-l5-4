@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.inject.Model;
+import javax.print.DocFlavor.STRING;
 import javax.resource.spi.IllegalStateException;
 import javax.security.auth.message.AuthException;
 import javax.validation.Valid;
@@ -124,29 +125,28 @@ public class TournamentController {
     }
 
     @GetMapping("/{tournamentId}/play")
-    public String playTournament(@PathVariable("tournamentId") Long tournamentId) {
+    public String playTournament(@PathVariable("tournamentId") Long tournamentId, RedirectAttributes reddirAttributes) {
         Tournament tournament = this.tournamentService.findTournament(tournamentId);
         Game game = new Game(); 
-        List<GameUser> gameusers = new ArrayList<>();
         game.setGamemode(tournament.getGamemodes().get(0));
         game.setOwner(tournament.getOwner());
         game.setMaxPlayers(tournament.getMaxPlayers());
-        game.setWinner(null);
         game.setState(GameState.LOBBY);
-        game.setUpdatedAt(null);
-        for(User user: tournament.getUsers()){
-                user.setCurrentGame(game);
-                userService.setCurrentGame(user, game);
-                GameUser gameUser = new GameUser(user,game);
-                gameUserService.save(gameUser);
-                gameusers.add(gameUser);
-        }
-        if(tournament.getAccessCode()!=null) game.setAccessCode(""+tournament.getAccessCode());
-        game.setGameUsers(gameusers);
+        game.setAccessCode(tournament.getAccessCode());
         gameService.saveGame(game);
+        List<String> usernames = tournament.getUsers().stream().map(User::getUsername).toList();
+        for(String username: usernames){
+            try {
+                gameUserService.addGameUser(game.getId(), username, game.getAccessCode());
+            } catch (Exception e) {
+                System.out.println("BBBB");
+                e.printStackTrace();
+                reddirAttributes.addAttribute("error", e.getMessage());
+                return "redirect:/tournaments/"+tournamentId+"/lobby";
+            }
+        } 
         List<Game> games = tournament.getGames();
         games.add(game);
-        tournament.setGames(games);
         GameUser winnerUser = null;
         Integer i = 0; 
         Integer j = 0; 
@@ -175,7 +175,7 @@ public class TournamentController {
             tournament.setGamemodes(mode);
         }
         tournamentService.saveTournament(tournament);
-		return "redirect:/games/";	
+		return "redirect:/games/"+game.getId()+"/lobby";	
     }
 
     @GetMapping("/{tournamentId}/lobby")
