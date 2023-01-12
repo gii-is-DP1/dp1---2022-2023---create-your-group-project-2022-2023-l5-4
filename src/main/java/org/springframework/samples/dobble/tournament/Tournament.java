@@ -93,9 +93,17 @@ public class Tournament extends BaseEntity {
 
     @ColumnDefault("null")
     private String accessCode;
-    
+
+    public Integer getAccessCode() {
+        return null;
+    }
+
     public Boolean isPrivate() {
         return this.accessCode != null;
+    }
+
+    private Integer hashCode(String accessCode) {
+        return accessCode.toString().hashCode();
     }
 
     public Boolean validAccessCode(String accessCode) {
@@ -106,7 +114,6 @@ public class Tournament extends BaseEntity {
         if (accessCode == "") this.accessCode = null;
         else this.accessCode = accessCode;
     }
-
 
     public Integer getNumUsers() {
         return this.users.size();

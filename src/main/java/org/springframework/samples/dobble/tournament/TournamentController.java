@@ -132,9 +132,12 @@ public class TournamentController {
         game.setOwner(tournament.getOwner());
         game.setMaxPlayers(tournament.getMaxPlayers());
         game.setState(GameState.LOBBY);
-        game.setAccessCode(tournament.getAccessCode());
+        if(tournament.getAccessCode()!=null) game.setAccessCode(""+tournament.getAccessCode());
         gameService.saveGame(game);
-        List<String> usernames = tournament.getUsers().stream().map(User::getUsername).toList();
+        List<String> usernames = new ArrayList<String>();
+        for(User u : tournament.getUsers()){
+            usernames.add(u.getUsername()); 
+        }
         for(String username: usernames){
             try {
                 gameUserService.addGameUser(game.getId(), username, game.getAccessCode());
