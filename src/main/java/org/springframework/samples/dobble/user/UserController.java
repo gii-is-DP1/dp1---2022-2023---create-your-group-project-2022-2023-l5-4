@@ -85,10 +85,10 @@ public class UserController {
    @PreAuthorize("hasRole('admin')")
    @GetMapping("/users/{username}")
    public ModelAndView showUser(@PathVariable("username") String username){
-	   ModelAndView mav = new ModelAndView(VIEWS_USER_CREATE_OR_UPDATE_FORM);
+	    ModelAndView mav = new ModelAndView(VIEWS_USER_CREATE_OR_UPDATE_FORM);
 		User user = userService.findUser(username);
 		mav.addObject(user);
-	   return mav;
+	    return mav;
    }
 
    @PostMapping(value = "/users/edit/{username}")
