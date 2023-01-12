@@ -92,7 +92,7 @@ public class Tournament extends BaseEntity {
     private Integer maxPlayers;
 
     @ColumnDefault("null")
-    private Integer accessCode;
+    private String accessCode;
 
     public Integer getAccessCode() {
         return null;
@@ -106,16 +106,13 @@ public class Tournament extends BaseEntity {
         return accessCode.toString().hashCode();
     }
 
-    public void setAccessCode(String accessCode) {
-
-        if (!(accessCode == null || accessCode == ""))
-            this.accessCode = hashCode(accessCode);
+    public Boolean validAccessCode(String accessCode) {
+        return this.accessCode == null || this.accessCode.equals(accessCode);
     }
 
-    public Boolean validAccessCode(String accessCode) {
-        if (this.accessCode != null)
-            return this.accessCode.equals(hashCode(accessCode));
-        return true;
+    public void setAccessCode(String accessCode) {
+        if (accessCode == "") this.accessCode = null;
+        else this.accessCode = accessCode;
     }
 
     public Integer getNumUsers() {

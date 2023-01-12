@@ -69,10 +69,8 @@ public class GameUserService {
 		
 		if (!game.hasStarted() && !game.getGameUsers().contains(gameUser)) {
 			save(gameUser);
-			game.getGameUsers().add(gameUser);
-			gameService.saveGame(game);
 			Game currentGame = user.getCurrentGame();
-			if (currentGame!=null && !currentGame.isFinished()){
+			if (currentGame!=null && !currentGame.isFinished() && currentGame!=game){
 				deleteGameUser(currentGame.getId(), username);
 			}
 			userService.setCurrentGame(user, game);
@@ -92,7 +90,6 @@ public class GameUserService {
 		GameUser gameUser = findById(GameUserPk.of(user, game));
 
 		remove(gameUser);
-		game.getGameUsers().remove(gameUser);
 		userService.setCurrentGame(user, null);
 			
 		if (game.getNumUsers()==0) {
