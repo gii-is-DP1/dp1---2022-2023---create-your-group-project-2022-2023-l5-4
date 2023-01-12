@@ -38,6 +38,9 @@
 			color: #2196f3;
 			}
 
+			.private-username{
+				text-decoration: line-through;
+			}
 
 	  </style>
 	
@@ -57,7 +60,7 @@
 					<c:forEach items="${comments}" var="c">
 					  <li style="display: flex; margin-bottom: 10px; background-color: #eee; border-radius: 5px;">
 						<div>
-						  <h4 style="margin: 0; font-family: sans-serif;">${c.user.username}</h4>
+						  <h4 style="margin: 0; font-family: sans-serif;" class="username ${!c.user.enabled ? 'private-username' : ''}">${c.user.username}</h4>
 						  <p style="margin: 0; font-family: sans-serif;">${c.text}</p>
 						  <small style="color: rgb(153, 153, 153); font-family: sans-serif;">${c.date}</small>
 						</div>

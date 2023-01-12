@@ -64,9 +64,7 @@ public class UserService {
 	
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
-		user.setEnabled(true);
 		userRepository.save(user);
-		authoritiesService.saveAuthorities(user.getUsername(), "user");
 	}
 	
 
@@ -74,13 +72,7 @@ public class UserService {
 	public User findUser(String username) throws NoSuchElementException {
 		return userRepository.findById(username)
 			.orElseThrow(() -> new NoSuchElementException("User with id" + username + "was not found"));
-
 	}
-
-    @Transactional(readOnly = true)
-    public Optional<User> findUsers(String username){
-        return userRepository.findById(username);
-    }
 
     @Transactional List<User> getUserss(){
         return userRepository.findAll();
@@ -215,7 +207,7 @@ public class UserService {
     }
 
 	@Transactional
-	public List<User> getPaginatedUsers(String filterUsername, Integer pageNumber){
+	public List<User> getPaginatedUsers(Integer pageNumber){
 		if(pageNumber==null){
 			pageNumber=0;
 		}

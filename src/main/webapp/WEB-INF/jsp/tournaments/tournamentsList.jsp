@@ -8,15 +8,7 @@
 
 <dobble:layout pageName="tournaments">
    
-    <c:if test="${param.error!=null}">
-        <div class="alert alert-danger" role="alert">
-            <span class="glyphicon glyphicon-alert"></span>
-            <label>
-                ERROR:  
-            </label>
-            <c:out value="${param.error}"></c:out>
-        </div>
-    </c:if>
+    <dobble:errorMessage/>
     
     <div class="game-list-header">
         <h2>Tournaments</h2>
