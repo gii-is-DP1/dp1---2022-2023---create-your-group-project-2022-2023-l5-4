@@ -68,4 +68,9 @@ public class AuthoritiesService {
 		}else
 			throw new DataAccessException("User '"+username+"' not found!") {};
 	}
+
+	@Transactional
+	public Authorities findAuthorities(User user, String role) {
+		return authoritiesRepository.findByUserAndRole(user, role);
+	}
 }

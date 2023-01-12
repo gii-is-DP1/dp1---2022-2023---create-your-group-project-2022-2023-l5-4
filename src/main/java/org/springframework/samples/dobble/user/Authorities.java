@@ -17,6 +17,13 @@ import lombok.Setter;
 @Table(name = "authorities")
 public class Authorities extends BaseEntity{
 	
+	public Authorities(){}
+
+	public Authorities(User user, String authority) {
+		this.authority = authority;
+		this.user = user;
+	}
+
 	@ManyToOne
 	@JoinColumn(name = "username")
 	User user;
@@ -24,5 +31,14 @@ public class Authorities extends BaseEntity{
 	@Size(min = 3, max = 50)
 	String authority;
 	
+	public boolean equals(Object o) {
+		if (!(o instanceof Authorities)) return false;
+		Authorities other = (Authorities) o;
+		return this.authority.equals(other.getAuthority()) && this.user.equals(other.getUser());
+	}
+
+	public String toString() {
+		return this.authority;
+	}
 	
 }

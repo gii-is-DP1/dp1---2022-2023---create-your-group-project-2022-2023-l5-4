@@ -61,7 +61,9 @@ public class GameController {
     public ModelAndView indexUnstartedGames(@ModelAttribute("error") String error) {
         ModelAndView mav = new ModelAndView(VIEW_INDEX_GAMES);
         List<Game> games = this.gameService.findAllUnstartedGames();
+        User user = userService.getLoggedUser();
         mav.addObject("games", games);
+        mav.addObject("user", user);
         mav.addObject("error",error);
         return mav;
 

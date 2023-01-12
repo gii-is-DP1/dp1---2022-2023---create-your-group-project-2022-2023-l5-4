@@ -1,16 +1,21 @@
-
-function sortTable(name, n) {
+resizeTable = () => {
+  table = document.getElementsByClassName("game-list")[0];
+  table.style.height = window.innerHeight*0.65+"px"
+}
+resizeTable()
+window.addEventListener("resize",resizeTable)
+function sortTable(n) {
   var table, rows, switching, i, x,x0,x1, y,y0,y1, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById(name);
+  table = document.getElementsByClassName("game-list")[0];
   switching = true;
   dir = "asc"; 
   while (switching) {
     switching = false;
-    rows = table.rows;
+    rows = table.getElementsByClassName("body-line");
     for (i = 0; i < (rows.length - 1); i++) {
       shouldSwitch = false;
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
+      x = rows[i].getElementsByClassName("body-field")[n];
+      y = rows[i + 1].getElementsByClassName("body-field")[n];
       if (dir == "asc") {
         if ((n==1 || n==3) && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
           shouldSwitch= true;
@@ -72,22 +77,27 @@ function goto(url){
     window.location=url
 }
 
-function showAccessModal(bool){
-    document.getElementById("access-modal").style.visibility=bool
-}
 
 let enableJoin = true
-function join(id, isPrivate) {
+let joinSubmit = (id) => {document.getElementById(id+"-form").submit()}
 
-if (!enableJoin) return
-if(eval(isPrivate)) {
-    const modal = document.getElementById(id+"-access-modal")
-    modal.style.display="block"
-} else {
-    const form = document.getElementById(id+"-form").submit()
-}      
-
+function join(id, isPrivate, isOnAnotherGame) {
+  if (!enableJoin) return
+  if(eval(isPrivate)) {
+      const modal = document.getElementById(id+"-access-modal")
+      modal.style.display="block"
+  } else checkIsOnAnotherGame(id, isOnAnotherGame)
 }
+
+function checkIsOnAnotherGame(id, isOnAnotherGame) {
+  console.log(isOnAnotherGame)
+  if(eval(isOnAnotherGame)) {
+      const modal = document.getElementById(id+"-on-another-game-modal")
+      modal.style.display="block"
+  } else joinSubmit(id)
+}
+
+
 document.addEventListener('keydown',function(e) { 
 if (e.key === "Escape") { 
 const modals = document.getElementsByClassName("modal")

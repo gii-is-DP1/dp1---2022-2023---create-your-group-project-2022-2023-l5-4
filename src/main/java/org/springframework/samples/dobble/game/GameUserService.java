@@ -58,7 +58,10 @@ public class GameUserService {
 	public void addGameUser(Long gameId, String username, String accessCode) throws AuthException, NullPointerException, IllegalStateException{
 		Game game = gameService.findGame(gameId);
 		User user = userService.findUser(username);
+		
 		GameUser gameUser = new GameUser(user, game);
+		
+		if (game.getGameUsers().contains(gameUser)) return;
 		
 		if (!game.validAccessCode(accessCode)) throw new AuthException("Wrong Access Code");
 		
