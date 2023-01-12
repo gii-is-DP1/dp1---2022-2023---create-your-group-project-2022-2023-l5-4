@@ -38,14 +38,9 @@
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span style="font-size: 200%;">Tournaments</span>
 				</dobble:menuItem>
-				<dobble:menuItem active="${name eq 'users'}" url="/users"
-					title="users">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span class="menuItemSpan">List users</span>
-				</dobble:menuItem>
 				
 
-			</ul>
+			
 				
 				<dobble:menuItem active="${name eq 'chat'}" url="/" title="chat">
 					<span style="font-size: 140%;" type="button" data-toggle="modal" data-target="#modalWindow">
@@ -53,6 +48,8 @@
 						class="glyphicon glyphicon-comment"></span>
 					</span>
 				</dobble:menuItem>
+
+			
 				
 
 			<style>
@@ -132,6 +129,10 @@
 											<p class="text-left">
 												<a href="<c:url value="/users/edit/"/><sec:authentication property="name"/>"
 													class="btn btn-primary btn-block btn-sm">Change Password</a>
+											</p>
+											<p class="text-left">
+												<a href="<c:url value="/users"/>"
+													class="btn btn-primary btn-block btn-sm">User List</a>
 											</p>
 											<p class="text-left">
 												<a href="<c:url value="/friends/" />"
