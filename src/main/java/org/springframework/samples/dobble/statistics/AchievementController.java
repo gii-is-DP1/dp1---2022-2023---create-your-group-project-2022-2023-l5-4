@@ -134,7 +134,6 @@ public class AchievementController {
         for(Achievement a : service.getAchievements()){
             if(score>a.getThreshold()){
                 User user = userService.findUser(userId);
-                user.getAchievements();
                 achievements.add(a);
                 user.setAchievements(achievements);
                 userService.saveUser(user);

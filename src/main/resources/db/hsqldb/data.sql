@@ -273,7 +273,8 @@ INSERT INTO achievement (id, name, description, badge_image, threshold, metric) 
 (9, 'You have scored 10000', 'You have scored 10000 points', '/resources/images/achievement/badge9.png', 10000, 'POINTS');
 
 INSERT INTO user_achievement (username, achievement_id) VALUES 
-('admin1', 1);
+('admin1', 1),
+('owner1', 1);
 
 INSERT INTO forum(id,name,creation_date) VALUES
 (1,'GENERAL','2023-01-01 01:01:01')
