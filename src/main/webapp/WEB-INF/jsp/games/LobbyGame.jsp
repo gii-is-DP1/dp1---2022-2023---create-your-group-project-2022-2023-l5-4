@@ -45,9 +45,13 @@
 		</c:forEach>		
 	</table>
 	<p>
-		<form:form action="/games/${game.id}/start" method="POST">
-			<input type="submit" class="w3-button w3-purple" value="Start Game"/>
-		</form:form>
+		<c:if test="${game.getOwner().equals(user)}">
+
+			<form:form action="/games/${game.id}/start" method="POST">
+				<input type="submit" class="w3-button w3-purple" value="Start Game"/>
+			</form:form>
+		</c:if>
 	</p>
     
 </dobble:layout>
+<script src="/resources/js/checkForUpdate.js" href="/games/${game.id}/play" timeout="1000" params="lastUpdatedAt=${game.updatedAt}"></script>

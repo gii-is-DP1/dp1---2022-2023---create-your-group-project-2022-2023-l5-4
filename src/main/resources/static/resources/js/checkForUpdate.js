@@ -1,8 +1,10 @@
-let updatedAt = document.currentScript.getAttribute("updatedAt")
+let params = document.currentScript.getAttribute("params")
+let href = document.currentScript.getAttribute("href")
+let timeout = parseInt(document.currentScript.getAttribute("timeout"))
 function checkForUpdate() {
     $.ajax({
         type:"get",
-        url: window.location.href+"/checkForUpdate?lastUpdatedAt="+updatedAt,
+        url: (href || window.location.href)+"/checkForUpdate?"+params,
         async: false,
         success: function(result) {
             if (result== "reload") window.location.reload()
@@ -10,4 +12,4 @@ function checkForUpdate() {
     }
     );
 }
-window.setInterval(checkForUpdate, 500)
+window.setInterval(checkForUpdate, timeout || 500)

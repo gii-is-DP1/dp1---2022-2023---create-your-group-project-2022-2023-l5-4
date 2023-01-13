@@ -69,8 +69,8 @@
                     <dobble:modal id="${game.id}-on-another-game-modal" className="on-another-game-modal">
                         <h1 style="text-align: center;" class="modal-title">You are already in another game</h1>
                         <div class="form">
-                            <div id="${game.id}-on-another-game-modal-submit-current" class="modal-submit on-another-game-modal-submit-current" onclick="join('${user.getCurrentGame().getId()}')">current</div>
-                            <div id="${game.id}-on-another-game-modal-submit-join" class="modal-submit on-another-game-modal-submit-join" onclick="join('${game.id}')">Join</div>
+                            <div id="${game.id}-on-another-game-modal-submit-current" class="modal-submit on-another-game-modal-submit-current" onclick="joinSubmit('${user.getCurrentGame().getId()}','${user.getCurrentGame().isOnPlay()}')">current</div>
+                            <div id="${game.id}-on-another-game-modal-submit-join" class="modal-submit on-another-game-modal-submit-join" onclick="joinSubmit('${game.id}')">Join</div>
                         </div>
                     </dobble:modal> 
                 </c:forEach>
