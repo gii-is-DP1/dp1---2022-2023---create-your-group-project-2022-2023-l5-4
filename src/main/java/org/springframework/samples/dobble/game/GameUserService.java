@@ -67,18 +67,18 @@ public class GameUserService {
 		
 		if (game.isFull()) throw new IllegalStateException("The game is already full");
 		
-		if (!game.hasStarted() && !game.getGameUsers().contains(gameUser)) {
-			save(gameUser);
+		if (!game.hasStarted()) {
 			Game currentGame = user.getCurrentGame();
-			if (currentGame!=null && !currentGame.isFinished() && currentGame!=game){
+			if (currentGame!=null && !currentGame.isFinished()){
 				deleteGameUser(currentGame.getId(), username);
 			}
+			save(gameUser); 
 			userService.setCurrentGame(user, game);
 		}
 
 		
 	}
-
+ 
 	@Transactional
 	public void deleteGameUser(Long gameId, String username)
 			throws NoSuchElementException {
@@ -88,8 +88,9 @@ public class GameUserService {
 
 		User user = userService.findUser(username);
 		GameUser gameUser = findById(GameUserPk.of(user, game));
-
+		game.getGameUsers().remove(gameUser);
 		remove(gameUser);
+		gameService.saveGame(game);
 		userService.setCurrentGame(user, null);
 			
 		if (game.getNumUsers()==0) {
@@ -99,6 +100,7 @@ public class GameUserService {
 		
 		if (game.getOwner().equals(user)) gameService.chooseNewOwner(game);
 	}
+
 
 
 	public void makePlay(Game game, GameUser gameUser) {
