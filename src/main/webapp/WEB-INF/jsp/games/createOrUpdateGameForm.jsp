@@ -27,7 +27,7 @@
                 <dobble:selectField label="Max. Number of Players" name="maxPlayers" names="${[6,5,4,3,2]}" size="1"/>
             </div>
            <dobble:slider id="isPrivateSlider" label="Set Private"></dobble:slider>
-           <div id="isPrivateBody" style="visibility:hidden;">
+           <div id="isPrivateBody" style="display: none;">
             <div class="control-group">
                 <dobble:inputField id="accessCodeInput" label="Access Code" name="accessCode"/>
             </div>
