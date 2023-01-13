@@ -101,15 +101,13 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
                 //.andExpect(view().name("users/EditUser"));
     }
-
-    @WithMockUser(value = "spring")
+    
+    @WithMockUser(value = "spring", authorities = "admin")
     @Test
-    public void testUserProfile() throws Exception{
-        mockMvc.perform(get("/users/profile/user1"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("users/ProfileUser"))
-                .andExpect(model().attributeExists("user"));
-
+    public void testDeletePlayer() throws Exception{
+        mockMvc.perform(get("/users/delete/1"))
+                        .andExpect(status().isOk())
+                        .andExpect(view().name("users/userListing"));
     }
 
 

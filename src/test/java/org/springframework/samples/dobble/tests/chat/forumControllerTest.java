@@ -55,6 +55,14 @@ public class forumControllerTest {
 
     }
 
+    @WithMockUser(value = "spring")
+    @Test
+    public void deleteForum() throws Exception{
+        mockMvc.perform(get("/api/forum/delete/19"))
+                        .andExpect(status().isOk())
+                        .andExpect(model().attributeDoesNotExist("forum"));
+    }
+
     
     
 }
