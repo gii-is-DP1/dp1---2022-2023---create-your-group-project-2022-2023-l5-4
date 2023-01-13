@@ -1,6 +1,5 @@
 package org.springframework.samples.dobble.game;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,7 +20,6 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.samples.dobble.card.HandedEntity;
-import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.samples.dobble.user.User;
 
 import lombok.Getter;

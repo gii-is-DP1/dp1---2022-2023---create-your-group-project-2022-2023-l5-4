@@ -1,17 +1,11 @@
 package org.springframework.samples.dobble.comment;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
@@ -22,7 +16,6 @@ import org.springframework.samples.dobble.forum.Forum;
 import org.springframework.samples.dobble.model.BaseEntity;
 import org.springframework.samples.dobble.user.User;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
