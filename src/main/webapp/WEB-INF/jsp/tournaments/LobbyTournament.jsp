@@ -27,7 +27,7 @@
 			</tr>
 		</table>
 
-		<div id="isPrivateBody" class="hidden">
+		<div id="isPrivateBody">
 			<mvc:form modelAttribute="tournament">
 				<table class="table table-striped">
 					<tr>
@@ -67,7 +67,7 @@
 				<c:if test="${u.username==tournament.owner}">&nbsp;<span class="glyphicon glyphicon-user warning" aria-hidden="true"></span></c:if>
 			  </td>  
 			  <td>
-				<a href="/users/profile/${u.username}"><span class="glyphicon glyphicon-book warning" aria-hidden="true"></span></a>&nbsp;
+				<a href="/statistics/achievements/byUser/${u.username}"><span class="glyphicon glyphicon-book warning" aria-hidden="true"></span></a>&nbsp;
 				<c:if test="${isowner}">  
 				  <a href="/tournaments/${tournament.id}/lobby/delete/${u.username}"><span class="glyphicon glyphicon-trash alert" aria-hidden="true"></a>&nbsp;
 				</c:if>
@@ -93,14 +93,21 @@
 	<nav></nav>	
 </dobble:layout>
 <style>
-    .hidden {
-        display: none;
-		visibility:hidden;
-    }
-
 	#isPrivateBody {
-        display: none;
+       display: none;
     }
 	
 </style>
-<script src="/resources/js/handleIsPrivateSlider.js"></script>
+<script>
+    let isPrivate = false;
+
+        const slider =  document.getElementById("isPrivateSlider")
+        const isPrivateBody =  document.getElementById("isPrivateBody");
+		document.getElementById('isPrivateBody').className = 'block';
+        slider.onchange = function (){
+            console.log("SLID")
+            isPrivate = (this.checked)? true : false;
+            if (isPrivate) isPrivateBody.style.display = 'block';
+            else isPrivateBody.style.display = 'none';
+		}
+</script>

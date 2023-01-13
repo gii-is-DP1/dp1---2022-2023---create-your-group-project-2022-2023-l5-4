@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -64,6 +65,10 @@ public class UserService {
 	
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
+        if (user.isNew() || user.getAuthorities() == null) {
+            user.setAuthorities(Set.of(new Authorities(user, "user")));
+            user.setEnabled(true);
+        }
 		userRepository.save(user);
 	}
 	
@@ -71,7 +76,7 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public User findUser(String username) throws NoSuchElementException {
 		return userRepository.findById(username)
-			.orElseThrow(() -> new NoSuchElementException("User with id" + username + "was not found"));
+			.orElseThrow(() -> new NoSuchElementException("User with id " + username + " was not found"));
 	}
 
     @Transactional List<User> getUserss(){
@@ -92,7 +97,6 @@ public class UserService {
     public void setCurrentGame(User user, Game game) {
 		user.setCurrentGame(game);
 		userRepository.save(user);
-
     }
 
 	@Transactional

@@ -1,5 +1,5 @@
 
--- Users--
+-- Our Team Users--
 INSERT INTO users(username,password,email,enabled) VALUES 
 ('admin1','4dm1n','admin1@alum.us.es',TRUE),
 ('owner1','0wn3r','owner1@alum.us.es',TRUE),
@@ -170,11 +170,33 @@ INSERT INTO USERS(username, password, email, enabled) VALUES
 ('User16','p4ssw0rd','User16@alum.us.es',TRUE),
 ('User17','p4ssw0rd','User17@alum.us.es',TRUE);
 
+-- Authorities --
+INSERT INTO authorities(id,username,authority) VALUES 
+
+(7,'User0','user'),
+(8,'User1','user'),
+(9,'User2','user'),
+(10,'User3','user'),
+(11,'User4','user'),
+(12,'User5','user'),
+(13,'User6','user'),
+(14,'User7','user'),
+(15,'User8','user'),
+(16,'User9','user'),
+(17,'User10','user'),
+(18,'User11','user'),
+(19,'User12','user'),
+(20,'User13','user'),
+(21,'User14','user'),
+(22,'User15','user'),
+(23,'User16','user'),
+(24,'User17','user');
+
 -- Initial games, not needed but useful for testing --
 
 INSERT INTO games(id, access_code, max_players, state, gamemode, owner_Id, winner_Id) VALUES 
 (1, null, 4, 'LOBBY', 'THE_TOWER', 'User17', null),
-(2, null, 6, 'LOBBY', 'THE_WELL', 'adrgarpor', null), -- the owner of the game must be changed
+(2, null, 6, 'LOBBY', 'THE_WELL', 'User16', null), -- the owner of the game must be changed
 (3, 1234, 2, 'LOBBY', 'THE_WELL', 'User15', null),
 (4, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User14', null),
 (5, null, 6, 'LOBBY', 'THE_POISONED_GIFT', 'User13', null),
@@ -273,7 +295,8 @@ INSERT INTO achievement (id, name, description, badge_image, threshold, metric) 
 (9, 'You have scored 10000', 'You have scored 10000 points', '/resources/images/achievement/badge9.png', 10000, 'POINTS');
 
 INSERT INTO user_achievement (username, achievement_id) VALUES 
-('admin1', 1);
+('admin1', 1),
+('owner1', 1);
 
 INSERT INTO forum(id,name,creation_date) VALUES
 (1,'GENERAL','2023-01-01 01:01:01')

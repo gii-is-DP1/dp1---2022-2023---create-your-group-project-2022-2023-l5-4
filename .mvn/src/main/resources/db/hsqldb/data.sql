@@ -250,4 +250,18 @@ INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User2',8);
 INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User1',9);
 INSERT INTO usertournaments(user_id,tournament_id) VALUES ('User0',10);
 
+INSERT INTO achievement (id, name, description, badge_image, threshold, metric) VALUES 
+(1, 'First time', 'First time you play Dobble', '/resources/images/achievement/badge1.png', 50, 'POINTS'),
+(2, 'Catch the same symbol', 'Catch the same symbol more than three times in a game', '/resources/images/achievement/badge2.png', 1000, 'POINTS'),
+(3, 'Play more', 'Play more than 1000 cards', '/resources/images/achievement/badge3.png', 1000, 'POINTS'),
+(4, 'You have won 10', 'You have won 10 games', '/resources/images/achievement/badge4.png', 10, 'GAMES_WON'),
+(5, 'You have won 100', 'You have won 100 games', '/resources/images/achievement/badge5.png', 100, 'GAMES_WON'),
+(6, 'You have won 1000', 'You have won 1000 games', '/resources/images/achievement/badge6.png', 1000, 'GAMES_WON'),
+(7, 'You have scored 100', 'You have scored 100 points', '/resources/images/achievement/badge7.png', 100, 'POINTS'),
+(8, 'You have scored 1000', 'You have scored 1000 points', '/resources/images/achievement/badge8.png', 1000, 'POINTS'),
+(9, 'You have scored 10000', 'You have scored 10000 points', '/resources/images/achievement/badge9.png', 10000, 'POINTS');
+
+INSERT INTO user_achievement (username, achievement_id) VALUES 
+('admin1', 1);
+
 

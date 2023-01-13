@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.game.Game;
+import org.springframework.samples.dobble.game.GameMode;
 import org.springframework.samples.dobble.game.GameService;
 import org.springframework.samples.dobble.game.GameUserService;
 import org.springframework.samples.dobble.tournament.Tournament;
@@ -133,16 +134,27 @@ public class AchievementController {
         for(Achievement a : service.getAchievements()){
             if(score>a.getThreshold()){
                 User user = userService.findUser(userId);
-                user.getAchievements();
                 achievements.add(a);
                 user.setAchievements(achievements);
                 userService.saveUser(user);
             }
         }
         Integer victoriesG = 0;
+        Integer gamemodeTheTower = 0;
+        Integer gamemodeThePoisongift = 0;
+        Integer gamemodeTheWell = 0;
         for(Game g:gameService.findAllGames()){
             if(g.getWinner()!=null && g.getWinner().getUsername().compareTo(userId)==0){
                 victoriesG = victoriesG + 1;
+            }
+            if(g.getGamemode()==GameMode.THE_POISONED_GIFT){
+                gamemodeThePoisongift += 1;
+            }
+            if(g.getGamemode()==GameMode.THE_TOWER){
+                gamemodeTheTower += 1;
+            }
+            if(g.getGamemode()==GameMode.THE_WELL){
+                gamemodeTheWell += 1;
             }
         }
         Integer victoriesT = 0;
@@ -151,8 +163,17 @@ public class AchievementController {
                 victoriesT = victoriesT + 1;
             }
         }
+        String gamemode = "";
+        if(gamemodeThePoisongift<gamemodeTheTower && gamemodeThePoisongift<gamemodeTheWell){
+            gamemode = "The Poising Gift";
+        }else if(gamemodeTheWell<gamemodeTheTower && gamemodeTheWell<gamemodeThePoisongift){
+            gamemode = "The Well";
+        }else{
+            gamemode = "The Tower";
+        }
         result.addObject("achievements",service.getAchievementsByOwner(id));
         result.addObject("score", score);
+        result.addObject("gamemode", gamemode);
         result.addObject("victoriesG", victoriesG);
         result.addObject("victoriesT", victoriesT);
 

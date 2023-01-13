@@ -6,11 +6,11 @@ let isPrivate = false;
         slider.onchange = function (){
             isPrivate = (this.checked)? true : false
             if (isPrivate){
-                isPrivateBody.style.visibility="visible"
+                isPrivateBody.style.display = 'block';
                 accessCodeInput.value=""
             }
             else {
-                isPrivateBody.style.visibility="hidden"
+                isPrivateBody.style.display = 'none';
                 accessCodeInput.value=null
             }
         }
