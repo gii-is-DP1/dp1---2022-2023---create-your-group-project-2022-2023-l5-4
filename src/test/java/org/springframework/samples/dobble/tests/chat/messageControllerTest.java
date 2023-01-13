@@ -44,14 +44,13 @@ public class messageControllerTest {
         Comment comment1 = new Comment();
         comment1.setText("Hola soy un texto");
         comment1.setDate("1923/12/16");
+        comment1.setId((long) 25);
         Forum forum1 = new Forum();
         forum1.setName("forum1");
         forum1.setCreationDate(LocalDateTime.now());
         forum1.setId((long) 19);
-        Comment comment2 = new Comment();
-        comment2.setText("zorra");
-        comment2.setDate("1923/12/16");
         List<Comment> c = new ArrayList<>();
+        c.add(comment1);
         forum1.setComments(c);
 
     }
@@ -60,7 +59,6 @@ public class messageControllerTest {
     @WithMockUser(value = "spring")
     public void showCommentsTest() throws Exception{
         mockMvc.perform(get("/comments/19"))
-                //.andExpect(view().name("comments/CommentsListing"))
                 .andExpect(status().isOk());
     }
 
@@ -75,12 +73,12 @@ public class messageControllerTest {
 
     @Test
     @WithMockUser
-    public void saveCommentTest() throws Exception{
-        mockMvc.perform(post("/comments/19/save"))
-                .andExpect(status().is3xxRedirection());
-                
-
+    public void deleteCommentTest() throws Exception{
+        mockMvc.perform(get("/comments/19/delete/25"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeDoesNotExist("comment"));
     }
+
 
     
 

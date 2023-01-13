@@ -8,15 +8,7 @@
 
 <dobble:layout pageName="tournaments">
    
-    <c:if test="${param.error!=null}">
-        <div class="alert alert-danger" role="alert">
-            <span class="glyphicon glyphicon-alert"></span>
-            <label>
-                ERROR:  
-            </label>
-            <c:out value="${param.error}"></c:out>
-        </div>
-    </c:if>
+    <dobble:errorMessage/>
     
     <div class="game-list-header">
         <h2>Tournaments</h2>
@@ -42,7 +34,7 @@
                 </spring:url>
                 
                    
-                <div class="body-line" onclick="join('${tournament.id}','${tournament.isPrivate()}', '${user.getCurrentTournament()==null}')">
+                <div class="body-line" onclick="join('${tournament.id}','${tournament.isPrivate()}', '${user.getCurrentTournament()!=null}')">
                     <div style="width:10%; text-indent: 15px" class="body-field">
                         <c:out value="${tournament.id}"/> 
                     </div>
@@ -70,7 +62,7 @@
                             <h1 class="access-modal-title">Access Code</h1>
                             <div class="form">
                                 <input id="${tournament.id}-access-modal-input" name="accessCode"  class="modal-input" placeholder="Enter access code..."/>
-                                <div id="${tournament.id}-access-modal-submit" class="modal-submit" onclick="checkIsOnAnotherGame('${game.id}','${user.getCurrentGame()!=null}')">Join</div>
+                                <div id="${tournament.id}-access-modal-submit" class="modal-submit" onclick="checkIsOnAnotherGame('${tournament.id}','${user.getCurrentTournament()!=null}')">Join</div>
                             </div>
                         </dobble:modal>
                     </c:if>
@@ -78,8 +70,8 @@
                 <dobble:modal id="${tournament.id}-on-another-game-modal" className="on-another-game-modal">
                     <h1 style="text-align: center;" class="modal-title">You are already in another game</h1>
                     <div class="form">
-                        <div id="${tournament.id}-on-another-game-modal" class="modal-submit on-another-game-modal-submit-current" onclick="join('${user.getCurrentTournament().getId()}')">current</div>
-                        <div id="${tournament.id}-on-another-game-modal" class="modal-submit on-another-game-modal-submit-join" onclick="join('${tournament.id}')">Join</div>
+                        <div id="${tournament.id}-on-another-game-modal" class="modal-submit on-another-game-modal-submit-current" onclick="joinSubmit('${user.getCurrentTournament().getId()}','${user.getCurrentTournament().isOnPlay()}',true)">current</div>
+                        <div id="${tournament.id}-on-another-game-modal" class="modal-submit on-another-game-modal-submit-join" onclick="joinSubmit('${tournament.id}')">Join</div>
                     </div>
                 </dobble:modal> 
             </c:forEach>
