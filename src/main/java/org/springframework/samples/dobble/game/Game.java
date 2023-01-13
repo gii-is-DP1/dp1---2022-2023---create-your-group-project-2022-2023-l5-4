@@ -49,7 +49,7 @@ public class Game extends HandedEntity {
     @NotNull
     private GameMode gamemode;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "ownerId")
     @NotAudited
     @NotNull
@@ -60,7 +60,7 @@ public class Game extends HandedEntity {
     @JoinColumn(name = "winnerId")
     private User winner;
 
-    @OneToMany(mappedBy = "game", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "game")
     @Size(max = 6)
     @NotAudited
     private List<GameUser> gameUsers;

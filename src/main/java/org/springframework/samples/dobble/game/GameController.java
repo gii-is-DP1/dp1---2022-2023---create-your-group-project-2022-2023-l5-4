@@ -95,7 +95,7 @@ public class GameController {
         User owner = userService.getLoggedUser();
         game.setOwner(owner);
         game.setState(GameState.LOBBY);
-        this.gameService.saveGame(game);
+        game=this.gameService.saveGame(game);
         gameUserService.addGameUser(game.getId(), owner.getUsername(), game.getAccessCode());
         return "redirect:/games/" + game.getId() + "/lobby";
     }

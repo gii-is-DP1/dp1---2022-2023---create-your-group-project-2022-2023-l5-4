@@ -76,7 +76,7 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public User findUser(String username) throws NoSuchElementException {
 		return userRepository.findById(username)
-			.orElseThrow(() -> new NoSuchElementException("User with id" + username + "was not found"));
+			.orElseThrow(() -> new NoSuchElementException("User with id " + username + " was not found"));
 	}
 
     @Transactional List<User> getUserss(){
@@ -97,7 +97,6 @@ public class UserService {
     public void setCurrentGame(User user, Game game) {
 		user.setCurrentGame(game);
 		userRepository.save(user);
-
     }
 
 	@Transactional

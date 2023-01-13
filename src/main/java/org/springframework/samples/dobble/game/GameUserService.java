@@ -89,7 +89,7 @@ public class GameUserService {
 		GameUser gameUser = findById(GameUserPk.of(user, game));
 		game.getGameUsers().remove(gameUser);
 		remove(gameUser);
-		gameService.saveGame(game);
+		game = gameService.saveGame(game);
 		userService.setCurrentGame(user, null);
 			
 		if (game.getNumUsers()==0) {
