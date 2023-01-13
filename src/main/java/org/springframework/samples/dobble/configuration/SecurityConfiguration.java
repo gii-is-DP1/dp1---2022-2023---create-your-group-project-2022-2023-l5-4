@@ -80,7 +80,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	       "select username, authority "
 	        + "from authorities "
 	        + "where username = ?")	      	      
-	      .passwordEncoder(encoder1());	
+	      .passwordEncoder(passwordEncoder());	
 	}
 	
 	@Bean
