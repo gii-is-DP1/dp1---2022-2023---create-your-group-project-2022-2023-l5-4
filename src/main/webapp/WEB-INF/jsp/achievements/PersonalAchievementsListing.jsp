@@ -6,8 +6,10 @@
 
 <dobble:layout pageName="achievements">
     <h2>Achievements</h2>
+
     <h4 class="score">TOTAL SCORE: <c:out value="${score}"/></h4>
     <progress class="ml-auto" value="${score}" max="10000"></progress>
+    <h4 class="gamemode">Gamemode: <c:out value="${gamemode}"/></h4>
     <h4 class="victoriesG">VICTORIES IN GAMES: <c:out value="${victoriesG}"/></h4>
     <h4 class="victoriesT">VICTORIES IN TOURNAMENTS: <c:out value="${victoriesT}"/></h4>
 
