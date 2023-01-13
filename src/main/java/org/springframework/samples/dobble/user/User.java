@@ -53,6 +53,7 @@ public class User {
 	private String email;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@NotAudited
 	private Set<Authorities> authorities;
 
 	@ManyToMany
