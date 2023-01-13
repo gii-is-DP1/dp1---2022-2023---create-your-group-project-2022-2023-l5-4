@@ -167,7 +167,6 @@ public class UserController {
 		User user = userService.findUser(id);
 		user.setEnabled(false);
 		userService.saveUser(user);
-		gameUserService.deleteGameUser(user.getCurrentGame().getId(), user.getUsername());
 		return view;
 	}
 

@@ -12,4 +12,4 @@ function checkForUpdate() {
     }
     );
 }
-window.setInterval(checkForUpdate, timeout || 500)
+window.setInterval(checkForUpdate, timeout || 2000)
