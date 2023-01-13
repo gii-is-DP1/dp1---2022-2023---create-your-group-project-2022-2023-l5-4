@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,21 +27,26 @@ public class LobbyController {
      // Constructor
      private GameService gameService;
      private GameUserService gameUserService;
+     private UserService userService;
      
  
      @Autowired
-     public LobbyController(GameService gameService, GameUserService gameUserService) {
+     public LobbyController(GameService gameService, GameUserService gameUserService, UserService userService) {
          this.gameService = gameService;
          this.gameUserService = gameUserService;
+         this.userService = userService;
      }
  
     @GetMapping
     public ModelAndView lobbyGame(@PathVariable("gameId") Long gameId, @ModelAttribute("error") String error) {
         Game game = this.gameService.findGame(gameId);
+        if (game.isOnPlay()) return new ModelAndView("redirect:/games/{gameId}/play");
+        if (game.isFinished()) return new ModelAndView("redirect:/games/{gameId}");
         List<GameUser> gameUsers = game.getGameUsers();
 		ModelAndView result = new ModelAndView(VIEW_LOBBY_GAME);
 		result.addObject("gameUsers", gameUsers);
         result.addObject("game", game);
+        result.addObject("user", userService.getLoggedUser());
         result.addObject("error",error);
 		return result;	
     }
