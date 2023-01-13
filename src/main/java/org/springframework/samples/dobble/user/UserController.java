@@ -29,6 +29,7 @@ import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.game.Game;
+import org.springframework.samples.dobble.game.GameUserService;
 import org.springframework.samples.dobble.tournament.Tournament;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -53,6 +54,7 @@ import org.springframework.web.servlet.view.RedirectView;
 * @author Michael Isvy
 */
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
    private static final String VIEWS_USER_CREATE_OR_UPDATE_FORM = "users/createOrUpdateUserForm";
@@ -61,10 +63,12 @@ public class UserController {
 
    UserService userService;
    AuthoritiesService authoritiesService;
+   GameUserService gameUserService;
    @Autowired
-   public UserController(UserService userService, AuthoritiesService authoritiesService){
+   public UserController(UserService userService, AuthoritiesService authoritiesService, GameUserService gameUserService){
 	 this.userService = userService;
 	 this.authoritiesService = authoritiesService;
+	 this.gameUserService = gameUserService;
    }
 
    @InitBinder
@@ -74,14 +78,14 @@ public class UserController {
 
 
 	
-   @GetMapping(value = "/users/new")
+   @GetMapping(value = "/new")
    public String initCreationForm(Map<String, Object> model) {
 	   User user = new User();
 	   model.put("user", user);
 	   return VIEWS_USER_CREATE_OR_UPDATE_FORM;
    }
 
-   @PostMapping(value = "/users/new")
+   @PostMapping(value = "/new")
    public String processCreationForm(@Valid User user, BindingResult result) {
 	   if (result.hasErrors()) {
 		   return VIEWS_USER_CREATE_OR_UPDATE_FORM;
@@ -93,16 +97,15 @@ public class UserController {
 		}
    }
 
-   @RequestMapping("/users")
    @PreAuthorize("hasRole('admin')")
    @GetMapping()
-   public String showUser(ModelMap modelMap, @PathParam("username") String username, @PathParam("pageNumber") Integer pageNumber, RedirectAttributes redirectAttributes){
+   public String showUser(ModelMap modelMap, @PathParam("pageNumber") Integer pageNumber, RedirectAttributes redirectAttributes){
 		String view = VIEW_INDEX_USERS;
 		
 		List<Integer> pages = userService.calculatePages(pageNumber);
 		Integer previousPageNumber = pages.get(0);
 		Integer nextPageNumber = pages.get(1);
-		List<User> usuarios = userService.getPaginatedUsers(username, pageNumber);
+		List<User> usuarios = userService.getPaginatedUsers(pageNumber);
 		User loggedUser = userService.getLoggedUser();
 
 		if (authoritiesService.findAuthorities(loggedUser, "admin")==null) {
@@ -111,7 +114,6 @@ public class UserController {
 			
 		}else{
 			modelMap.addAttribute("users", usuarios);
-			modelMap.addAttribute("username", username==null?"":username);
 			modelMap.addAttribute("pageNumber", pageNumber==null?0:pageNumber);
 			modelMap.addAttribute("nextPageNumber", nextPageNumber);
 			modelMap.addAttribute("previousPageNumber", previousPageNumber);
@@ -122,7 +124,7 @@ public class UserController {
 
 
    @PreAuthorize("hasRole('admin')")
-   @GetMapping("/users/{username}")
+   @GetMapping("/{username}")
    public ModelAndView showUser(@PathVariable("username") String username){
 	    ModelAndView mav = new ModelAndView(VIEWS_USER_CREATE_OR_UPDATE_FORM);
 		  User user = userService.findUser(username);
@@ -131,7 +133,7 @@ public class UserController {
 
    }
 
-   @PostMapping(value = "/users/edit/{username}")
+   @PostMapping(value = "/edit/{username}")
    public String UpdateUser(@Valid User user, BindingResult result) {
 		if (result.hasErrors()) {
 		   return "users/EditUser";
@@ -142,7 +144,7 @@ public class UserController {
 	   }
    }
 
-   @GetMapping(path="/users/edit/{username}")
+   @GetMapping(path="/edit/{username}")
 	public ModelAndView editarUser(@PathVariable("username") String username, RedirectAttributes redirectAttributes){	
 		User user = userService.findUser(username);
 		User loggedUser = userService.getLoggedUser();
@@ -158,56 +160,14 @@ public class UserController {
 		return result;
 	}
 
-	@GetMapping(path="/users/profile/{username}")
-	public ModelAndView UserProfile(@PathVariable("username") String username){		
-		ModelAndView result=new ModelAndView("users/ProfileUser");
-		result.addObject("user", userService.findUsername(username));
-		return result;
-	}
-	
-	@GetMapping(value = "/users/{userId}/edit")
-	public String initUpdateUserForm(@PathVariable("username") String userId, Model model) {
-		User user = this.userService.findUser(userId);
-		model.addAttribute(user);
-		return VIEWS_USER_CREATE_OR_UPDATE_FORM;
-	}
-
-	@PostMapping(value = "/users/{userId}/edit")
-	public String processUpdateUserForm(@Valid User user, BindingResult result,
-			@PathVariable("userId") String userId) {
-		if (result.hasErrors()) {
-			return VIEWS_USER_CREATE_OR_UPDATE_FORM;
-		}
-		else {
-			user.setUsername(userId);
-			this.userService.saveUser(user);
-			return "redirect:/users/{userId}";
-		}
-	}
-   
-
-
-
 	@PreAuthorize("hasRole('admin')")
 	@GetMapping(path="/delete/{id}")
 	public String deletePlayer(@PathVariable("id") String id, ModelMap modelMap, HttpServletRequest request){
 		String view =  VIEW_INDEX_USERS;
-		Optional<User> user = userService.findUsers(id);
-		if(user.isPresent()){
-			User u = user.get();
-			Collection<Game> lg = u.getOwnedGames()==null? new ArrayList<>():u.getOwnedGames();
-			lg.stream().forEach(x->x.deletePlayerOfGame(u));
-			Collection<Tournament> lg2 = u.getTournaments()==null? new ArrayList<>():u.getTournaments();
-			lg2.stream().forEach(x->x.removeUser(u));
-			
-
-			userService.delete(u);
-			modelMap.addAttribute(MESSAGE, "User successfully deleted!");
-			return showUser(modelMap, null, 0, null);
-		}else{
-			modelMap.addAttribute(MESSAGE, "Player not found!");
-			view = showUser(modelMap, null, 0, null);
-		}
+		User user = userService.findUser(id);
+		user.setEnabled(false);
+		userService.saveUser(user);
+		gameUserService.deleteGameUser(user.getCurrentGame().getId(), user.getUsername());
 		return view;
 	}
 

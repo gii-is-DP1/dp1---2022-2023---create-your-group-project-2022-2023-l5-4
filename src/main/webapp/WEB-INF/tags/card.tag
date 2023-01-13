@@ -28,7 +28,6 @@
 	translate:-50% -50%;
 	border-radius: 100%;
 	position: absolute;
-	display:block;
 
 	width:70%;
 	height:70%;

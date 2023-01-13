@@ -105,10 +105,6 @@ public class MatchController {
 
     @PostMapping("/match")
     public String checkMatch(@PathVariable("gameId") Long gameId, @ModelAttribute("symbol") Symbol symbol,  @ModelAttribute("user") User user) {
-        //This method steps are only made for testing at the moment. For the next sprint it will 
-        //fully implement the required mehtod
-       
-
         if (user.getUsername() == null) return "redirect:/games/{gameId}/play";
         Game game = gameService.findGame(gameId);
         GameUser gameUser = gameUserService.findById(GameUserPk.of(user, game));
@@ -130,6 +126,9 @@ public class MatchController {
         
         if (game.getCards().size() == 0 || gameUser.getCards().size()==0) {
             gameService.endGame(game);
+            game.getGameUsers().stream()
+            .map(GameUser::getUser)
+            .forEach(player->userService.setCurrentGame(player,null));
             return "redirect:/games/{gameId}";
         }
 

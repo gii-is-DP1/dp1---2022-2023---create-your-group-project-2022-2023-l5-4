@@ -61,7 +61,7 @@ public class Game extends HandedEntity {
     private User winner;
 
     @OneToMany(mappedBy = "game", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @Size(min = 1, max = 6)
+    @Size(max = 6)
     @NotAudited
     private List<GameUser> gameUsers;
 
