@@ -16,10 +16,7 @@
 package org.springframework.samples.dobble.user;
 
 
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -28,10 +25,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import javax.resource.spi.IllegalStateException;
-import javax.security.auth.message.AuthException;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -39,11 +32,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.samples.dobble.game.Game;
-import org.springframework.samples.dobble.game.GameRepository;
 import org.springframework.samples.dobble.tournament.Tournament;
-import org.springframework.samples.dobble.tournament.TournamentRepository;
-import org.springframework.samples.dobble.tournament.TournamentService;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;

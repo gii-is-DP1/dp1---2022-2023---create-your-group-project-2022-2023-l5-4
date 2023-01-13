@@ -1,8 +1,5 @@
 package org.springframework.samples.dobble.comment;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

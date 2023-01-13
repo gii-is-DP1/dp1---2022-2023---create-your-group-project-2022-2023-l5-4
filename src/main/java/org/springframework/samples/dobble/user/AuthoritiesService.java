@@ -20,8 +20,6 @@ package org.springframework.samples.dobble.user;
 import java.util.HashSet;
 import java.util.Objects;
 
-import javax.faces.view.ActionSource2AttachedObjectTarget;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;

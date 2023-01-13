@@ -2,15 +2,6 @@ package org.springframework.samples.dobble.tournament;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import javax.enterprise.inject.Model;
-import javax.print.DocFlavor.STRING;
-import javax.resource.spi.IllegalStateException;
-import javax.security.auth.message.AuthException;
-import javax.validation.Valid;
-
-import org.hibernate.hql.internal.HolderInstantiator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.dobble.game.Game;
 import org.springframework.samples.dobble.game.GameMode;
