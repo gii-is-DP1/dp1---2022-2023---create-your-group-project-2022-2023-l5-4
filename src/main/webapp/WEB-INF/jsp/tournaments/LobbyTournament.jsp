@@ -27,7 +27,7 @@
 			</tr>
 		</table>
 
-		<div id="isPrivateBody" class="hidden">
+		<div id="isPrivateBody">
 			<mvc:form modelAttribute="tournament">
 				<table class="table table-striped">
 					<tr>
@@ -93,13 +93,8 @@
 	<nav></nav>	
 </dobble:layout>
 <style>
-    .hidden {
-        display: none;
-		visibility:hidden;
-    }
-
 	#isPrivateBody {
-        display: none;
+       display: none;
     }
 	
 </style>
