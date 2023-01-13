@@ -5,7 +5,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <!--  >%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%-->
 <%@ attribute name="name" required="true" rtexprvalue="true"
-	description="Name of the active menu: home, owners, vets or error"%>
+	description="Name of the active menu: home, games, tournaments, chat, login, register or error"%>
 
 
 <nav class="navbar navbar-default" role="navigation">
@@ -42,7 +42,7 @@
 
 			
 				
-				<dobble:menuItem active="${name eq 'chat'}" url="/" title="chat">
+				<dobble:menuItem active="${name eq 'chat'}" url="/chats" title="chat">
 					<span style="font-size: 140%;" type="button" data-toggle="modal" data-target="#modalWindow">
 						Chat &nbsp &nbsp<span
 						class="glyphicon glyphicon-comment"></span>
