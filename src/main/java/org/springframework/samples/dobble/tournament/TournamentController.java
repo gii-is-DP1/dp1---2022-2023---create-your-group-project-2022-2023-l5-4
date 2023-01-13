@@ -139,10 +139,13 @@ public class TournamentController {
         for(User u : tournament.getUsers()){
             usernames.add(u.getUsername()); 
         }
+        
         for(String username: usernames){
             try {
+                if(tournament.getGames().size()<=0){
                 gameUserService.addGameUser(game.getId(), username, game.getAccessCode());
-            } catch (Exception e) {
+            }
+        } catch (Exception e) {
                 e.printStackTrace();
                 reddirAttributes.addFlashAttribute("error", e.getMessage());
                 return "redirect:/tournaments/"+tournamentId+"/lobby";
