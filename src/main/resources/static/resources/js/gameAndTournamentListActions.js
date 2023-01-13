@@ -79,7 +79,13 @@ function goto(url){
 
 
 let enableJoin = true
-let joinSubmit = (id) => {document.getElementById(id+"-form").submit()}
+let joinSubmit = (id, isOnPlay, isTournament) => {
+  if(!eval(isOnPlay)) {
+    console.log(id)
+    document.getElementById(id+"-form").submit()
+} else window.location.replace((isTournament ? "/tournaments/" : "/games/")+id+"/play")
+  
+}
 
 function join(id, isPrivate, isOnAnotherGame) {
   if (!enableJoin) return
@@ -90,7 +96,6 @@ function join(id, isPrivate, isOnAnotherGame) {
 }
 
 function checkIsOnAnotherGame(id, isOnAnotherGame) {
-  console.log(isOnAnotherGame)
   if(eval(isOnAnotherGame)) {
       const modal = document.getElementById(id+"-on-another-game-modal")
       modal.style.display="block"

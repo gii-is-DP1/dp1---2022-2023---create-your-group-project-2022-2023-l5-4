@@ -137,6 +137,9 @@ public class Tournament extends BaseEntity {
         return this.state == TournamentState.FINISHED;
     }
 
+    public boolean isOnPlay() {
+        return this.state == TournamentState.STARTED;
+    } 
     public boolean hasStarted() {
         return this.state != TournamentState.LOBBY;
     }
