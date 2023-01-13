@@ -42,17 +42,6 @@
                 <td>       
                     <c:out value="${achievement.metric} "/>
                 </td>
-
-                <td> 
-                    <a href="/statistics/achievements/${achievement.id}/edit"> 
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>                            
-                    </a>       
-                </td>
-                <td> 
-                    <a href="/statistics/achievements/${achievement.id}/delete"> 
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </a>      
-                </td>
                 
             </tr>
         </c:forEach>
