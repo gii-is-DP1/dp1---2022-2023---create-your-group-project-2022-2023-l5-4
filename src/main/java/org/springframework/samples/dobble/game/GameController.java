@@ -104,13 +104,15 @@ public class GameController {
 
     @PostMapping("/{gameId}/join")
     public RedirectView joinGame(@PathVariable("gameId") Long gameId, @ModelAttribute("accessCode") String accessCode, RedirectAttributes attributes) {
+        Game game = gameService.findGame(gameId);
+        String userId = userService.getLoggedUser().getUsername();
         try {
-            String userId = userService.getLoggedUser().getUsername();
             gameUserService.addGameUser(gameId, userId, accessCode);
         } catch(Exception e) {
             attributes.addFlashAttribute("error",e.getMessage());
             return new RedirectView("/games");
         } 
+        if (game.hasStarted()) return new RedirectView("/games/{gameId}/play");
         return new RedirectView("/games/{gameId}/lobby");
 
     }

@@ -66,6 +66,7 @@ public class TournamentController {
         for(Tournament t: tournaments){
             numPartidas.add(t.getGamemodes().size());
         }
+        mav.addObject("user", userService.getLoggedUser());
         mav.addObject("tournaments", tournaments);
         mav.addObject("numpartidas", numPartidas);
         return mav;

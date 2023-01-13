@@ -62,21 +62,20 @@ public class GameUserService {
 		GameUser gameUser = new GameUser(user, game);
 		
 		if (game.getGameUsers().contains(gameUser)) return;
-		
+				
 		if (!game.validAccessCode(accessCode)) throw new AuthException("Wrong Access Code");
 		
 		if (game.isFull()) throw new IllegalStateException("The game is already full");
-		
-		if (!game.hasStarted()) {
-			Game currentGame = user.getCurrentGame();
-			if (currentGame!=null && !currentGame.isFinished()){
-				deleteGameUser(currentGame.getId(), username);
-			}
-			save(gameUser); 
-			userService.setCurrentGame(user, game);
-		}
 
+		if (game.hasStarted()) throw new IllegalStateException("The game has already started");
 		
+		Game currentGame = user.getCurrentGame();
+		if (currentGame!=null && !currentGame.isFinished()){
+			deleteGameUser(currentGame.getId(), username);
+		}
+		save(gameUser); 
+		userService.setCurrentGame(user, game);
+		gameService.saveGame(game);
 	}
  
 	@Transactional
@@ -84,8 +83,8 @@ public class GameUserService {
 			throws NoSuchElementException {
 		Game game = gameService.findGame(gameId);
 
-		if (game.hasStarted()) return;
-
+		if (game.isFinished()) return;
+		
 		User user = userService.findUser(username);
 		GameUser gameUser = findById(GameUserPk.of(user, game));
 		game.getGameUsers().remove(gameUser);

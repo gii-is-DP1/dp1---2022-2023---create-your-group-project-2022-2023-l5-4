@@ -266,6 +266,6 @@
     </div>
 </div>
 <script src="/resources/js/sortScoreboard.js" defer></script>
-<script src="/resources/js/checkForUpdate.js" updatedAt="${game.updatedAt}" ></script>
+<script src="/resources/js/checkForUpdate.js" params="lastUpdatedAt=${game.updatedAt}" ></script>
 <script src="/resources/js/timerUpdater.js"></script>
 </body>
